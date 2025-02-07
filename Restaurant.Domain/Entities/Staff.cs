@@ -36,4 +36,18 @@ public class Staff
         return staff;
 
     }
+    public void EditStaff(Staff updatedStaff)
+    {
+        var staff = AppDb.StaffTable.GetValueOrDefault(this.StaffId);
+        if (staff == null)
+            throw new EntityNotFoundException($"Staff with id {this.StaffId} does not exist");
+
+        staff.FirstName = updatedStaff.FirstName;
+        staff.LastName = updatedStaff.LastName;
+        staff.Designation = updatedStaff.Designation;
+        staff.Password = updatedStaff.Password;
+    }
+
+
+
 }
