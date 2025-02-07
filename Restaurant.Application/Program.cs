@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-//Console.WriteLine("Hello, World!");
-using Restaurant.Domain.Db;
+﻿using Restaurant.Domain.Db;
 using Restaurant.Domain.Entities;
 
 namespace Restaurant.Application;
