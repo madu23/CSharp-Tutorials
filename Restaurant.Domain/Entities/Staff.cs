@@ -36,4 +36,28 @@ public class Staff
         return staff;
 
     }
+
+    public List<Staff> ListStaff()
+    {
+        var staff = AppDb.StaffTable.Values.ToList();
+        if (staff == null || !staff.Any()) throw new EntityNotFoundException($"Staff List is empty");
+        return staff;
+    }
+
+    public Staff EditStaff(int id)
+    {
+        // check if the staff does exist
+        var staff = AppDb.StaffTable[id];
+        if (staff == null) throw new EntityNotFoundException($"Staff with id {id} does not exist");
+        return AppDb.StaffTable[id] as Staff;
+
+    }
+
+    public static Staff DeleteStaff(int id)
+    {
+        var staff = AppDb.StaffTable.ContainsKey(id) ? AppDb.StaffTable[id] : null;
+        if (staff == null) throw new EntityNotFoundException($"Staff with id {id} does not exist");
+        AppDb.StaffTable.Remove(id);
+        return staff;
+    }
 }
