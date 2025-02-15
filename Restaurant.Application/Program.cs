@@ -1,6 +1,8 @@
 ﻿// See https://aka.ms/new-console-template for more information
 //Console.WriteLine("Hello, World!");
+
 using Restaurant.Application.Services;
+
 using Restaurant.Domain.Db;
 using Restaurant.Domain.Entities;
 
@@ -81,6 +83,17 @@ class Program
 
         }
 
+       else if(menuSelection == "2")
+       {
+            Console.WriteLine("enter staff you want to view id");
+            var viewstaffid = Console.ReadLine();
+            var getStaffid= AppDb.StaffTable;
+            var staffList = AppDb.StaffTable.Values.ToList();
+                foreach (var record in staffList)
+                {
+                    Console.WriteLine(String.Format("{0}\t {1}\t {2}\t {3}", record.StaffId, record.FirstName, record.LastName, record.Designation));
+                }
+       }
         Console.ReadLine();
     }
 
