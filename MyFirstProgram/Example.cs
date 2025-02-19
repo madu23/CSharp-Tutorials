@@ -211,11 +211,11 @@
 
 ///*
 //Assignment.
-//Expand the Restaurant application to allow admin to setup intercontinental Menu and local Menu. 
+//Expand the Restaurant application to allow admin to setup intercontinental Menu and local Menu.
 //This menu item must be setup using the Restaurant class constructor.
-////Requirements:- 
-//Admin should be able to enter a comma separated list of local menu from the prompt- 
-//Admin should be able to enter a comma separated list of intercontinental menu from the prompt- 
+////Requirements:-
+//Admin should be able to enter a comma separated list of local menu from the prompt-
+//Admin should be able to enter a comma separated list of intercontinental menu from the prompt-
 //Display the Restaurant details including a list of the local and intercontinental menus
 //*/
 
@@ -224,7 +224,7 @@
 ///*
 //Assignment.
 //Expand the Restaurant application to allow Adding and Removal of Item from any of the Menus (Local, Intl).
-////Requirements:- 
+////Requirements:-
 //Admin should be able to optionally add Restaurant Menu at setup
 //Admin should have a functionality that allow them to add or remove a menu from the different categories (Intl or Local)
 //To remove a local Menu, An admin will enter Remove in the prompt and the application should present the two menu categories with a number
@@ -274,7 +274,7 @@
 ////Additional Requirements
 //// Allow the Admin to specify which of the properties that should be outputted to the console
 //// Example: Display WHich of these Information do you want display (Name, Address, OpeningHours)
-//// if enters : Name 
+//// if enters : Name
 //// then only the name of the restaurant should be displayed on the Console
 //// if enters: Name, OpeningHours
 //// then only the name and OpeningHours of the restaurant should be displayed on the Console
@@ -349,7 +349,7 @@
 
 
 //// The length of studentAges should be 20 (clasroom)
-//// the value of variable studentAges should 1, 2, 3, 5, .... 
+//// the value of variable studentAges should 1, 2, 3, 5, ....
 //// the sequence of the value should be the addition of the current "index" + the "previous index"
 
 //// Control Flow Statement
@@ -366,7 +366,7 @@
 //while
 
 //// Operators
-//+ - * / 
+//+ - * /
 //> < >= <= ! != && || ^ = bool
 //(5 > 8) = true or false
 
@@ -389,16 +389,8 @@
 
 //// Write a program that prints out any input passed to it. If I pass multiple values separated by comma (,) it should print out each of them in a separate line
 //// example 1 - If I enter Rice Output should be Rice
-//// example 2 - If I enter Rice, Beans, Chicken & Chips - Output should be 
-///* Rice 
-//   Beans 
+//// example 2 - If I enter Rice, Beans, Chicken & Chips - Output should be
+///* Rice
+//   Beans
 //   Chicken & Chips
 //   */
-
-
-
-
-
-
-
-

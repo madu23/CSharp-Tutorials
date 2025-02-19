@@ -1,8 +1,8 @@
-﻿
-using Restaurant.Domain.Db;
+﻿using Restaurant.Domain.Db;
 using Restaurant.Domain.Entities;
 
 namespace Restaurant.Application.Services;
+
 public class StartupTask
 {
     public Task<bool> SeedAdminRecord()
@@ -10,7 +10,9 @@ public class StartupTask
         try
         {
             // when application starts up, verify you have an admin account already setup.
-            var adminStaff = AppDb.StaffTable.Where(_ => _.Value.Designation == "System Admin").FirstOrDefault();
+            var adminStaff = AppDb
+                .StaffTable.Where(_ => _.Value.Designation == "System Admin")
+                .FirstOrDefault();
             if (adminStaff.Value == null)
             {
                 // meaning there is no admin. So go ahead and create one
@@ -20,7 +22,7 @@ public class StartupTask
                     FirstName = "System",
                     LastName = "Admin",
                     Designation = "System Admin",
-                    Password = "superPassword"
+                    Password = "superPassword",
                 };
 
                 newAdminStaff.CreateStaff();
