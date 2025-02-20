@@ -1,36 +1,39 @@
 ﻿// See https://aka.ms/new-console-template for more information
 //Console.WriteLine("Hello, World!");
+using Restaurant.Application.Services;
 using Restaurant.Domain.Db;
 using Restaurant.Domain.Entities;
 
 namespace Restaurant.Application;
 class Program
 {
-    static void Main(string[] args)
+    //static void Main(string[] args)
+    //{
+
+    //}
+    static async Task Main(string[] args)
     {
         Console.WriteLine("Hello, Welcome to Eke Tech Restaurant!");
 
+<<<<<<< HEAD
         // when application starts up, verify you have an admin account already setup.
         var adminStaff = AppDb.StaffTable.Where(_ => _.Value.Designation == "System Admin").FirstOrDefault();
         if (adminStaff.Value == null)
+=======
+        // seed default admin data step 1
+        var seedDbTask = new StartupTask();
+       var result =  await seedDbTask.SeedAdminRecord();
+        if(result == false)
+>>>>>>> 6b3a6ff8d30d8e7cdf8877317d1aec8bbf007bfe
         {
-            // meaning there is no admin. So go ahead and create one
-            var newAdminStaff = new Staff
-            {
-                StaffId = 1,
-                FirstName = "System",
-                LastName = "Admin",
-                Designation = "System Admin",
-                Password = "superPassword"
-            };
-
-            newAdminStaff.CreateStaff();
+            Console.WriteLine("Admin data was not successfully pre-created");
         }
 
-        Console.WriteLine("Enter your login details");
-        Console.WriteLine("Staff Id:");
-        var staffId = Convert.ToInt16(Console.ReadLine());
+        // Login Step 2
+        var authService = new AuthService();
+        var loginResult = await authService.Login();
 
+<<<<<<< HEAD
         Console.WriteLine("Password:");
         var password = Console.ReadLine();
         var staff = AppDb.StaffTable.Where(_ => _.Value.StaffId == staffId && _.Value.Password == password).SingleOrDefault().Value;
@@ -50,6 +53,16 @@ class Program
 
         int menuCounter = 0;
         if (staff.Designation == "System Admin")
+=======
+
+
+
+        Console.WriteLine($"Welcome {loginResult?.FirstName} {loginResult?.LastName}");
+        Console.WriteLine($"Select a system menu from the list below");
+
+        int menuCounter = 0;
+        if(loginResult?.Designation == "System Admin")
+>>>>>>> 6b3a6ff8d30d8e7cdf8877317d1aec8bbf007bfe
         {
             List<string> systemMenu = new List<string> { "Create a new Staff", "View Staff", "Edit Staff", "Setup a new Restaurant", "Setup Restaurant Menu" };
             foreach (var sysMenu in systemMenu)
