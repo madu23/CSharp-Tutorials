@@ -26,7 +26,12 @@ class Program
 
 
 
-        Console.WriteLine($"Welcome {loginResult?.FirstName} {loginResult?.LastName}");
+        Console.WriteLine("");
+        Console.WriteLine("");
+        Console.WriteLine("");
+        Console.WriteLine($"Welcome {loginResult?.FirstName} {loginResult?.LastName}") ;
+        Console.WriteLine("========================================================================");
+        
         Console.WriteLine($"Select a system menu from the list below");
 
         int menuCounter = 0;
