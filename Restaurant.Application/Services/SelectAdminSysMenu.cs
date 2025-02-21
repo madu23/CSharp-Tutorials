@@ -62,12 +62,14 @@ public class MenuSelectionHandler
             };
             newStaffData.CreateStaff();
             Console.WriteLine("Staff list");
-            Console.WriteLine("===================");
+            Console.WriteLine(
+                "------------------------------------------------------------------------------------------------------------"
+            );
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine(
                 String.Format(
-                    "{0}\t {1}\t {2}\t {3}",
+                    "{0, 4}\t {1, -30}\t {2, -30}\t {3, -30}",
                     "StaffId",
                     "First Name",
                     "Last Name",
@@ -75,14 +77,14 @@ public class MenuSelectionHandler
                 )
             );
             Console.WriteLine(
-                "========================================================================"
+                "------------------------------------------------------------------------------------------------------------"
             );
             var staffList = AppDb.StaffTable.Values.ToList();
             foreach (var record in staffList)
             {
                 Console.WriteLine(
                     String.Format(
-                        "{0}\t {1}\t {2}\t {3}",
+                        "{0, 4}\t {1, -30}\t {2, -30}\t {3, -30}",
                         record.StaffId,
                         record.FirstName,
                         record.LastName,
@@ -94,13 +96,14 @@ public class MenuSelectionHandler
             if (Console.ReadLine().Trim().Equals("YES", StringComparison.OrdinalIgnoreCase))
             {
                 await CreateStaff();
+                return;
             }
         }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error: {ex.Message}. Please try again.");
-            Console.WriteLine();
-            CreateStaff();
+            Console.WriteLine($"Error: {ex.Message}. Please try again.\n");
+            await CreateStaff();
+            return;
         }
     }
 
@@ -115,26 +118,34 @@ public class MenuSelectionHandler
             string adminInput = Console.ReadLine();
             if (string.Equals(adminInput, "A", StringComparison.OrdinalIgnoreCase))
             {
-                Console.WriteLine("Enter the staff ID:");
-                if (!int.TryParse(Console.ReadLine(), out int staffIdToView))
+                while (true)
                 {
-                    Console.WriteLine("Invalid input. Please enter a valid number.");
-                    Console.WriteLine();
-                    ViewStaff();
-                }
-                var viewStaff = new Staff().ViewStaff(staffIdToView);
-                if (viewStaff != null)
-                {
-                    Console.WriteLine(
-                        $"Staff Details:\nStaffId: {viewStaff.StaffId}\nFirst Name: {viewStaff.FirstName}\nLast Name: {viewStaff.LastName}\nDesignation: {viewStaff.Designation}"
-                    );
-                    Console.WriteLine("Staff Details Retrieved Successfully.");
-                }
-                else
-                {
-                    Console.WriteLine("Staff ID not found.");
-                    Console.WriteLine();
-                    ViewStaff();
+                    Console.Write("Enter the staff ID: ");
+                    if (!int.TryParse(Console.ReadLine(), out int staffIdToView))
+                    {
+                        Console.WriteLine("Invalid input. Please enter a valid number.\n");
+                        continue;
+                    }
+                    var viewStaff = new Staff().ViewStaff(staffIdToView);
+                    if (viewStaff != null)
+                    {
+                        Console.WriteLine(
+                            $"Staff Details:\nStaffId: {viewStaff.StaffId}\nFirst Name: {viewStaff.FirstName}\nLast Name: {viewStaff.LastName}\nDesignation: {viewStaff.Designation}"
+                        );
+                        Console.WriteLine("Staff Details Retrieved Successfully.");
+                    }
+                    else
+                    {
+                        Console.WriteLine("Staff ID not found.\n");
+                        continue;
+                    }
+                    Console.Write("Do you want to view another staff? (Yes/No): ");
+                    if (Console.ReadLine().Trim().Equals("YES", StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+                    else
+                        break;
                 }
             }
             else if (string.Equals(adminInput, "B", StringComparison.OrdinalIgnoreCase))
@@ -173,21 +184,28 @@ public class MenuSelectionHandler
             }
             else
             {
-                Console.WriteLine("Invalid selection. Please choose A or B.");
-                ViewStaff();
-            }
-            Console.WriteLine("Do you want to view another staff? (Yes/No)");
-            if (Console.ReadLine().Trim().Equals("YES", StringComparison.OrdinalIgnoreCase))
-            {
+                Console.WriteLine("Invalid selection. Please choose A or B.\n");
                 await ViewStaff();
                 return;
             }
         }
+        catch (KeyNotFoundException)
+        {
+            Console.WriteLine($"Staff ID not found. Try again.\n");
+            await ViewStaff();
+            return;
+        }
+        catch (FormatException)
+        {
+            Console.WriteLine("Invalid format! Please enter numbers where required.\n");
+            await ViewStaff();
+            return;
+        }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error: {ex.Message}. Please try again.");
-            Console.WriteLine();
-            ViewStaff();
+            Console.WriteLine($"Error: {ex.Message}. Please try again.\n");
+            await ViewStaff();
+            return;
         }
     }
 
@@ -195,17 +213,18 @@ public class MenuSelectionHandler
     {
         try
         {
-            Console.WriteLine("Enter the staff ID to edit:");
+            Console.Write("Enter the staff ID to edit: ");
             if (!int.TryParse(Console.ReadLine(), out int staffIdToEdit))
             {
-                Console.WriteLine("Invalid input. Please enter a valid number.");
-                Console.WriteLine();
-                EditStaff();
+                Console.WriteLine("Invalid input. Please enter a valid number.\n");
+                await EditStaff();
+                return;
             }
             if (!AppDb.StaffTable.ContainsKey(staffIdToEdit))
             {
-                Console.WriteLine("Staff ID not found. Try again.");
+                Console.WriteLine("Staff ID not found. Try again.\n");
                 await EditStaff();
+                return;
             }
             var staffToEdit = AppDb.StaffTable[staffIdToEdit];
             Console.WriteLine(
@@ -216,6 +235,25 @@ public class MenuSelectionHandler
             );
             var editSelection = Console.ReadLine();
             var selectedFields = editSelection.Trim().Split(',');
+            if (selectedFields.Contains("5"))
+            {
+                if (selectedFields.Length > 1) // If "5" is selected along with any other number
+                {
+                    Console.WriteLine("Returning to main menu...");
+                    return;
+                }
+                else
+                {
+                    Console.WriteLine("cancelling operation...");
+                    return;
+                }
+            }
+            if (selectedFields.Length == 0 || string.IsNullOrWhiteSpace(editSelection))
+            {
+                Console.WriteLine("Pick a value. Try again!\n");
+                await EditStaff();
+                return;
+            }
 
             var staffInfoToEdit = new Staff { StaffId = staffIdToEdit };
 
@@ -239,11 +277,9 @@ public class MenuSelectionHandler
                         Console.Write("Enter the new designation: ");
                         staffInfoToEdit.Designation = Console.ReadLine();
                         break;
-                    case "5":
-                        Console.WriteLine("Cancelling operation...");
-                        return;
                     default:
                         Console.WriteLine("\nInvalid selection. Try again!\n");
+                        await EditStaff();
                         continue;
                 }
             }
@@ -258,10 +294,17 @@ public class MenuSelectionHandler
                 return;
             }
         }
+        catch (FormatException)
+        {
+            Console.WriteLine("Invalid format! Please enter numbers where required.\n");
+            await EditStaff();
+            return;
+        }
         catch (Exception ex)
         {
-            Console.WriteLine($"Error: {ex.Message}. Please try again.");
-            EditStaff();
+            Console.WriteLine($"Error: {ex.Message}. Please try again.\n");
+            await EditStaff();
+            return;
         }
     }
 }

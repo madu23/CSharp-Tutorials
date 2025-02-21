@@ -32,7 +32,6 @@ class Program
         Console.WriteLine($"Welcome {loginResult?.FirstName} {loginResult?.LastName}");
         Console.WriteLine($"Select a system menu from the list below");
 
-        int menuCounter = 0;
         if (loginResult?.Designation == "System Admin")
         {
             Console.WriteLine("You are logged in as a System Admin");
