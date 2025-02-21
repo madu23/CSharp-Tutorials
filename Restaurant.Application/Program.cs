@@ -2,11 +2,11 @@
 //Console.WriteLine("Hello, World!");
 
 using Restaurant.Application.Services;
-
 using Restaurant.Domain.Db;
 using Restaurant.Domain.Entities;
 
 namespace Restaurant.Application;
+
 class Program
 {
     //static void Main(string[] args)
@@ -19,8 +19,8 @@ class Program
 
         // seed default admin data step 1
         var seedDbTask = new StartupTask();
-       var result =  await seedDbTask.SeedAdminRecord();
-        if(result == false)
+        var result = await seedDbTask.SeedAdminRecord();
+        if (result == false)
         {
             Console.WriteLine("Admin data was not successfully pre-created");
         }
@@ -29,72 +29,46 @@ class Program
         var authService = new AuthService();
         var loginResult = await authService.Login();
 
-
-
-
         Console.WriteLine($"Welcome {loginResult?.FirstName} {loginResult?.LastName}");
         Console.WriteLine($"Select a system menu from the list below");
 
         int menuCounter = 0;
-        if(loginResult?.Designation == "System Admin")
+        if (loginResult?.Designation == "System Admin")
         {
-            List<string> systemMenu = new List<string> { "Create a new Staff", "View Staff", "Edit Staff", "Setup a new Restaurant", "Setup Restaurant Menu" };
-            foreach (var sysMenu in systemMenu)
+            Console.WriteLine("You are logged in as a System Admin");
+            SysMenu sysMenu = new SysMenu();
+            var menuHandler = new MenuSelectionHandler(sysMenu);
+            while (true)
             {
-                menuCounter++;
-                Console.WriteLine($"{menuCounter} {sysMenu}");
+                await sysMenu.DisplayMainMenu();
+                int mainChoice = await sysMenu.GetMainMenuSelection();
+                if (mainChoice == 3)
+                {
+                    Console.WriteLine("Exiting application... Goodbye!");
+                    break;
+                }
+                string selectedMainMenu = sysMenu.systemMenu[mainChoice - 1];
+                while (true)
+                {
+                    await sysMenu.DisplaySubMenu(selectedMainMenu);
+                    int subChoice = await sysMenu.GetSubMenuSelection(selectedMainMenu);
+                    if (
+                        subChoice == -1
+                        || sysMenu.subMenus[selectedMainMenu][subChoice - 1] == "Exit"
+                    )
+                        break;
+                    Console.WriteLine(
+                        $"You selected: {sysMenu.subMenus[selectedMainMenu][subChoice - 1]}"
+                    );
+                    if (selectedMainMenu == "Staff Management")
+                        await menuHandler.HandleStaffManagement(subChoice);
+                    else
+                        Console.WriteLine("Invalid input! Please enter a valid option.");
+                }
             }
         }
-        var menuSelection = Console.ReadLine();
-        if (menuSelection == "1") 
-        {
-            try
-            {
-                Console.WriteLine("Enter staff details (staff id, first name, last name, designation, password)");
-                var newStaffInfo = Console.ReadLine();
-                var splitStaffInfo = newStaffInfo.Split(',');
-                var newStaffData = new Staff
-                {
-                    StaffId = Convert.ToInt32(splitStaffInfo[0]),
-                    FirstName = splitStaffInfo[1],
-                    LastName = splitStaffInfo[2],
-                    Designation = splitStaffInfo[3],
-                    Password = splitStaffInfo[4]
-                };
-                newStaffData.CreateStaff();
-                Console.WriteLine("Staff list");
-                Console.WriteLine("===================");
-                Console.WriteLine();
-                Console.WriteLine();
-                Console.WriteLine(String.Format("{0}\t {1}\t {2}\t {3}", "StaffId", "First Name", "Last Name", "Designation"));
-                Console.WriteLine("========================================================================");
-                var staffList = AppDb.StaffTable.Values.ToList();
-                foreach (var record in staffList)
-                {
-                    Console.WriteLine(String.Format("{0}\t {1}\t {2}\t {3}", record.StaffId, record.FirstName, record.LastName, record.Designation));
-                }
-
-            }
-            catch (Exception ex)
-            {
-
-                Console.WriteLine($"Something went wrong: {ex.Message}");
-            }
-
-        }
-
-       else if(menuSelection == "2")
-       {
-            Console.WriteLine("enter staff you want to view id");
-            var viewstaffid = Console.ReadLine();
-            var getStaffid= AppDb.StaffTable;
-            var staffList = AppDb.StaffTable.Values.ToList();
-                foreach (var record in staffList)
-                {
-                    Console.WriteLine(String.Format("{0}\t {1}\t {2}\t {3}", record.StaffId, record.FirstName, record.LastName, record.Designation));
-                }
-       }
+        else
+            Console.WriteLine("You do not have access to system admin functions.");
         Console.ReadLine();
     }
-
 }
