@@ -1,4 +1,4 @@
-﻿
+
 using Restaurant.Application.Services;
 using Restaurant.Domain.Db;
 using Restaurant.Domain.Entities;
@@ -6,7 +6,7 @@ using Restaurant.Domain.Entities;
 namespace Restaurant.Application;
 class Program
 {
-    
+
     static async Task Main(string[] args)
     {
         Console.WriteLine("Hello, Welcome to Eke Tech Restaurant!");
@@ -22,9 +22,6 @@ class Program
         // Login Step 2
         var authService = new AuthService();
         var loginResult = await authService.Login();
-
-
-
 
         Console.WriteLine("");
         Console.WriteLine("");
