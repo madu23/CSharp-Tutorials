@@ -1,4 +1,6 @@
-﻿using Restaurant.Domain.Db;
+﻿// See https://aka.ms/new-console-template for more information
+//Console.WriteLine("Hello, World!");
+using Restaurant.Domain.Db;
 using Restaurant.Domain.Entities;
 
 namespace Restaurant.Application;
@@ -42,6 +44,7 @@ class Program
 
         while (true)
         {
+            // display system menu inside of the while loop so that it can be displayed after Selecting different menus
             Console.WriteLine("Select a system menu from the list below");
             int menuCounter = 0;
             if (staff.Designation == "System Admin")
@@ -54,6 +57,7 @@ class Program
                 }
             }
             var menuSelection = Console.ReadLine();
+            // using switch instead of an if statement to check if the menu selection is a number(Note): I still need a better explaination for this
             switch (menuSelection)
             {
                 case "1":
@@ -78,6 +82,7 @@ class Program
         }
     }
 
+    // create a new staff
     static void CreateStaff()
     {
         try
@@ -102,10 +107,12 @@ class Program
         }
     }
 
+    // view staff
     static void ViewStaff()
     {
         Console.WriteLine("Staff list");
         Console.WriteLine("===================");
+        Console.WriteLine();
         Console.WriteLine();
         Console.WriteLine(String.Format("{0}\t {1}\t {2}\t {3}", "StaffId", "First Name", "Last Name", "Designation"));
         Console.WriteLine("========================================================================");
@@ -116,6 +123,7 @@ class Program
         }
     }
 
+    // edit staff
     static void EditStaff()
     {
         try
@@ -129,15 +137,114 @@ class Program
                 return;
             }
 
-            Console.WriteLine("Enter new details (first name, last name, designation, password)");
-            var newStaffInfo = Console.ReadLine();
-            var splitStaffInfo = newStaffInfo.Split(',');
-            staff.FirstName = splitStaffInfo[0];
-            staff.LastName = splitStaffInfo[1];
-            staff.Designation = splitStaffInfo[2];
-            staff.Password = splitStaffInfo[3];
-            staff.CreateStaff();
-            Console.WriteLine("Staff updated successfully.");
+            // Store original values
+            var originalFirstName = staff.FirstName;
+            var originalLastName = staff.LastName;
+            var originalDesignation = staff.Designation;
+            var originalPassword = staff.Password;
+
+            Console.WriteLine("\nWhat would you like to edit?");
+            Console.WriteLine("1. First Name");
+            Console.WriteLine("2. Last Name");
+            Console.WriteLine("3. Designation");
+            Console.WriteLine("4. Password");
+            Console.WriteLine("5. All Fields");
+
+            Console.Write("\nEnter your choice (1-5): ");
+            var choice = Convert.ToInt32(Console.ReadLine());
+
+            try
+            {
+                // Store the values before modification
+                var newFirstName = staff.FirstName;
+                var newLastName = staff.LastName;
+                var newDesignation = staff.Designation;
+                var newPassword = staff.Password;
+
+                switch (choice)
+                {
+                    case 1:
+                        Console.Write("Enter new First Name: ");
+                        newFirstName = Console.ReadLine();
+                        break;
+                    case 2:
+                        Console.Write("Enter new Last Name: ");
+                        newLastName = Console.ReadLine();
+                        break;
+                    case 3:
+                        Console.Write("Enter new Designation: ");
+                        newDesignation = Console.ReadLine();
+                        break;
+                    case 4:
+                        Console.Write("Enter new Password: ");
+                        newPassword = Console.ReadLine();
+                        break;
+                    case 5:
+                        Console.WriteLine("Enter new details (first name, last name, designation, password)");
+                        var newStaffInfo = Console.ReadLine();
+                        var splitStaffInfo = newStaffInfo.Split(',');
+                        newFirstName = splitStaffInfo[0];
+                        newLastName = splitStaffInfo[1];
+                        newDesignation = splitStaffInfo[2];
+                        newPassword = splitStaffInfo[3];
+                        break;
+                    default:
+                        Console.WriteLine("Invalid choice!");
+                        return;
+                }
+
+                // First remove the current staff record
+                Staff.DeleteStaff(staffId);
+
+                // Check for duplicates before saving
+                bool isDuplicate = AppDb.StaffTable.Values.Any(s =>
+                    s.FirstName.Trim().Equals(newFirstName.Trim(), StringComparison.OrdinalIgnoreCase) &&
+                    s.LastName.Trim().Equals(newLastName.Trim(), StringComparison.OrdinalIgnoreCase));
+
+                if (isDuplicate)
+                {
+                    // If duplicate found, restore the original record
+                    var originalStaff = new Staff
+                    {
+                        StaffId = staffId,
+                        FirstName = originalFirstName,
+                        LastName = originalLastName,
+                        Designation = originalDesignation,
+                        Password = originalPassword
+                    };
+                    originalStaff.CreateStaff();
+                    throw new Exception($"A staff member with the name {newFirstName} {newLastName} already exists.");
+                }
+
+                // Create new staff record with updated values
+                var updatedStaff = new Staff
+                {
+                    StaffId = staffId,
+                    FirstName = newFirstName,
+                    LastName = newLastName,
+                    Designation = newDesignation,
+                    Password = newPassword
+                };
+                updatedStaff.CreateStaff();
+                Console.WriteLine("Staff updated successfully.");
+            }
+            catch (Exception)
+            {
+                // Restore original values if not already restored
+                if (!AppDb.StaffTable.ContainsKey(staffId))
+                {
+                    var originalStaff = new Staff
+                    {
+                        StaffId = staffId,
+                        FirstName = originalFirstName,
+                        LastName = originalLastName,
+                        Designation = originalDesignation,
+                        Password = originalPassword
+                    };
+                    originalStaff.CreateStaff();
+                }
+                throw; // Re-throw the exception to be caught by outer try-catch
+            }
         }
         catch (Exception ex)
         {
@@ -145,6 +252,7 @@ class Program
         }
     }
 
+    // delete staff
     static void DeleteStaff()
     {
         try
