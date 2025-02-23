@@ -43,7 +43,32 @@ namespace Restaurant.Application.Services
             }
             else if (mainMenuSelection == 2)
             {
-                // Handle restaurant management logic here
+                int restaurantMenuSelection;
+                do
+                {
+                    restaurantMenuSelection = _appMenu.GetMenuSelectionIndex(
+                        "Restaurant Management"
+                    );
+                    switch (restaurantMenuSelection)
+                    {
+                        case 1:
+                            // Handle Menu Setup logic here
+                            break;
+                        case 2:
+                            // Handle Menu Item Setup logic here
+                            break;
+                        case 3:
+                            return true; // this returns to main menu
+                        default:
+                            Console.WriteLine("Invalid selection. Please try again.");
+                            break;
+                    }
+                } while (true);
+            }
+            else if (mainMenuSelection == 3)
+            {
+                Console.WriteLine("Exiting...");
+                Environment.Exit(0);
             }
             else
             {
