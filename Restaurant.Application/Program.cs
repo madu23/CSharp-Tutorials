@@ -29,6 +29,12 @@ class Program
         var authService = new AuthService();
         var loginResult = await authService.Login();
 
+        //show main menu step 3
+        var MainMenuDb = new MainMenuTask();
+        var menuResult = await MainMenuDb.showMenu();
+       
+
+
 
 
 

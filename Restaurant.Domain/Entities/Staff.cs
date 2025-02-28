@@ -36,4 +36,21 @@ public class Staff
         return staff;
 
     }
+
+     public void StaffManagementMenu()
+    {
+        Console.WriteLine("staff mamangement menu");
+        Console.WriteLine("1. view staff");
+        Console.WriteLine("2. create staff");
+        Console.WriteLine("3. Edit staff");
+        Console.WriteLine("4. Back to main menu");
+    }
+
+    public void RestaurantMenu()
+    {
+        Console.WriteLine("RestaurantMenu");
+        Console.WriteLine("menu setup");
+        Console.WriteLine("menu item setup");
+    }
+        
 }
