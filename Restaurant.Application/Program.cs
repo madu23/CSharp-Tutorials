@@ -4,6 +4,7 @@
 using Restaurant.Application.Services;
 using Restaurant.Domain.Db;
 using Restaurant.Domain.Entities;
+using System.Diagnostics;
 
 namespace Restaurant.Application;
 
@@ -39,14 +40,27 @@ class Program
             var menuHandler = new MenuSelectionHandler(sysMenu);
             while (true)
             {
+                // step 1: display main menu
                 await sysMenu.DisplayMainMenu();
-                int mainChoice = await sysMenu.GetMainMenuSelection();
-                if (mainChoice == 3)
+                var mainChoice = await sysMenu.GetMainMenuSelection();
+                
+                // step 2: capture user main selection and display submenu if the menu selected has submenu
+                // if not, then check if the menu selected is "Exit". If the selection is exit, exit the app, else navigate to the appropriate page or action
+                if (mainChoice.menuTitle == "Exit")
                 {
                     Console.WriteLine("Exiting application... Goodbye!");
                     break;
                 }
-                string selectedMainMenu = sysMenu.systemMenu[mainChoice - 1];
+                else
+                {
+                    await sysMenu.DisplaySubMenu(mainChoice.menuTitle);
+                }
+
+
+                // step 3
+
+
+                var selectedMainMenu = sysMenu.SystemMenu[mainChoice.menuTitle];
                 while (true)
                 {
                     await sysMenu.DisplaySubMenu(selectedMainMenu);
