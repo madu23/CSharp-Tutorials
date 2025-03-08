@@ -1,10 +1,14 @@
 ﻿using Restaurant.Domain.Db;
 using Restaurant.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Restaurant.Application.Services;
 
 public class StaffManagementService
 {
+    private Dictionary<int, Staff> _staffMembers = new Dictionary<int, Staff>();
     public void ManageStaff()
     {
         bool returnToMainMenu = false;

@@ -1,10 +1,14 @@
-﻿using Restaurant.Domain.Db;
-using Restaurant.Domain.Entities;
+﻿using Restaurant.Domain.Entities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Restaurant.Application.Services;
 
 public class MenuManagementService
 {
+    private Dictionary<int, MenuItem> _menuItems = new Dictionary<int, MenuItem>();
+
     public void ManageRestaurantMenu()
     {
         bool returnToMainMenu = false;
@@ -86,7 +90,7 @@ public class MenuManagementService
                 Category = menuType
             };
 
-            menuItem.CreateMenuItem();
+            _menuItems[menuItem.ItemId] = menuItem;
             Console.WriteLine("Menu item created successfully.");
         }
         catch (Exception ex)
@@ -110,15 +114,15 @@ public class MenuManagementService
             switch (viewSelection)
             {
                 case "1":
-                    menuItems = MenuItem.GetMenuItemsByCategory("Continental");
+                    menuItems = _menuItems.Values.Where(m => m.Category == "Continental").ToList();
                     Console.WriteLine("\nContinental Dishes Menu");
                     break;
                 case "2":
-                    menuItems = MenuItem.GetMenuItemsByCategory("Local");
+                    menuItems = _menuItems.Values.Where(m => m.Category == "Local").ToList();
                     Console.WriteLine("\nLocal Dishes Menu");
                     break;
                 case "3":
-                    menuItems = MenuItem.GetAllMenuItems();
+                    menuItems = _menuItems.Values.ToList();
                     Console.WriteLine("\nComplete Restaurant Menu");
                     break;
                 default:
@@ -155,13 +159,13 @@ public class MenuManagementService
             Console.WriteLine("Enter the menu item ID to edit:");
             var itemId = Convert.ToInt32(Console.ReadLine());
 
-            if (!AppDb.MenuItemsTable.ContainsKey(itemId))
+            if (!_menuItems.ContainsKey(itemId))
             {
                 Console.WriteLine("Menu item not found.");
                 return;
             }
 
-            var menuItem = AppDb.MenuItemsTable[itemId];
+            var menuItem = _menuItems[itemId];
             Console.WriteLine($"Editing: {menuItem.Name} ({menuItem.Category})");
             Console.WriteLine("Enter new details (name, description, price):");
 
@@ -189,20 +193,12 @@ public class MenuManagementService
                 category = categorySelection == "1" ? "Continental" : "Local";
             }
 
-            // First remove the existing menu item
-            AppDb.MenuItemsTable.Remove(itemId);
+            // Update the menu item
+            menuItem.Name = splitItemInfo[0].Trim();
+            menuItem.Description = splitItemInfo[1].Trim();
+            menuItem.Price = Convert.ToDecimal(splitItemInfo[2].Trim());
+            menuItem.Category = category;
 
-            // Create updated menu item
-            var updatedMenuItem = new MenuItem
-            {
-                ItemId = itemId,
-                Name = splitItemInfo[0].Trim(),
-                Description = splitItemInfo[1].Trim(),
-                Price = Convert.ToDecimal(splitItemInfo[2].Trim()),
-                Category = category
-            };
-
-            updatedMenuItem.CreateMenuItem();
             Console.WriteLine("Menu item updated successfully.");
         }
         catch (Exception ex)
@@ -218,19 +214,19 @@ public class MenuManagementService
             Console.WriteLine("Enter the menu item ID to delete:");
             var itemId = Convert.ToInt32(Console.ReadLine());
 
-            if (!AppDb.MenuItemsTable.ContainsKey(itemId))
+            if (!_menuItems.ContainsKey(itemId))
             {
                 Console.WriteLine("Menu item not found.");
                 return;
             }
 
-            var menuItem = AppDb.MenuItemsTable[itemId];
+            var menuItem = _menuItems[itemId];
             Console.WriteLine($"Are you sure you want to delete '{menuItem.Name}'? (y/n)");
 
             var confirmation = Console.ReadLine()?.ToLower();
             if (confirmation == "y")
             {
-                AppDb.MenuItemsTable.Remove(itemId);
+                _menuItems.Remove(itemId);
                 Console.WriteLine("Menu item deleted successfully.");
             }
             else
