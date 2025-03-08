@@ -36,6 +36,18 @@ class Program
         if (loginResult?.Designation == "System Admin")
         {
             Console.WriteLine("You are logged in as a System Admin");
+            // create a new instance of Menu object
+
+
+            // Build and display the the menu
+
+
+            // get user selection
+
+            // if user menu selection has submenu, display it else call the handler
+
+
+
             SysMenu sysMenu = new SysMenu();
             var menuHandler = new MenuSelectionHandler(sysMenu);
             while (true)
@@ -57,8 +69,7 @@ class Program
                 }
 
 
-                // step 3
-
+                // select submenu
 
                 var selectedMainMenu = sysMenu.SystemMenu[mainChoice.menuTitle];
                 while (true)
@@ -67,7 +78,7 @@ class Program
                     int subChoice = await sysMenu.GetSubMenuSelection(selectedMainMenu);
                     if (
                         subChoice == -1
-                        || sysMenu.subMenus[selectedMainMenu][subChoice - 1] == "Exit"
+                        || sysMenu.subMenus[selectedMainMenu][subChoice - 1] == "ExiT"
                     )
                         break;
                     Console.WriteLine(
