@@ -1,4 +1,4 @@
-using Restaurant.Application.Services;
+﻿using Restaurant.Application.Services;
 using Restaurant.Domain.Db;
 using Restaurant.Domain.Entities;
 
@@ -22,11 +22,12 @@ class Program
         var authService = new AuthService();
         var loginResult = await authService.Login();
 
-        Console.WriteLine($"Welcome {loginResult?.FirstName} {loginResult?.LastName}");
-        Console.WriteLine($"Select a system menu from the list below");
-
         if (loginResult?.Designation == "System Admin")
         {
+            Console.WriteLine("You are logged in as a System Admin");
+            Console.WriteLine($"Welcome {loginResult?.FirstName} {loginResult?.LastName}");
+            Console.WriteLine($"Select a system menu from the list below");
+
             var appMenu = new AppMenu();
             var selectionTask = new SelectionTask();
             int mainMenuSelection;
@@ -41,5 +42,10 @@ class Program
                 }
             } while (true);
         }
+        else
+        {
+            Console.WriteLine("You do not have access to system admin functions.");
+        }
+        Console.ReadLine();
     }
 }

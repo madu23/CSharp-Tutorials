@@ -2,6 +2,7 @@
 using Restaurant.Domain.Entities;
 
 namespace Restaurant.Application.Services;
+
 public class AuthService
 {
     public Task<Staff> Login()
@@ -12,7 +13,10 @@ public class AuthService
 
         Console.WriteLine("Password:");
         var password = Console.ReadLine();
-        var staff = AppDb.StaffTable.Where(_ => _.Value.StaffId == staffId && _.Value.Password == password).SingleOrDefault().Value;
+        var staff = AppDb
+            .StaffTable.Where(_ => _.Value.StaffId == staffId && _.Value.Password == password)
+            .SingleOrDefault()
+            .Value;
         if (staff is null)
         {
             Console.WriteLine("Invalid login details");

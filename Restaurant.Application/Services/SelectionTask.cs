@@ -8,81 +8,102 @@ namespace Restaurant.Application.Services
     public class SelectionTask
     {
         private readonly AppMenu _appMenu;
+        private readonly ResponseOptions _responseOptions;
 
         public SelectionTask()
         {
             _appMenu = new AppMenu();
+            _responseOptions = new ResponseOptions();
         }
 
+        /// <summary>
+        /// This section handles the selection of the main menu.
+        /// </summary>
         public async Task<bool> HandleSelection(int mainMenuSelection)
         {
-            if (mainMenuSelection == 1)
+            switch (mainMenuSelection)
             {
-                int staffMenuSelection;
-                do
-                {
-                    staffMenuSelection = _appMenu.GetMenuSelectionIndex("Staff Management");
-                    switch (staffMenuSelection)
-                    {
-                        case 1:
-                            await HandleViewStaff();
-                            break;
-                        case 2:
-                            await HandleCreateStaff();
-                            break;
-                        case 3:
-                            await HandleEditStaff();
-                            break;
-                        case 4:
-                            return true; // this returns to main menu
-                        default:
-                            Console.WriteLine("Invalid selection. Please try again.");
-                            break;
-                    }
-                } while (true);
+                case ResponseOptions.MainMenu.StaffManagement:
+                    await HandleStaffManagement();
+                    break;
+                case ResponseOptions.MainMenu.RestaurantManagement:
+                    await HandleRestaurantManagement();
+                    break;
+                case ResponseOptions.MainMenu.Exit:
+                    Console.WriteLine("Exiting...");
+                    Environment.Exit(0);
+                    break;
+                default:
+                    Console.WriteLine("Invalid main menu selection.");
+                    break;
             }
-            else if (mainMenuSelection == 2)
-            {
-                int restaurantMenuSelection;
-                do
-                {
-                    restaurantMenuSelection = _appMenu.GetMenuSelectionIndex(
-                        "Restaurant Management"
-                    );
-                    switch (restaurantMenuSelection)
-                    {
-                        case 1:
-                            // Handle Menu Setup logic here
-                            break;
-                        case 2:
-                            // Handle Menu Item Setup logic here
-                            break;
-                        case 3:
-                            return true; // this returns to main menu
-                        default:
-                            Console.WriteLine("Invalid selection. Please try again.");
-                            break;
-                    }
-                } while (true);
-            }
-            else if (mainMenuSelection == 3)
-            {
-                Console.WriteLine("Exiting...");
-                Environment.Exit(0);
-            }
-            else
-            {
-                Console.WriteLine("Invalid main menu selection.");
-            }
-            return false;
+            return true;
         }
 
+        /// <summary>
+        /// This handles the staff management menu.
+        /// </summary>
+        public async Task HandleStaffManagement()
+        {
+            int staffMenuSelection;
+            do
+            {
+                staffMenuSelection = _appMenu.GetMenuSelectionIndex("Staff Management");
+                switch (staffMenuSelection)
+                {
+                    case ResponseOptions.StaffManagement.ViewStaff:
+                        await HandleViewStaff();
+                        break;
+                    case ResponseOptions.StaffManagement.CreateStaff:
+                        await HandleCreateStaff();
+                        break;
+                    case ResponseOptions.StaffManagement.EditStaff:
+                        await HandleEditStaff();
+                        break;
+                    case ResponseOptions.StaffManagement.Exit:
+                        return; // this returns to main menu
+                    default:
+                        Console.WriteLine("Invalid selection. Please try again.");
+                        break;
+                }
+            } while (true);
+        }
+
+        /// <summary>
+        /// This section handles the restaurant management menu.
+        /// </summary>
+        private async Task HandleRestaurantManagement()
+        {
+            int restaurantMenuSelection;
+            do
+            {
+                restaurantMenuSelection = _appMenu.GetMenuSelectionIndex("Restaurant Management");
+                switch (restaurantMenuSelection)
+                {
+                    case ResponseOptions.RestaurantManagement.MenuSetup:
+                        // Handle Menu Setup logic here
+                        break;
+                    case ResponseOptions.RestaurantManagement.MenuItemSetup:
+                        // Handle Menu Item Setup logic here
+                        break;
+                    case ResponseOptions.RestaurantManagement.Exit:
+                        return; // this returns to main menu
+                    default:
+                        Console.WriteLine("Invalid selection. Please try again.");
+                        break;
+                }
+            } while (true);
+        }
+
+        /// <summary>
+        /// This section handles the viewing of staff details.
+        /// </summary>
         private async Task HandleViewStaff()
         {
             Console.WriteLine("\nPress 1 to view a specific staff, or 2 to view all staffs:");
             var viewStaffOption = Console.ReadLine();
 
-            if (viewStaffOption == "1")
+            if (viewStaffOption == ResponseOptions.ViewStaff.SpecificStaff.ToString())
             {
                 Console.WriteLine("\nEnter Staff Id:");
                 Console.WriteLine("=======================");
@@ -123,7 +144,7 @@ namespace Restaurant.Application.Services
                     );
                 }
             }
-            else if (viewStaffOption == "2")
+            else if (viewStaffOption == ResponseOptions.ViewStaff.AllStaffs.ToString())
             {
                 Console.WriteLine("\nStaff Details:");
                 Console.WriteLine(
@@ -161,6 +182,9 @@ namespace Restaurant.Application.Services
             await Task.CompletedTask;
         }
 
+        /// <summary>
+        /// This section handles the creation of a new staff.
+        /// </summary>
         private async Task HandleCreateStaff()
         {
             string[] splitStaffInfo;
@@ -231,6 +255,9 @@ namespace Restaurant.Application.Services
             await Task.CompletedTask;
         }
 
+        /// <summary>
+        /// This section handles the editing of an existing staff.
+        /// </summary>
         private async Task HandleEditStaff()
         {
             int id;
@@ -240,6 +267,11 @@ namespace Restaurant.Application.Services
                 var input = Console.ReadLine();
                 if (int.TryParse(input, out id))
                 {
+                    if (id == 1)
+                    {
+                        Console.WriteLine("\nCannot Edit System Admin data.");
+                        return;
+                    }
                     break;
                 }
                 else
