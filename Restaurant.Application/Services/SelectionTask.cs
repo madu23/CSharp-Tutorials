@@ -60,6 +60,9 @@ namespace Restaurant.Application.Services
                     case ResponseOptions.StaffManagement.EditStaff:
                         await HandleEditStaff();
                         break;
+                    case ResponseOptions.StaffManagement.DeleteStaff:
+                        await HandleDeleteStaff();
+                        break;
                     case ResponseOptions.StaffManagement.Exit:
                         return; // this returns to main menu
                     default:
@@ -341,6 +344,40 @@ namespace Restaurant.Application.Services
                 Console.WriteLine("Staff details updated successfully.");
                 break;
             } while (true);
+            await Task.CompletedTask;
+        }
+
+        private async Task HandleDeleteStaff()
+        {
+            int id;
+            do
+            {
+                Console.WriteLine("\nEnter Staff Id to delete:");
+                var input = Console.ReadLine();
+                if (int.TryParse(input, out id))
+                {
+                    if (id == 1)
+                    {
+                        Console.WriteLine("\nCannot delete System Admin.");
+                        return;
+                    }
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid input. Please enter a valid Staff Id.");
+                }
+            } while (true);
+
+            if (AppDb.StaffTable.ContainsKey(id))
+            {
+                AppDb.StaffTable.Remove(id);
+                Console.WriteLine($"Staff with Id {id} has been deleted.");
+            }
+            else
+            {
+                Console.WriteLine("Staff not found.");
+            }
             await Task.CompletedTask;
         }
     }

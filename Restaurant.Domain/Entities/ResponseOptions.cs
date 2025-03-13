@@ -14,7 +14,8 @@ namespace Restaurant.Domain.Entities
             public const int ViewStaff = 1;
             public const int CreateStaff = 2;
             public const int EditStaff = 3;
-            public const int Exit = 4;
+            public const int DeleteStaff = 4;
+            public const int Exit = 5;
         }
 
         public static class RestaurantManagement

@@ -14,7 +14,14 @@ public class AppMenu
             },
             {
                 "Staff Management",
-                new List<string> { "View Staff", "Create Staff", "Edit Staff", "Back" }
+                new List<string>
+                {
+                    "View Staff",
+                    "Create Staff",
+                    "Edit Staff",
+                    "Delete Staff",
+                    "Back",
+                }
             },
             {
                 "Restaurant Management",
