@@ -6,149 +6,93 @@ using Restaurant.Domain.Entities;
 
 namespace Restaurant.Application.Services;
 
-public class SysMenu
-{
-    //public List<string> SystemMenu { get; set; } = new List<string>
-    //{
-    //    "Staff Management",
-    //    "Restaurant Management",
-    //    "Exit Application",
-    //};
+/// <summary>
+/// Service to handle the display of system menus (main menu and submenus)
+/// </summary>
 
-    public Dictionary<string, List<string>> SystemMenu = new Dictionary<string, List<string>>
+public class DisplayMenuService
+{
+    private readonly Menu _menu;
+
+    /// <summary>
+    /// Initializes a new instance of DisplayMenuService with a given menu.
+    /// </summary>
+    public DisplayMenuService(Menu menu)
     {
-        {
-            "Staff Management",
-            new List<string> { "Create Staff", "View Staff", "Edit Staff", "Exit" }
-        },
-        {
-            "Restaurant Management",
-            new List<string> { "Menu Setup", "Menu Item Setup", "Exit" }
-        },
-        {
-            "Exit",
-            new List<string>()
-        },
-    };
+        _menu = menu;
+    }
 
     public async Task DisplayMainMenu()
     {
         Console.WriteLine("\nSelect a system menu from the list below:");
-        int menuCounter = 0;
-        foreach (var sysMenu in SystemMenu)
+        Console.WriteLine($"==== {MenuType.MainMenu} ====");
+        int index = 1;
+        foreach (var menuItem in _menu.GetSystemMenu().Keys)
         {
-            menuCounter++;
-            Console.WriteLine($"{menuCounter} {sysMenu}");
+            Console.WriteLine($"{index}. {menuItem}");
+            index++;
         }
         await Task.CompletedTask;
     }
 
+    /// <returns>Tuple containing the menu index and title.</returns>
     public Task<(int menuIndex, string menuTitle)> GetMainMenuSelection()
     {
         Console.Write("\nEnter your choice: ");
-        int menuSelection = Convert.ToInt32(Console.ReadLine());
-        if (menuSelection >= 1 && menuSelection <= SystemMenu.Count)
+        if (!int.TryParse(Console.ReadLine(), out int selectedIndex))
         {
-            // search the dictionary using the index of the number entered by the user
-
-            return Task.FromResult((menuSelection, "MenuTitle"));
+            Console.WriteLine("Invalid input. Please enter a valid number.");
+            return GetMainMenuSelection();
         }
-        else
+        // search the dictionary using the index of the number entered by the user
+        var systemMenu = _menu.GetSystemMenu();
+        string? selectedMenu = systemMenu.Keys.ElementAtOrDefault(selectedIndex - 1);
+
+        if (string.IsNullOrEmpty(selectedMenu))
         {
-            Console.WriteLine("Invalid input. Please enter a valid option.");
+            Console.WriteLine("Invalid option. Please try again.");
             return GetMainMenuSelection();
         }
 
+        return Task.FromResult((selectedIndex, selectedMenu));
     }
 
     public async Task DisplaySubMenu(string mainMenuChoice)
     {
-        if (SystemMenu.ContainsKey(mainMenuChoice))
+        var submenuOptions = _menu.GetSystemMenu().GetValueOrDefault(mainMenuChoice);
+        if (submenuOptions != null && submenuOptions.Any())
         {
+            Console.WriteLine($"\n===={MenuType.SubMenu}====");
             Console.WriteLine($"\n{mainMenuChoice} - Select an option below:");
-            List<string> submenuOptions = SystemMenu[mainMenuChoice];
-            int menuCounter = 0;
-            foreach (var sysMenu in submenuOptions)
+            int index = 1;
+            foreach (var option in submenuOptions)
             {
-                menuCounter++;
-                Console.WriteLine($"{menuCounter}. {sysMenu}");
+                Console.WriteLine($"{index}. {option}");
+                index++;
             }
+        }
+        else
+        {
+            Console.WriteLine("\nNo available submenu for this selection.");
         }
         await Task.CompletedTask;
     }
 
-    // Remove this block of code
-    //public Task<int> GetSubMenuSelection(string mainMenuChoice)
-    //{
-    //    if (!subMenus.ContainsKey(mainMenuChoice))
-    //    {
-    //        Console.WriteLine("Invalid main menu selection.");
-    //        return Task.FromResult(-1);
-    //    }
-
-    //    List<string> submenuOptions = subMenus[mainMenuChoice];
-
-    //    while (true)
-    //    {
-    //        Console.Write("\nEnter your choice: ");
-    //        int submenuSelection = Convert.ToInt32(Console.ReadLine());
-    //        if (submenuSelection >= 1 && submenuSelection <= submenuOptions.Count)
-    //        {
-    //            return Task.FromResult(submenuSelection);
-    //        }
-
-    //        Console.WriteLine("Invalid input. Please enter a valid option.");
-    //    }
-    //}
-}
-
-
-public class Menu
-{
-    private const string EXIT = "exit";
-    private Dictionary<string, List<string>> SystemMenu = new Dictionary<string, List<string>>
-        {
-            {
-                "Staff Management",
-                new List<string> { "Create Staff", "View Staff", "Edit Staff", "Exit" }
-            },
-            {
-                "Restaurant Management",
-                new List<string> { "Menu Setup", "Menu Item Setup", "Exit" }
-            },
-            {
-                "Exit",
-                new List<string>()
-            },
-        };
-    public required string Title { get; set; }
-    public int Index { get; set; }
-    public List<Menu>? Submenus { get; set; } = new();
-    public MenuType TypeOfMenu { get; set; }
-
-    public Task<Menu> BuildSystemMenu(Dictionary<string, List<string>> menu)
+    public Task<(int menuIndex, string menuTitle)> GetSubMenuSelection(string mainMenuChoice)
     {
-        int menuIndex = 0;
-        foreach (var item in SystemMenu)
-        {
-            Title = item.Key;
-            Index = menuIndex++;
-            foreach (var submenu in item.Value)
-            {
-                Submenus!.Add(new Menu { Title = submenu, Index = menuIndex, TypeOfMenu = submenu == EXIT ? MenuType.Exit : MenuType.SubMenu });
-            }
-            if(item.Key == EXIT)
-            {
-                TypeOfMenu = MenuType.Exit;
-            }
-        }
-        return Task.FromResult(this);
-    }
-}
+        var submenuOptions = _menu.GetSystemMenu()[mainMenuChoice];
 
-public enum MenuType
-{
-    MainMenu = 0,
-    SubMenu = 1,
-    Exit = 2
+        Console.Write("\nEnter your choice: ");
+        if (
+            !int.TryParse(Console.ReadLine(), out int selectedIndex)
+            || selectedIndex < 1
+            || selectedIndex > submenuOptions.Count
+        )
+        {
+            Console.WriteLine("Invalid input. Please enter a valid option.");
+            return GetSubMenuSelection(mainMenuChoice);
+        }
+        string selectedMenu = submenuOptions[selectedIndex - 1];
+        return Task.FromResult((selectedIndex, selectedMenu));
+    }
 }

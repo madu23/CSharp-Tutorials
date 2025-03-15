@@ -1,19 +1,13 @@
-﻿// See https://aka.ms/new-console-template for more information
-//Console.WriteLine("Hello, World!");
-
-using Restaurant.Application.Services;
+﻿using Restaurant.Application.Services;
 using Restaurant.Domain.Db;
 using Restaurant.Domain.Entities;
-using System.Diagnostics;
+using Restaurant.Domain.Enums;
+using Restaurant.Domain.Utilities;
 
 namespace Restaurant.Application;
 
 class Program
 {
-    //static void Main(string[] args)
-    //{
-
-    //}
     static async Task Main(string[] args)
     {
         Console.WriteLine("Hello, Welcome to Eke Tech Restaurant!");
@@ -30,6 +24,12 @@ class Program
         var authService = new AuthService();
         var loginResult = await authService.Login();
 
+        if (loginResult == null)
+        {
+            Console.WriteLine("Login failed. Exiting application.");
+            return;
+        }
+
         Console.WriteLine($"Welcome {loginResult?.FirstName} {loginResult?.LastName}");
         Console.WriteLine($"Select a system menu from the list below");
 
@@ -37,62 +37,62 @@ class Program
         {
             Console.WriteLine("You are logged in as a System Admin");
             // create a new instance of Menu object
-
-
+            var menu = new Menu { Title = "" };
             // Build and display the the menu
-
-
+            await menu.BuildSystemMenu(new Dictionary<string, List<string>>());
             // get user selection
-
             // if user menu selection has submenu, display it else call the handler
-
-
-
-            SysMenu sysMenu = new SysMenu();
-            var menuHandler = new MenuSelectionHandler(sysMenu);
             while (true)
             {
-                // step 1: display main menu
-                await sysMenu.DisplayMainMenu();
-                var mainChoice = await sysMenu.GetMainMenuSelection();
-                
-                // step 2: capture user main selection and display submenu if the menu selected has submenu
-                // if not, then check if the menu selected is "Exit". If the selection is exit, exit the app, else navigate to the appropriate page or action
-                if (mainChoice.menuTitle == "Exit")
+                // Step 1: Display main menu
+                var menuService = new DisplayMenuService(menu);
+                await menuService.DisplayMainMenu();
+
+                // Step 2: Capture user main selection
+                var (menuIndex, menuTitle) = await menuService.GetMainMenuSelection();
+
+                // Step 3: Handle menu selection
+                var exitCommand = MenuType.Exit.ToString();
+                if (string.Equals(menuTitle, exitCommand, StringComparison.OrdinalIgnoreCase))
                 {
-                    Console.WriteLine("Exiting application... Goodbye!");
+                    Console.WriteLine("Exiting application...");
                     break;
                 }
-                else
+
+                await menuService.DisplaySubMenu(menuTitle);
+                var (subMenuIndex, subMenuTitle) = await menuService.GetSubMenuSelection(menuTitle);
+
+                if (string.Equals(subMenuTitle, exitCommand, StringComparison.OrdinalIgnoreCase))
                 {
-                    await sysMenu.DisplaySubMenu(mainChoice.menuTitle);
+                    continue;
                 }
 
-
-                // select submenu
-
-                var selectedMainMenu = sysMenu.SystemMenu[mainChoice.menuTitle];
-                while (true)
+                // Step 4: Call the appropriate handler
+                const string staffHandler = "Staff Management";
+                const string restaurantHandler = "Restaurant Management";
+                switch (menuTitle)
                 {
-                    await sysMenu.DisplaySubMenu(selectedMainMenu);
-                    int subChoice = await sysMenu.GetSubMenuSelection(selectedMainMenu);
-                    if (
-                        subChoice == -1
-                        || sysMenu.subMenus[selectedMainMenu][subChoice - 1] == "ExiT"
-                    )
+                    case staffHandler:
+                        var staffService = new StaffManagementService();
+                        await staffService.HandleStaffManagement(subMenuIndex);
                         break;
-                    Console.WriteLine(
-                        $"You selected: {sysMenu.subMenus[selectedMainMenu][subChoice - 1]}"
-                    );
-                    if (selectedMainMenu == "Staff Management")
-                        await menuHandler.HandleStaffManagement(subChoice);
-                    else
-                        Console.WriteLine("Invalid input! Please enter a valid option.");
+
+                    case restaurantHandler:
+                        new MenuSelectionHandler(menu, HandlerType.RestaurantHandler);
+                        Console.WriteLine(
+                            "Restaurant management functionality is under development."
+                        );
+                        break;
+
+                    default:
+                        Console.WriteLine("Invalid selection. Returning to main menu...");
+                        break;
                 }
             }
         }
         else
-            Console.WriteLine("You do not have access to system admin functions.");
-        Console.ReadLine();
+        {
+            Console.WriteLine("You are not an admin! Logging out...");
+        }
     }
 }
