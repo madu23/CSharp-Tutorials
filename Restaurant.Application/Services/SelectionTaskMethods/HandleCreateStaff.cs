@@ -60,33 +60,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
             Console.WriteLine("\nNew Staff has been created");
 
             // Display the list of all staff
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine(
-                string.Format(
-                    "{0, -10} {1, -15} {2, -15} {3, -20}",
-                    "StaffId",
-                    "First Name",
-                    "Last Name",
-                    "Designation"
-                )
-            );
-            Console.WriteLine(
-                "========================================================================"
-            );
-            var staffList = AppDb.StaffTable.Values.ToList();
-            foreach (var record in staffList)
-            {
-                Console.WriteLine(
-                    string.Format(
-                        "{0, -10} {1, -15} {2, -15} {3, -20}",
-                        record.StaffId,
-                        record.FirstName,
-                        record.LastName,
-                        record.Designation
-                    )
-                );
-            }
+            Display.DisplayStaffList(AppDb.StaffTable);
             await Task.CompletedTask;
         }
     }

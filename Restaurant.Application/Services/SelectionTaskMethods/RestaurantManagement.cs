@@ -44,8 +44,22 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
         private async Task DisplayUnderDevelopmentMessage()
         {
             // Display a message indicating that the feature is under development
-            string message = "Restaurant Menu is still under development !!!";
+            string message = "Restaurant Menu is still under development !";
             foreach (var word in message.Split(' '))
+            {
+                Console.Write(word + " ");
+                await Task.Delay(300);
+            }
+            Console.WriteLine();
+            string checkBackMessage = "Please Check Back Later!!";
+            foreach (var word in checkBackMessage.Split(' '))
+            {
+                Console.Write(word + " ");
+                await Task.Delay(300);
+            }
+            Console.WriteLine();
+            string thankYouMessage = "Thank You!!!";
+            foreach (var word in thankYouMessage.Split(' '))
             {
                 Console.Write(word + " ");
                 await Task.Delay(300);

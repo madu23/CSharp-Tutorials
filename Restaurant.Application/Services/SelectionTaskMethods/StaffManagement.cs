@@ -45,10 +45,16 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
                     case ResponseOptions.StaffManagement.Exit:
                         return;
                     default:
-                        Console.WriteLine("Invalid selection. Please try gain.");
+                        await DisplayInvalidSelectionMessage();
                         break;
                 }
             } while (true);
+        }
+
+        private async Task DisplayInvalidSelectionMessage()
+        {
+            Console.WriteLine("Invalid selection. Please try again.");
+            await Task.CompletedTask;
         }
     }
 }

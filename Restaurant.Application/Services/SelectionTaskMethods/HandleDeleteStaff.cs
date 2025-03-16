@@ -57,5 +57,18 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
             }
             await Task.CompletedTask;
         }
+
+        private void DisplayStaffDetails(Staff staff)
+        {
+            Console.WriteLine(
+                string.Format(
+                    "{0, -10} {1, -15} {2, -15} {3, -20}",
+                    staff.StaffId,
+                    staff.FirstName,
+                    staff.LastName,
+                    staff.Designation
+                )
+            );
+        }
     }
 }

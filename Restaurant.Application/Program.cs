@@ -9,6 +9,7 @@ class Program
     static async Task Main(string[] args)
     {
         Console.WriteLine("Hello, Welcome to Eke Tech Restaurant!");
+        Console.WriteLine("=======================================");
 
         // Seed default admin data step 1
         var seedDbTask = new StartupTask();

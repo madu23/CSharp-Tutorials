@@ -20,73 +20,66 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
 
         public async Task Execute()
         {
-            int newStaffId;
-            do
+            var newStaffData = new Staff();
+            bool isCancelled = false;
+
+            while (!isCancelled)
             {
-                // Prompt user to enter a new Staff ID
-                newStaffId = _inputHandler.GetValidIntInput("\nEnter Staff Id:");
-                if (AppDb.StaffTable.ContainsKey(newStaffId))
-                {
-                    // If Staff ID already exists, prompt user to enter a unique Staff ID
-                    Console.WriteLine(
-                        $"Something went wrong: Staff {newStaffId} with {AppDb.StaffTable[newStaffId].Designation} already exists."
-                    );
-                    Console.WriteLine("Please input a unique Staff Id.");
-                }
-                else
-                {
-                    break;
-                }
-            } while (true);
-
-            // Prompt user to enter the new staff details
-            var firstName = _inputHandler.GetValidStringInput("Enter First Name:");
-            var lastName = _inputHandler.GetValidStringInput("Enter Last Name:");
-            var designation = _inputHandler.GetValidStringInput("Enter Designation:");
-            var password = _inputHandler.GetValidStringInput("Enter Password:");
-
-            // Create a new Staff object with the entered details
-            var newStaffData = new Staff
-            {
-                StaffId = newStaffId,
-                FirstName = firstName,
-                LastName = lastName,
-                Designation = designation,
-                Password = password,
-            };
-
-            // Add the new staff to the database
-            _staffHandler.CreateStaff(newStaffData);
-            Console.WriteLine("\nNew Staff has been created");
-
-            // Display the list of all staff
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.WriteLine(
-                string.Format(
-                    "{0, -10} {1, -15} {2, -15} {3, -20}",
-                    "StaffId",
-                    "First Name",
-                    "Last Name",
-                    "Designation"
-                )
-            );
-            Console.WriteLine(
-                "========================================================================"
-            );
-            var staffList = AppDb.StaffTable.Values.ToList();
-            foreach (var record in staffList)
-            {
+                Console.WriteLine("\nSelect the detail to input:");
+                Console.WriteLine($"{ResponseOptions.CreateStaff.EnterStaffId}. Enter Staff Id");
                 Console.WriteLine(
-                    string.Format(
-                        "{0, -10} {1, -15} {2, -15} {3, -20}",
-                        record.StaffId,
-                        record.FirstName,
-                        record.LastName,
-                        record.Designation
-                    )
+                    $"{ResponseOptions.CreateStaff.EnterFirstName}. Enter First Name"
                 );
+                Console.WriteLine($"{ResponseOptions.CreateStaff.EnterLastName}. Enter Last Name");
+                Console.WriteLine(
+                    $"{ResponseOptions.CreateStaff.EnterDesignation}. Enter Designation"
+                );
+                Console.WriteLine($"{ResponseOptions.CreateStaff.EnterPassword}. Enter Password");
+                Console.WriteLine($"{ResponseOptions.CreateStaff.Cancel}. Cancel");
+
+                var selection = _inputHandler.GetValidIntInput("Enter your choice:");
+
+                switch (selection)
+                {
+                    case ResponseOptions.CreateStaff.EnterStaffId:
+                        newStaffData.StaffId = _inputHandler.GetValidIntInput("Enter Staff Id:");
+                        break;
+                    case ResponseOptions.CreateStaff.EnterFirstName:
+                        newStaffData.FirstName = _inputHandler.GetValidStringInput(
+                            "Enter First Name:"
+                        );
+                        break;
+                    case ResponseOptions.CreateStaff.EnterLastName:
+                        newStaffData.LastName = _inputHandler.GetValidStringInput(
+                            "Enter Last Name:"
+                        );
+                        break;
+                    case ResponseOptions.CreateStaff.EnterDesignation:
+                        newStaffData.Designation = _inputHandler.GetValidStringInput(
+                            "Enter Designation:"
+                        );
+                        break;
+                    case ResponseOptions.CreateStaff.EnterPassword:
+                        newStaffData.Password = _inputHandler.GetValidStringInput(
+                            "Enter Password:"
+                        );
+                        break;
+                    case ResponseOptions.CreateStaff.Cancel:
+                        isCancelled = true;
+                        break;
+                    default:
+                        Console.WriteLine("Invalid selection. Please try again.");
+                        break;
+                }
             }
+
+            if (!isCancelled)
+            {
+                _staffHandler.CreateStaff(newStaffData);
+                Console.WriteLine("\nNew Staff has been created");
+                Display.DisplayStaffList(AppDb.StaffTable);
+            }
+
             await Task.CompletedTask;
         }
     }

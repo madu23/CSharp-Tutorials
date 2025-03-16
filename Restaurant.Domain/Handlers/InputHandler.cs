@@ -40,6 +40,25 @@ public class InputHandler
         return input!;
     }
 
+    public string GetValidStringInput(string prompt, bool allowEmpty)
+    {
+        string input;
+        do
+        {
+            Console.WriteLine(prompt);
+            input = Console.ReadLine()?.Trim();
+            if (allowEmpty || !string.IsNullOrWhiteSpace(input))
+            {
+                break;
+            }
+            else
+            {
+                Console.WriteLine("Invalid input. Please enter a valid string.");
+            }
+        } while (true);
+        return input!;
+    }
+
     public string[] GetValidStringArrayInput(string prompt, char separator = ',')
     {
         string[] inputArray;

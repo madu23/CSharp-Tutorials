@@ -52,16 +52,20 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
                     "Enter the details you want to edit (To keep current value, press enter):"
                 );
                 newFirstName = _inputHandler.GetValidStringInput(
-                    $"Current First Name: {staffToEdit?.FirstName}\nNew First Name: "
+                    $"Current First Name: {staffToEdit?.FirstName}\nNew First Name: ",
+                    true
                 );
                 newLastName = _inputHandler.GetValidStringInput(
-                    $"Current Last Name: {staffToEdit?.LastName}\nNew Last Name: "
+                    $"Current Last Name: {staffToEdit?.LastName}\nNew Last Name: ",
+                    true
                 );
                 newDesignation = _inputHandler.GetValidStringInput(
-                    $"Current Designation: {staffToEdit?.Designation}\nNew Designation: "
+                    $"Current Designation: {staffToEdit?.Designation}\nNew Designation: ",
+                    true
                 );
                 newPassword = _inputHandler.GetValidStringInput(
-                    $"Current Password: {staffToEdit?.Password}\nNew Password: "
+                    $"Current Password: {staffToEdit?.Password}\nNew Password: ",
+                    true
                 );
 
                 // Check if any changes were made

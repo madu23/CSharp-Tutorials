@@ -23,9 +23,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
             do
             {
                 // Prompt user to enter the Staff ID to edit
-                id = _inputHandler.GetValidIntInput(
-                    $"\nEnter Staff Id to edit ({ResponseOptions.EditStaff.EnterStaffId}):"
-                );
+                id = _inputHandler.GetValidIntInput($"\nEnter Staff Id to edit:");
 
                 // Check if the entered ID is for the System Admin
                 if (id == 1)
@@ -54,16 +52,20 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
                     "Enter the details you want to edit (To keep current value, press enter):"
                 );
                 newFirstName = _inputHandler.GetValidStringInput(
-                    $"Current First Name: {staffToEdit?.FirstName}\nNew First Name ({ResponseOptions.EditStaff.EnterNewFirstName}): "
+                    $"Current First Name: {staffToEdit?.FirstName}\nNew First Name: ",
+                    true
                 );
                 newLastName = _inputHandler.GetValidStringInput(
-                    $"Current Last Name: {staffToEdit?.LastName}\nNew Last Name ({ResponseOptions.EditStaff.EnterNewLastName}): "
+                    $"Current Last Name: {staffToEdit?.LastName}\nNew Last Name: ",
+                    true
                 );
                 newDesignation = _inputHandler.GetValidStringInput(
-                    $"Current Designation: {staffToEdit?.Designation}\nNew Designation ({ResponseOptions.EditStaff.EnterNewDesignation}): "
+                    $"Current Designation: {staffToEdit?.Designation}\nNew Designation: ",
+                    true
                 );
                 newPassword = _inputHandler.GetValidStringInput(
-                    $"Current Password: {staffToEdit?.Password}\nNew Password ({ResponseOptions.EditStaff.EnterNewPassword}): "
+                    $"Current Password: {staffToEdit?.Password}\nNew Password: ",
+                    true
                 );
 
                 // Check if any changes were made
@@ -101,6 +103,19 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
                 break;
             } while (true);
             await Task.CompletedTask;
+        }
+
+        private void DisplayStaffDetails(Staff staff)
+        {
+            Console.WriteLine(
+                string.Format(
+                    "{0, -10} {1, -15} {2, -15} {3, -20}",
+                    staff.StaffId,
+                    staff.FirstName,
+                    staff.LastName,
+                    staff.Designation
+                )
+            );
         }
     }
 }

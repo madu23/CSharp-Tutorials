@@ -59,15 +59,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
                     Console.WriteLine(
                         "========================================================================"
                     );
-                    Console.WriteLine(
-                        string.Format(
-                            "{0, -10} {1, -15} {2, -15} {3, -20}",
-                            specificStaff.StaffId,
-                            specificStaff.FirstName,
-                            specificStaff.LastName,
-                            specificStaff.Designation
-                        )
-                    );
+                    Display.DisplayStaffDetails(specificStaff);
                 }
             }
             else if (viewStaffOption == ResponseOptions.ViewStaff.AllStaffs.ToString())
@@ -91,15 +83,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
                 );
                 foreach (var s in AppDb.StaffTable.Values)
                 {
-                    Console.WriteLine(
-                        string.Format(
-                            "{0,-10} {1,-15} {2,-15} {3,-20}",
-                            s.StaffId,
-                            s.FirstName,
-                            s.LastName,
-                            s.Designation
-                        )
-                    );
+                    Display.DisplayStaffDetails(s);
                 }
             }
             else if (viewStaffOption == ResponseOptions.ViewStaff.Cancel.ToString())

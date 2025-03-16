@@ -27,5 +27,11 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
             var staffManagement = new StaffManagement(_menuHandler, _staffHandler, _inputHandler);
             await staffManagement.Execute();
         }
+
+        private async Task DisplayInvalidSelectionMessage()
+        {
+            Console.WriteLine("Invalid selection. Please try again.");
+            await Task.CompletedTask;
+        }
     }
 }

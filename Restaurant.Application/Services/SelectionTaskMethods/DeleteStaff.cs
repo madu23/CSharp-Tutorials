@@ -1,5 +1,6 @@
 using System;
 using System.Threading.Tasks;
+using Restaurant.Domain.Entities;
 using Restaurant.Domain.Handlers;
 
 namespace Restaurant.Application.Services.SelectionTaskMethods
