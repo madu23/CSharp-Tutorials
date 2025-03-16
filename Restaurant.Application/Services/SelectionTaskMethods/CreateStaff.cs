@@ -23,9 +23,11 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
             int newStaffId;
             do
             {
+                // Prompt user to enter a new Staff ID
                 newStaffId = _inputHandler.GetValidIntInput("\nEnter Staff Id:");
                 if (AppDb.StaffTable.ContainsKey(newStaffId))
                 {
+                    // If Staff ID already exists, prompt user to enter a unique Staff ID
                     Console.WriteLine(
                         $"Something went wrong: Staff {newStaffId} with {AppDb.StaffTable[newStaffId].Designation} already exists."
                     );
@@ -37,11 +39,13 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
                 }
             } while (true);
 
+            // Prompt user to enter the new staff details
             var firstName = _inputHandler.GetValidStringInput("Enter First Name:");
             var lastName = _inputHandler.GetValidStringInput("Enter Last Name:");
             var designation = _inputHandler.GetValidStringInput("Enter Designation:");
             var password = _inputHandler.GetValidStringInput("Enter Password:");
 
+            // Create a new Staff object with the entered details
             var newStaffData = new Staff
             {
                 StaffId = newStaffId,
@@ -50,9 +54,12 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
                 Designation = designation,
                 Password = password,
             };
+
+            // Add the new staff to the database
             _staffHandler.CreateStaff(newStaffData);
             Console.WriteLine("\nNew Staff has been created");
 
+            // Display the list of all staff
             Console.WriteLine();
             Console.WriteLine();
             Console.WriteLine(

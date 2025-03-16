@@ -17,6 +17,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
 
         public async Task Execute()
         {
+            // Create an instance of DeleteStaff and execute the task
             var deleteStaff = new DeleteStaff(_staffHandler, _inputHandler);
             await deleteStaff.Execute();
         }

@@ -8,7 +8,7 @@ public class StaffHandler
 {
     public void CreateStaff(Staff staff)
     {
-        // check if the staff does not exist
+        // Check if the staff already exists
         var existingStaff = AppDb
             .StaffTable.Where(_ => _.Key == staff.StaffId)
             .FirstOrDefault()
@@ -18,12 +18,13 @@ public class StaffHandler
                 $"Staff {existingStaff.StaffId} with {existingStaff.FirstName} {existingStaff.LastName} already exist"
             );
 
-        // add staff to the database if they don't exists
+        // Add staff to the database if they don't exist
         AppDb.StaffTable.Add(staff.StaffId, staff);
     }
 
     public Staff? ViewStaff(int id)
     {
+        // Retrieve the staff details for the given ID
         if (AppDb.StaffTable.TryGetValue(id, out var staff))
         {
             return staff;
@@ -33,10 +34,12 @@ public class StaffHandler
 
     public Staff EditStaff(int id, Staff updatedStaff)
     {
+        // Retrieve the staff details for the given ID
         var staffToEdit = AppDb.StaffTable[id];
         if (staffToEdit == null)
             throw new EntityNotFoundException($"Staff with id {id} does not exist");
 
+        // Update the staff details
         staffToEdit.FirstName = updatedStaff.FirstName;
         staffToEdit.LastName = updatedStaff.LastName;
         staffToEdit.Designation = updatedStaff.Designation;
@@ -47,6 +50,7 @@ public class StaffHandler
 
     public void DeleteStaff(int id)
     {
+        // Check if the staff exists and delete the staff with the given ID
         if (AppDb.StaffTable.ContainsKey(id))
         {
             AppDb.StaffTable.Remove(id);

@@ -18,6 +18,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
 
         public async Task Execute()
         {
+            // Create an instance of EditStaff and execute the task
             var editStaff = new EditStaff(_staffHandler, _inputHandler);
             await editStaff.Execute();
         }

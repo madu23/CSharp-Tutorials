@@ -10,7 +10,7 @@ class Program
     {
         Console.WriteLine("Hello, Welcome to Eke Tech Restaurant!");
 
-        // seed default admin data step 1
+        // Seed default admin data step 1
         var seedDbTask = new StartupTask();
         var result = await seedDbTask.SeedAdminRecord();
         if (result == false)
@@ -24,6 +24,7 @@ class Program
 
         if (loginResult?.Designation == "System Admin")
         {
+            // If logged in as System Admin, display the System Admin menu
             Console.WriteLine("You are logged in as a System Admin");
             Console.WriteLine($"Welcome {loginResult?.FirstName} {loginResult?.LastName}");
             Console.WriteLine($"Select a system menu from the list below");
@@ -33,6 +34,7 @@ class Program
             int mainMenuSelection;
             do
             {
+                // Get the user's selection from the System Admin Main Menu
                 mainMenuSelection = appMenu.GetMenuSelectionIndex("System Admin Main Menu");
                 var continueLoop = await selectionTask.HandleSelection(mainMenuSelection);
                 if (!continueLoop)
@@ -44,6 +46,7 @@ class Program
         }
         else
         {
+            // If not logged in as System Admin, display an access denied message
             Console.WriteLine("You do not have access to system admin functions.");
         }
         Console.ReadLine();

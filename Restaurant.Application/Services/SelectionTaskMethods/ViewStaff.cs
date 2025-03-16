@@ -20,21 +20,26 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
 
         public async Task Execute()
         {
+            // Prompt user to select an option to view a specific staff or all staffs
             Console.WriteLine("\n1. View a specific staff");
             Console.WriteLine("2. View all staffs");
             var viewStaffOption = Console.ReadLine();
 
             if (viewStaffOption == ResponseOptions.ViewStaff.SpecificStaff.ToString())
             {
+                // Prompt user to enter the Staff ID to view
                 int id = _inputHandler.GetValidIntInput("\nEnter Staff Id:");
 
+                // Retrieve the details of the specific staff
                 var specificStaff = _staffHandler.ViewStaff(id);
                 if (specificStaff == null)
                 {
+                    // If staff not found, display a message
                     Console.WriteLine("Staff not found.");
                 }
                 else
                 {
+                    // Display the details of the specific staff
                     Console.WriteLine("\nStaff Details:");
                     Console.WriteLine(
                         "========================================================================"
@@ -64,6 +69,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
             }
             else if (viewStaffOption == ResponseOptions.ViewStaff.AllStaffs.ToString())
             {
+                // Display the details of all staffs
                 Console.WriteLine("\nStaff Details:");
                 Console.WriteLine(
                     "========================================================================"
@@ -95,6 +101,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
             }
             else
             {
+                // If an invalid option is selected, display a message
                 Console.WriteLine("\nInvalid option selected to view staff.");
             }
             await Task.CompletedTask;

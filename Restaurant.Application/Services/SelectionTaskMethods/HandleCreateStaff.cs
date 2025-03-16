@@ -19,6 +19,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
 
         public async Task Execute()
         {
+            // Create an instance of CreateStaff and execute the task
             var createStaff = new CreateStaff(_staffHandler, _inputHandler);
             await createStaff.Execute();
         }

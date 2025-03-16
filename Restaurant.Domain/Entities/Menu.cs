@@ -25,9 +25,9 @@ namespace Restaurant.Domain.Entities
 
         /// <summary>
         /// Builds the system menu.
+        /// A task that represents the asynchronous operation.
         /// </summary>
-        /// <param name="menu">The menu structure.</param>
-        /// <returns>A task that represents the asynchronous operation.</returns>
+
         public Task<Menu> BuildSystemMenu(Dictionary<string, List<string>> menu)
         {
             int menuIndex = 0;

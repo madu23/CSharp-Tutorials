@@ -22,17 +22,21 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
             Staff staffToEdit;
             do
             {
+                // Prompt user to enter the Staff ID to edit
                 id = _inputHandler.GetValidIntInput("\nEnter Staff Id to edit");
 
+                // Check if the entered ID is for the System Admin
                 if (id == 1)
                 {
                     Console.WriteLine("\nCannot Edit System Admin data.");
                     return;
                 }
 
+                // Retrieve the staff details for the given ID
                 staffToEdit = _staffHandler.ViewStaff(id);
                 if (staffToEdit == null)
                 {
+                    // If staff not found, prompt user to input an existing ID
                     Console.WriteLine($"Staff with Id {id} not found, Input existing Id.");
                 }
             } while (staffToEdit == null);
@@ -43,6 +47,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
                 newPassword;
             do
             {
+                // Prompt user to enter new details for the staff
                 Console.WriteLine(
                     "Enter the details you want to edit (To keep current value, press enter):"
                 );
@@ -59,6 +64,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
                     $"Current Password: {staffToEdit?.Password}\nNew Password: "
                 );
 
+                // Check if any changes were made
                 if (
                     string.IsNullOrWhiteSpace(newFirstName)
                     && string.IsNullOrWhiteSpace(newLastName)
@@ -70,6 +76,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
                     break;
                 }
 
+                // Create an updated staff object with the new details
                 var updatedStaff = new Staff
                 {
                     FirstName = string.IsNullOrEmpty(newFirstName)
@@ -86,6 +93,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
                         : newPassword,
                 };
 
+                // Update the staff details in the database
                 _staffHandler.EditStaff(id, updatedStaff);
                 Console.WriteLine("Staff details updated successfully.");
                 break;

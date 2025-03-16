@@ -19,6 +19,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
             int restaurantMenuSelection;
             do
             {
+                // Display the Restaurant Management menu and get the user's selection
                 restaurantMenuSelection = _menuHandler.GetMenuSelectionIndex(
                     "Restaurant Management"
                 );
@@ -26,11 +27,14 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
                 {
                     case ResponseOptions.RestaurantManagement.MenuSetup:
                     case ResponseOptions.RestaurantManagement.MenuItemSetup:
+                        // Display a message indicating that the feature is under development
                         await DisplayUnderDevelopmentMessage();
                         break;
                     case ResponseOptions.RestaurantManagement.Exit:
+                        // Exit the Restaurant Management menu and return to the main menu
                         return; // this returns to main menu
                     default:
+                        // Handle invalid selections
                         Console.WriteLine("Invalid selection. Please try again.");
                         break;
                 }
@@ -39,6 +43,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
 
         private async Task DisplayUnderDevelopmentMessage()
         {
+            // Display a message indicating that the feature is under development
             string message = "Restaurant Menu is still under development !!!";
             foreach (var word in message.Split(' '))
             {

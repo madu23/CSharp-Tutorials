@@ -20,6 +20,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
 
         public async Task Execute()
         {
+            // Create an instance of ViewStaff and execute the task
             var viewStaff = new ViewStaff(_staffHandler, _inputHandler);
             await viewStaff.Execute();
         }

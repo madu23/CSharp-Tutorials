@@ -45,7 +45,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
                     case ResponseOptions.StaffManagement.Exit:
                         return; // this returns to main menu
                     default:
-                        Console.WriteLine("Invalid selection. Please try again.");
+                        Console.WriteLine("Invalid selection. Please try gain.");
                         break;
                 }
             } while (true);

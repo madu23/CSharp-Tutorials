@@ -23,6 +23,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
 
         public async Task Execute()
         {
+            // Create an instance of StaffManagement and execute the task
             var staffManagement = new StaffManagement(_menuHandler, _staffHandler, _inputHandler);
             await staffManagement.Execute();
         }
