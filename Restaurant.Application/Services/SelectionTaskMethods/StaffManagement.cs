@@ -43,7 +43,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
                         await new HandleDeleteStaff(_staffHandler, _inputHandler).Execute();
                         break;
                     case ResponseOptions.StaffManagement.Exit:
-                        return; // this returns to main menu
+                        return;
                     default:
                         Console.WriteLine("Invalid selection. Please try gain.");
                         break;

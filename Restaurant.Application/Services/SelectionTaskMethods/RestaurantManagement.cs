@@ -32,7 +32,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
                         break;
                     case ResponseOptions.RestaurantManagement.Exit:
                         // Exit the Restaurant Management menu and return to the main menu
-                        return; // this returns to main menu
+                        return;
                     default:
                         // Handle invalid selections
                         Console.WriteLine("Invalid selection. Please try again.");
@@ -48,7 +48,7 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
             foreach (var word in message.Split(' '))
             {
                 Console.Write(word + " ");
-                await Task.Delay(200);
+                await Task.Delay(300);
             }
             Console.WriteLine();
         }

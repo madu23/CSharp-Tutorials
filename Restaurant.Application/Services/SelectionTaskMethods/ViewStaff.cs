@@ -20,9 +20,12 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
 
         public async Task Execute()
         {
-            // Prompt user to select an option to view a specific staff or all staffs
-            Console.WriteLine("\n1. View a specific staff");
-            Console.WriteLine("2. View all staffs");
+            // Prompt user to select an option to view a specific staff, all staffs, or cancel
+            Console.WriteLine(
+                $"\n{ResponseOptions.ViewStaff.SpecificStaff}. View a specific staff"
+            );
+            Console.WriteLine($"{ResponseOptions.ViewStaff.AllStaffs}. View all staffs");
+            Console.WriteLine($"{ResponseOptions.ViewStaff.Cancel}. Cancel");
             var viewStaffOption = Console.ReadLine();
 
             if (viewStaffOption == ResponseOptions.ViewStaff.SpecificStaff.ToString())
@@ -98,6 +101,11 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
                         )
                     );
                 }
+            }
+            else if (viewStaffOption == ResponseOptions.ViewStaff.Cancel.ToString())
+            {
+                // Cancel the operation
+                Console.WriteLine("Operation canceled.");
             }
             else
             {
