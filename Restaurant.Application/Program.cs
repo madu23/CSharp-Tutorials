@@ -29,6 +29,7 @@ class Program
             Console.WriteLine($"Welcome {loginResult?.FirstName} {loginResult?.LastName}");
             Console.WriteLine($"Select a system menu from the list below");
 
+            // Create a new instance of AppMenu object
             var appMenu = new AppMenu();
             var selectionTask = new SelectionTask();
             int mainMenuSelection;

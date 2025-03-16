@@ -17,26 +17,39 @@ namespace Restaurant.Application.Services.SelectionTaskMethods
 
         public async Task Execute()
         {
-            // Prompt user to enter the Staff ID to delete
-            int id = _inputHandler.GetValidIntInput("\nEnter Staff Id to delete:");
+            while (true)
+            {
+                // Prompt user to enter the Staff ID to delete
+                int id = _inputHandler.GetValidIntInput("\nEnter Staff Id to delete:");
 
-            // Check if the entered ID is for the System Admin
-            if (id == 1)
-            {
-                Console.WriteLine("\nCannot delete System Admin.");
-                return;
-            }
+                // Check if the entered ID is for the System Admin
+                if (id == 1)
+                {
+                    Console.WriteLine("\nCannot delete System Admin.");
+                    return;
+                }
 
-            try
-            {
-                // Delete the staff with the given ID
-                _staffHandler.DeleteStaff(id);
-                Console.WriteLine($"Staff with Id {id} has been deleted.");
-            }
-            catch (Exception ex)
-            {
-                // Handle any exceptions that occur during deletion
-                Console.WriteLine(ex.Message);
+                try
+                {
+                    // Check if the staff with the given ID exists
+                    if (_staffHandler.ViewStaff(id) == null)
+                    {
+                        Console.WriteLine(
+                            $"Staff with Id {id} does not exist. Kindly input the correct Id."
+                        );
+                        continue;
+                    }
+
+                    // Delete the staff with the given ID
+                    _staffHandler.DeleteStaff(id);
+                    Console.WriteLine($"Staff with Id {id} has been deleted.");
+                    break;
+                }
+                catch (Exception ex)
+                {
+                    // Handle any exceptions that occur during deletion
+                    Console.WriteLine(ex.Message);
+                }
             }
             await Task.CompletedTask;
         }
