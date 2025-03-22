@@ -16,12 +16,12 @@
     <div class="dashboard-container">
       <!-- Sidebar -->
       <nav class="sidebar bg-light">
-        <div class="logo text-center py-3">
+        <div class="text-center">
           <img
-            src="https://cdn-icons-png.flaticon.com/128/3075/3075977.png"
+            src="assets/svg/mamaput.svg"
             alt="Mama Put Logo"
-            width="50" />
-          <h4 class="mt-2">Mama Put</h4>
+            width="250px"
+            height="250px" />
         </div>
 
         <ul class="nav flex-column px-3">
@@ -90,27 +90,35 @@
         </ul>
       </nav>
 
+      <!-- Header -->
+      <header class="dashboard-header">
+        <div class="header-left">
+          <div class="toggle-sidebar" onclick="toggleSidebar()">
+            <i class="fas fa-bars"></i>
+          </div>
+        </div>
+        <div class="header-right">
+          <div class="notifications">
+            <i class="fas fa-bell"></i>
+            <span class="badge">2</span>
+          </div>
+          <div class="user-info" id="userInfo" onclick="toggleUserDropdown()">
+            <i class="fas fa-user" style="font-size: 2rem"></i>
+            <span>Hello, Admin</span>
+            <div class="dropdown-menu" id="userDropdown">
+              <a class="dropdown-item" href="#">
+                <i class="fas fa-user-circle me-2"></i> Profile
+              </a>
+              <a class="dropdown-item" href="#logout">
+                <i class="fas fa-sign-out-alt me-2"></i> Logout
+              </a>
+            </div>
+          </div>
+        </div>
+      </header>
+
       <!-- Main Dashboard Content -->
       <div class="main-content">
-        <!-- Header -->
-        <header class="dashboard-header">
-          <div class="header-left">
-            <div class="toggle-sidebar" onclick="toggleSidebar()">
-              <i class="fas fa-bars"></i>
-            </div>
-          </div>
-          <div class="header-right">
-            <div class="notifications">
-              <i class="fas fa-bell"></i>
-              <span class="badge">2</span>
-            </div>
-            <div class="user-info">
-              <i class="fas fa-user"></i>
-              <span>Hello, Admin</span>
-            </div>
-          </div>
-        </header>
-
         <!-- Overview Cards -->
         <div class="dashboard-cards">
           <div class="card">
