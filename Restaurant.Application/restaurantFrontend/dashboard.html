@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Dashboard :: Mama Put</title>
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <link rel="stylesheet" href="assets/css/dashboard.css" />
+  </head>
+  <body>
+    <div class="dashboard-container">
+      <!-- Sidebar -->
+      <nav class="sidebar bg-light">
+        <div class="logo text-center py-3">
+          <img
+            src="https://cdn-icons-png.flaticon.com/128/3075/3075977.png"
+            alt="Mama Put Logo"
+            width="50" />
+          <h4 class="mt-2">Mama Put</h4>
+        </div>
+
+        <ul class="nav flex-column px-3">
+          <li class="nav-item mb-2">
+            <a class="nav-link" href="#">
+              <i class="fas fa-tachometer-alt me-2"></i> Dashboard
+            </a>
+          </li>
+
+          <!-- Menus Dropdown -->
+          <li class="nav-item mb-2">
+            <a
+              class="nav-link d-flex justify-content-between align-items-center"
+              data-bs-toggle="collapse"
+              href="#menuCollapse"
+              role="button"
+              aria-expanded="false"
+              aria-controls="menuCollapse">
+              <span><i class="fas fa-utensils me-2"></i>Menus</span>
+              <i class="fas fa-chevron-down"></i>
+            </a>
+            <div class="collapse" id="menuCollapse">
+              <ul class="list-unstyled ms-4 mt-2">
+                <li><a class="dropdown-item" href="#">Local Menu</a></li>
+                <li>
+                  <a class="dropdown-item" href="#">Intercontinental Menu</a>
+                </li>
+                <li><a class="dropdown-item" href="#">Sea Food Menu</a></li>
+              </ul>
+            </div>
+          </li>
+
+          <!-- Customers Dropdown -->
+          <li class="nav-item mb-2">
+            <a
+              class="nav-link d-flex justify-content-between align-items-center"
+              data-bs-toggle="collapse"
+              href="#customersCollapse"
+              role="button"
+              aria-expanded="false"
+              aria-controls="customersCollapse">
+              <span><i class="fas fa-users me-2"></i>Customers</span>
+              <i class="fas fa-chevron-down"></i>
+            </a>
+            <div class="collapse" id="customersCollapse">
+              <ul class="list-unstyled ms-4 mt-2"></ul>
+            </div>
+          </li>
+
+          <!-- Orders Dropdown -->
+          <li class="nav-item mb-2">
+            <a
+              class="nav-link d-flex justify-content-between align-items-center"
+              data-bs-toggle="collapse"
+              href="#ordersCollapse"
+              role="button"
+              aria-expanded="false"
+              aria-controls="ordersCollapse">
+              <span><i class="fas fa-shopping-cart me-2"></i>Orders</span>
+              <i class="fas fa-chevron-down"></i>
+            </a>
+            <div class="collapse" id="ordersCollapse">
+              <ul class="list-unstyled ms-4 mt-2"></ul>
+            </div>
+          </li>
+        </ul>
+      </nav>
+
+      <!-- Main Dashboard Content -->
+      <div class="main-content">
+        <!-- Header -->
+        <header class="dashboard-header">
+          <div class="header-left">
+            <div class="toggle-sidebar" onclick="toggleSidebar()">
+              <i class="fas fa-bars"></i>
+            </div>
+          </div>
+          <div class="header-right">
+            <div class="notifications">
+              <i class="fas fa-bell"></i>
+              <span class="badge">2</span>
+            </div>
+            <div class="user-info">
+              <i class="fas fa-user"></i>
+              <span>Hello, Admin</span>
+            </div>
+          </div>
+        </header>
+
+        <!-- Overview Cards -->
+        <div class="dashboard-cards">
+          <div class="card">
+            <p>Total Menu</p>
+            <h3>10</h3>
+            <i class="fas fa-utensils"></i>
+          </div>
+          <div class="card">
+            <p>Total Customers</p>
+            <h3>50</h3>
+            <i class="fas fa-users"></i>
+          </div>
+          <div class="card">
+            <p>Total Orders</p>
+            <h3>20</h3>
+            <i class="fas fa-shopping-cart"></i>
+          </div>
+          <div class="card">
+            <p>Total Revenue</p>
+            <h3>₦800K</h3>
+            <i class="fas fa-wallet"></i>
+          </div>
+        </div>
+
+        <!-- Charts & Employee Table -->
+        <div class="dashboard-content">
+          <div class="chart-container">
+            <h5>Sales Chart</h5>
+            <canvas id="salesChart"></canvas>
+          </div>
+          <div class="employee-table">
+            <h5>Employee Details</h5>
+            <table class="table table-bordered">
+              <thead>
+                <tr>
+                  <th>Staff No</th>
+                  <th>First Name</th>
+                  <th>Last Name</th>
+                  <th>Designation</th>
+                  <th>Status</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>01</td>
+                  <td>Akaeze</td>
+                  <td>Ikenna</td>
+                  <td>CEO</td>
+                  <td>Active</td>
+                </tr>
+                <tr>
+                  <td>02</td>
+                  <td>John</td>
+                  <td>Agaji</td>
+                  <td>Supervisor</td>
+                  <td>Inactive</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="assets/js/dashboard.js"></script>
+  </body>
+</html>

@@ -2,7 +2,7 @@ using Restaurant.Domain.Db;
 using Restaurant.Domain.Entities;
 
 namespace Restaurant.Application.Services;
-public class MainMenuTask
+public class MainMenuTask1
 {
    public Task<bool> showMenu()
     {

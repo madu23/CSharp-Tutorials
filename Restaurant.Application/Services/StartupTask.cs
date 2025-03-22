@@ -1,4 +1,4 @@
-﻿
+﻿ 
 using Restaurant.Domain.Db;
 using Restaurant.Domain.Entities;
 
@@ -13,7 +13,8 @@ public class StartupTask
             var adminStaff = AppDb.StaffTable.Where(_ => _.Value.Designation == "System Admin").FirstOrDefault();
             if (adminStaff.Value == null)
             {
-                // meaning there is no admin. So go ahead and create one
+                // meaning there is no admin. So go ahead and create dotnet run
+                
                 var newAdminStaff = new Staff
                 {
                     StaffId = 1,

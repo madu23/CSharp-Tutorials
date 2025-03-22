@@ -30,15 +30,33 @@ class Program
         var loginResult = await authService.Login();
 
         //show main menu step 3
-        var MainMenuDb = new MainMenuTask();
-        var menuResult = await MainMenuDb.showMenu();
+        if(loginResult?.Designation == "System Admin")
+        {
+            Console.WriteLine("Welcome System Admin");
+            Console.WriteLine($"welcome {loginResult?.FirstName} {loginResult?.LastName}");
+            Console.WriteLine("Select a system menu from the list below");
+
+            var mainMenuTask = new MainMenuTask();
+            await mainMenuTask.showMenu();
+            return;
+        }
+        else
+        {
+            Console.WriteLine("Invalid login details");
+            return;
+        }
+        return;
+
+    }
+    
+}
        
 
 
 
 
 
-        Console.WriteLine($"Welcome {loginResult?.FirstName} {loginResult?.LastName}");
+       /* Console.WriteLine($"Welcome {loginResult?.FirstName} {loginResult?.LastName}");
         Console.WriteLine($"Select a system menu from the list below");
 
         int menuCounter = 0;
@@ -100,7 +118,11 @@ class Program
                     Console.WriteLine(String.Format("{0}\t {1}\t {2}\t {3}", record.StaffId, record.FirstName, record.LastName, record.Designation));
                 }
        }
-        Console.ReadLine();
+    
+    
+       Console.ReadLine();
     }
 
+
 }
+*/

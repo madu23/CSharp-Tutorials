@@ -1,0 +1,320 @@
+html {
+    font-size: 18px;
+  }
+  
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: white;
+  }
+  
+  .dashboard-container {
+    display: flex;
+  }
+  
+  /* Sidebar styles */
+  .sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #f8f9fa;
+    padding: 20px;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    position: fixed;
+    left: -250px; /* Initially hidden */
+    transition: left 0.3s ease-in-out;
+  }
+  
+  .sidebar.active {
+    left: 0; /* Slide in when active */
+  }
+  
+  .sidebar .logo {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .sidebar .logo img {
+    width: 50px;
+  }
+  
+  .sidebar .nav-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .sidebar .nav-links li {
+    padding: 10px;
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+  }
+  
+  .sidebar .nav-link {
+    color: black !important;
+  }
+  
+  /* Arrow icon transition and rotation */
+  .nav-link i.fas.fa-chevron-down {
+    transition: transform 0.3s ease-in-out;
+    transform: rotate(-90deg);
+  }
+  
+  .nav-link[aria-expanded="true"] i.fas.fa-chevron-down {
+    transform: rotate(0deg);
+  }
+  
+  /* Hover effect for sidebar links */
+  .sidebar .nav-links li:hover {
+    background-color: #e9ecef;
+    transition: background-color 0.2s ease-in-out;
+  }
+  
+  /* Sidebar toggle button */
+  .toggle-sidebar {
+    background: #fff;
+    padding: 0.5rem;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+  
+  .toggle-sidebar i {
+    color: #333;
+  }
+  
+  /* Main content styles */
+  .main-content {
+    flex: 1;
+    padding: 0px 20px 20px 20px;
+    margin-left: 0; /* Full width when sidebar is closed */
+    transition: margin-left 0.3s ease-in-out;
+  }
+  
+  .main-content.expanded {
+    margin-left: 250px; /* Shift right when sidebar is open */
+  }
+  
+  /* Header styles */
+  .dashboard-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 30px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    background-color: #fff;
+    margin-bottom: 20px;
+    border-left: none;
+    border-right: none;
+  }
+  
+  .header-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .header-right {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  
+  /* Notifications styles */
+  .notifications {
+    position: relative;
+    cursor: pointer;
+    padding: 0.5rem;
+  }
+  
+  .notifications i {
+    font-size: 2rem;
+  }
+  
+  .notifications .badge {
+    background-color: red;
+    color: white;
+    font-size: 0.7rem;
+    border-radius: 50%;
+    padding: 4px 8px;
+    position: absolute;
+    top: -5px;
+    right: -5px;
+  }
+  
+  /* User info styles */
+  .user-info {
+    font-size: 1rem;
+    cursor: pointer;
+    display: flex;
+    flex-direction: row; /* Change from column to row */
+    align-items: center;
+    gap: 0.5rem; /* Optional: add some space between the icon and text */
+    padding: 0.5rem;
+  }
+  
+  .user-info i {
+    font-size: 2rem;
+    margin-bottom: 5px;
+  }
+  
+  /* Dashboard cards styles */
+  .dashboard-cards {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  
+  .card {
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    text-align: center;
+    transition: transform 0.2s ease-in-out;
+  }
+  
+  .card:hover {
+    transform: scale(1.02);
+  }
+  
+  .card i {
+    font-size: 1.8rem;
+    margin-top: 10px;
+  }
+  
+  /* Dashboard content styles */
+  .dashboard-content {
+    display: flex;
+    gap: 20px;
+    margin-top: 20px;
+  }
+  
+  /* Chart container and employee table styles */
+  .chart-container,
+  .employee-table {
+    flex: 1;
+    background: white;
+    padding: 1rem;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    min-height: 500px;
+  }
+  
+  /* Employee table styles */
+  .employee-table h5 {
+    margin-bottom: 20px;
+  }
+  
+  .employee-table .table {
+    margin-top: 10px;
+    font-size: 0.9rem;
+  }
+  
+  /* Responsive styles */
+  @media (min-width: 1350px) {
+    .dashboard-cards .card {
+      flex: 1 1 calc(25% - 20px);
+    }
+  }
+  
+  @media (max-width: 1349px) {
+    .dashboard-cards .card {
+      flex: 1 1 calc(50% - 20px);
+    }
+  }
+  
+  @media (max-width: 1000px) {
+    /* We remove forced margin-left: 0 here to allow toggling. */
+    .main-content {
+      padding: 10px;
+    }
+  
+    .dashboard-cards {
+      flex-direction: column;
+      margin-bottom: 10px;
+    }
+  
+    .dashboard-content {
+      flex-direction: column;
+      margin-bottom: 10px;
+    }
+  
+    .card {
+      padding: 15px;
+      margin-bottom: 10px;
+    }
+  
+    .chart-container,
+    .employee-table {
+      min-height: auto;
+      box-shadow: none;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .dashboard-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+  
+    .notifications,
+    .user-info {
+      font-size: 0.8rem;
+    }
+  
+    .notifications i,
+    .user-info i {
+      font-size: 1.2rem;
+    }
+  
+    .card {
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+  
+    .card i {
+      font-size: 1.2rem;
+    }
+  
+    .employee-table .table {
+      font-size: 0.8rem;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .dashboard-header {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 10px;
+      margin-bottom: 10px;
+    }
+  
+    .notifications i,
+    .user-info i {
+      font-size: 1rem;
+    }
+  
+    .card {
+      padding: 10px;
+      font-size: 0.8rem;
+    }
+  
+    .employee-table .table {
+      font-size: 0.75rem;
+    }
+  }
+  
