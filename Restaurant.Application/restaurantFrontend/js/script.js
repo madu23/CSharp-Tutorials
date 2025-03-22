@@ -1,4 +1,5 @@
-document.addEventListener("Submit", () => {
+
+    alert('You clicked login')
     document.getElementById("loginBtn").addEventListener("click", function() {
         const username = document.getElementById("username").value;
         const password = document.getElementById("password").value;
@@ -9,4 +10,6 @@ document.addEventListener("Submit", () => {
             alert("Invalid Credentials");
         }
     });
-});
+
+
+
