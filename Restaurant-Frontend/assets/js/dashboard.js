@@ -18,8 +18,24 @@ document.addEventListener("DOMContentLoaded", function () {
         {
           label: "Daily Sales (₦)",
           data: [15000, 12000, 18000, 20000, 17000, 25000, 22000],
-          backgroundColor: "rgba(54, 162, 235, 0.6)",
-          borderColor: "rgba(54, 162, 235, 1)",
+          backgroundColor: [
+            "rgba(255, 0, 0, 0.6)", // red
+            "rgba(0, 0, 255, 0.6)", // blue
+            "rgba(255, 255, 0, 0.6)", // yellow
+            "rgba(0, 128, 0, 0.6)", // green
+            "rgba(75, 0, 130, 0.6)", // indigo
+            "rgba(255, 215, 0, 0.6)", // gold
+            "rgba(165, 42, 42, 0.6)", // brown
+          ],
+          borderColor: [
+            "rgba(255, 0, 0, 0.6)", // red
+            "rgba(0, 0, 255, 08)", // blue
+            "rgba(255, 255, 0, 0.6)", // yellow
+            "rgba(0, 128, 0, 0.6)", // green
+            "rgba(75, 0, 130, 0.6)", // indigo
+            "rgba(255, 215, 0, 0.6)", // gold
+            "rgba(165, 42, 42, 0.6)", // brown
+          ],
           borderWidth: 1,
         },
       ],
@@ -54,6 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
       );
 
       this.init();
+      this.openSidebarOnLoad(); // Ensure sidebar is opened on load
     }
 
     init() {
@@ -72,6 +89,12 @@ document.addEventListener("DOMContentLoaded", function () {
       document.addEventListener("click", (event) =>
         this.handleDocumentClick(event)
       );
+      this.userInfo.addEventListener("click", (event) =>
+        this.toggleUserDropdown(event)
+      ); // Add event listener for user info
+      this.userInfo
+        .querySelector("i")
+        .addEventListener("click", (event) => this.toggleUserDropdown(event)); // Add event listener for user icon
     }
 
     toggleSidebar() {
@@ -93,7 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     handleLogout() {
-      window.location.href = "index.html";
+      window.location.href = "index.html"; // Redirect to index page
     }
 
     handleDocumentClick(event) {
@@ -116,6 +139,22 @@ document.addEventListener("DOMContentLoaded", function () {
           .forEach((openDropdown) => openDropdown.classList.remove("show"));
         this.userDropdown.classList.remove("show");
       }
+    }
+
+    openSidebarOnLoad() {
+      this.sidebar.classList.add("active");
+      if (window.innerWidth <= 1000) {
+        this.mainContent.classList.add("blurred");
+        this.toggleBtn.classList.add("sidebar-toggle");
+      } else {
+        this.mainContent.classList.add("expanded");
+        document.querySelector(".dashboard-header").classList.add("expanded");
+      }
+    }
+
+    toggleUserDropdown(event) {
+      event.stopPropagation(); // Prevent the event from bubbling up to the document
+      this.userDropdown.classList.toggle("show");
     }
   }
 

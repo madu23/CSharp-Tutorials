@@ -1,6 +1,43 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&display=swap");
+
+html,
+body,
+.dashboard-container,
+.sidebar,
+.sidebar .logo,
+.sidebar .nav-links,
+.sidebar .nav-links li,
+.nav-link,
+.dropdown-item,
+.toggle-sidebar,
+.main-content,
+.dashboard-header,
+.header-left,
+.header-right,
+.notifications,
+.user-info,
+.user-info .dropdown-menu,
+.user-info .dropdown-menu a,
+.dashboard-cards,
+.dashboard-cards .card,
+.dashboard-cards .card h3,
+.dashboard-cards .card i,
+.dashboard-content,
+.chart-container,
+.employee-table,
+.employee-table .table,
+.employee-table .table th,
+.employee-table .table td {
+  color: rgb(83, 83, 83); /* Set text color to gray */
+}
+
+* {
+}
 html {
   font-size: 18px; /* Base font size */
   width: 100%; /* Ensure proper scaling on mobile */
+  color: rgb(83, 83, 83);
 }
 
 body {
@@ -56,9 +93,11 @@ body {
 }
 
 /* NAV LINK STYLES */
-.nav-link {
-  color: black !important;
+.nav-link,
+.dropdown-item {
+  color: rgb(83, 83, 83);
   transition: background-color 0.3s ease, color 0.3s ease;
+  padding: 10px; /* Add padding */
 }
 
 .nav-link i.fas.fa-chevron-down {
@@ -70,8 +109,10 @@ body {
 }
 
 .nav-link:hover,
-.nav-link:active {
-  color: #e48e1f !important;
+.nav-link:active,
+.dropdown-item:hover,
+.dropdown-item:active {
+  color: white !important; /* Change text color on hover */
 }
 
 .nav-link.active,
@@ -81,10 +122,19 @@ body {
   border-radius: 5px;
 }
 
+.nav-link:hover,
+.dropdown-item:hover {
+  background-color: #e48e1f; /* Change background color on hover */
+  color: white !important; /* Change text color on hover */
+  border-radius: 5px;
+  transition: background-color 0.4s ease, color 0.4s ease, transform 0.4s ease;
+  transform: scale(1.05); /* Slightly enlarge the link on hover */
+}
+
 /* SIDEBAR LI HOVER */
 .sidebar .nav-links li:hover {
   background-color: #ff2400;
-  transition: background-color 0.2s ease-in-out;
+  transition: background-color 0.4s ease-in-out;
 }
 
 /* TOGGLE BUTTON */
@@ -183,30 +233,64 @@ body {
   padding: 0.5rem;
   position: relative;
 }
+
 .user-info .dropdown-menu {
   display: none;
   position: absolute;
   top: 100%;
   right: 0;
   background-color: #fff;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+  border-radius: 10px; /* Add border radius */
   overflow: hidden;
   z-index: 1000;
+  min-width: 160px;
+  padding: 0px;
+  border: 0px;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: opacity 0.2s ease-in-out, transform 0.2s ease-in-out;
 }
+
+/* Show dropdown when active */
+.user-info .dropdown-menu.show {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
 .user-info .dropdown-menu a {
   display: flex;
   align-items: center;
-  padding: 10px 20px;
+  padding: 12px 20px;
   color: black;
   text-decoration: none;
+  font-size: 0.95rem;
+  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 }
+
+.user-info .dropdown-menu a i {
+  margin-right: 12px;
+  font-size: 1rem;
+}
+
+/* Hover effect */
 .user-info .dropdown-menu a:hover {
   background-color: #e48e1f;
+  color: white;
+  border-radius: 5px;
+  transition: background-color 0.4s ease, color 0.4s ease, transform 0.4s ease;
+  transform: scale(1.05);
 }
-.user-info .dropdown-menu i {
-  margin-right: 10px;
-  font-size: 1rem;
+
+/* Ensure dropdown doesn't overflow in small screens */
+@media (max-width: 480px) {
+  .user-info .dropdown-menu {
+    right: auto;
+    left: 50%;
+    transform: translateX(-50%);
+    min-width: 140px;
+  }
 }
 
 /* DASHBOARD CARDS */
@@ -320,6 +404,14 @@ body {
   flex: 1;
 }
 
+.employee-table h5,
+.chart-container h5 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px; /* Add sizeable padding */
+}
+
 .employee-table .table {
   border-collapse: collapse;
 }
@@ -431,4 +523,29 @@ body {
 
 .collapse.show {
   display: block;
+}
+
+.m-logo {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* Center the text */
+}
+
+.m-logo img {
+  width: 100px;
+  height: 100px;
+  margin-bottom: 10px; /* Add space between image and text */
+}
+.m-logo span {
+  font-family: "Monsieur La Doulaise", cursive;
+  color: black;
+  font-size: 2rem;
+  font-weight: bold;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center; /* Center the text */
 }
