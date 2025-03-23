@@ -1,4 +1,14 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // Add loading class to body
+  document.body.classList.add("loading");
+
+  // Delay page load by 3 seconds
+  setTimeout(() => {
+    const preloader = document.getElementById("preloader");
+    preloader.style.display = "none";
+    document.body.classList.remove("loading");
+  }, 3000);
+
   // Chart.js configuration
   const ctx = document.getElementById("salesChart").getContext("2d");
 
