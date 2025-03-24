@@ -1,40 +1,75 @@
-document.addEventListener("DOMContentLoaded", function () {
-  // Add loading class to body
+document.addEventListener("DOMContentLoaded", () => {
+  // Preloader
   document.body.classList.add("loading");
-
-  // Delay page load by 3 seconds
   setTimeout(() => {
     const preloader = document.getElementById("preloader");
-    preloader.style.display = "none";
+    if (preloader) preloader.style.display = "none";
     document.body.classList.remove("loading");
   }, 3000);
 
-  document
-    .getElementById("loginForm")
-    .addEventListener("submit", function (event) {
+  // Login Form
+  const loginForm = document.getElementById("loginForm");
+  if (loginForm) {
+    loginForm.addEventListener("submit", (event) => {
       event.preventDefault();
+      const username = document.getElementById("username")?.value;
+      const password = document.getElementById("password")?.value;
+      const errorMessage = document.getElementById("errorMessage");
 
-      let username = document.getElementById("username").value;
-      let password = document.getElementById("password").value;
-      let errorMessage = document.getElementById("errorMessage");
-
-      errorMessage.style.marginTop = "10px";
-      errorMessage.style.fontSize = "14px";
+      if (errorMessage) {
+        errorMessage.style.marginTop = "10px";
+        errorMessage.style.fontSize = "14px";
+      }
 
       if (username === "admin" && password === "12345") {
-        errorMessage.style.color = "green";
-        errorMessage.textContent =
-          "Login Successful! Redirecting to dashboard...";
+        if (errorMessage) {
+          errorMessage.style.color = "green";
+          errorMessage.textContent =
+            "Login Successful! Redirecting to dashboard...";
+        }
         setTimeout(() => {
           window.location.href = "dashboard.html";
-        }, 2000); // Redirect after 2 seconds
+        }, 2000);
       } else {
-        errorMessage.style.color = "red";
-        if (username !== "admin") {
-          errorMessage.textContent = "Username cannot be found";
-        } else if (password !== "12345") {
-          errorMessage.textContent = "Please input correct password";
+        if (errorMessage) {
+          errorMessage.style.color = "red";
+          errorMessage.textContent =
+            username !== "admin"
+              ? "Username cannot be found"
+              : "Please input correct password";
         }
       }
     });
+  }
+
+  // Search Form
+  const searchForm = document.querySelector(".search-form");
+  if (searchForm) {
+    searchForm.addEventListener("submit", (e) => {
+      e.preventDefault();
+      const input = searchForm.querySelector('input[type="search"]');
+      const query = input ? input.value.trim() : "";
+      console.log("Searching for:", query);
+      query.length > 0 ? filterCards(query) : resetCards();
+    });
+  }
 });
+
+// Filters the dashboard cards based on the query.
+const filterCards = (query) => {
+  const cards = document.querySelectorAll(".custom-card");
+  cards.forEach((card) => {
+    card.style.display = card.textContent
+      .toLowerCase()
+      .includes(query.toLowerCase())
+      ? ""
+      : "none";
+  });
+};
+
+// Resets the display property for all dashboard cards.
+const resetCards = () => {
+  document.querySelectorAll(".custom-card").forEach((card) => {
+    card.style.display = "";
+  });
+};

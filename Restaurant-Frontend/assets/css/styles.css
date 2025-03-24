@@ -7,16 +7,17 @@
   padding: 0;
   font-family: "Poppins", sans-serif;
 }
+
+/* Background and overall layout for login */
 body {
-  background-color: #e2e2e2; /* Changed to #e2e2e2 */
-  font-family: "Poppins", sans-serif;
+  background-color: #e2e2e2;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
-  margin: 0;
+  min-height: 100vh;
 }
 
+/* Preloader styles */
 .loading-wave {
   width: 300px;
   height: 100px;
@@ -57,48 +58,25 @@ body {
   0% {
     height: 10px;
   }
-
   50% {
     height: 50px;
   }
-
   100% {
     height: 10px;
   }
 }
 
-body.loading #preloader {
-  display: flex;
-}
-
-body.loading .container,
-body.loading .login-box {
-  filter: blur(5px);
-}
-
-/* Outer box with a soft Light #e2e2e2 background */
-.outer-box {
-  background-color: #e2e2e2; /* Light #e2e2e2 */
-  padding: 50px;
-  border-radius: 15px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-}
-
-/* Glass effect for login box */
+/* Login box styles */
 .login-box {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 15px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
-  width: 400px;
-  text-align: center;
+  width: 100%;
+  max-width: 500px;
   padding: 30px;
   border: 1px solid rgba(255, 255, 255, 0.3);
-}
-
-.larger-login-box {
-  width: 500px;
 }
 
 .m-logo {
@@ -106,26 +84,22 @@ body.loading .login-box {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center; /* Center the text */
 }
 
 .m-logo img {
   width: 100px;
   height: 100px;
-  margin-bottom: 10px; /* Add space between image and text */
+  margin-bottom: 10px;
 }
+
 .m-logo span {
   font-family: "Monsieur La Doulaise", cursive;
   color: black;
   font-size: 2rem;
   font-weight: bold;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  text-align: center; /* Center the text */
 }
 
+/* Input & Button Styles */
 .input-group-text {
   background-color: rgba(255, 255, 255, 0.3);
   border-right: 0;
@@ -146,90 +120,46 @@ body.loading .login-box {
   color: black;
 }
 
-/* Update the primary button to use Crimson */
+/* Primary Button Overrides */
 .btn-primary {
-  background-color: #e48e1f; /* Primary color */
+  background-color: #e48e1f;
   border: none;
   padding: 10px 20px;
   font-size: 16px;
   color: white;
-  cursor: pointer;
   border-radius: 5px;
   transition: background-color 0.3s ease-in-out, transform 0.2s ease-in-out,
     box-shadow 0.3s ease-in-out;
 }
 
-/* Hover Effect */
 .btn-primary:hover {
   background-color: goldenrod;
   transform: scale(1.05);
   box-shadow: 0px 5px 15px rgba(228, 142, 31, 0.3);
 }
 
-/* Click (Active) Effect */
 .btn-primary:active {
   transform: scale(0.95);
   box-shadow: 0px 2px 10px rgba(228, 142, 31, 0.5);
 }
 
-/* Responsive styles */
-@media (max-width: 1200px) {
-  .outer-box {
-    padding: 40px;
-    margin-bottom: 10px;
-  }
-
-  .login-box {
-    width: 100%;
-    padding: 25px;
-    margin-bottom: 10px;
-  }
-
-  .login-logo {
-    width: 40px;
-  }
-
-  .btn-primary {
-    padding: 8px;
-    font-size: 14px;
-  }
-}
-
+/* Responsive adjustments */
 @media (max-width: 768px) {
-  .outer-box {
-    padding: 30px;
-  }
-
   .login-box {
-    width: 100%;
     padding: 20px;
   }
-
-  .login-logo {
-    width: 40px;
-  }
-
   .btn-primary {
-    padding: 8px;
+    padding: 8px 16px;
     font-size: 14px;
   }
 }
 
 @media (max-width: 480px) {
-  .outer-box {
-    padding: 20px;
-  }
-
   .login-box {
     padding: 15px;
   }
-
-  .login-logo {
-    width: 30px;
-  }
-
   .btn-primary {
-    padding: 6px;
+    padding: 6px 12px;
     font-size: 12px;
   }
 }
