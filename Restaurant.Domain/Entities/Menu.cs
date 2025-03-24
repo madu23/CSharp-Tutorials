@@ -25,9 +25,15 @@ namespace Restaurant.Domain.Entities
 
         /// <summary>
         /// Builds the system menu.
+<<<<<<< HEAD
         /// A task that represents the asynchronous operation.
         /// </summary>
 
+=======
+        /// </summary>
+        /// <param name="menu">The menu structure.</param>
+        /// <returns>A task that represents the asynchronous operation.</returns>
+>>>>>>> ed7dc5dd83c1de243b7a64f0c029b42d5192c598
         public Task<Menu> BuildSystemMenu(Dictionary<string, List<string>> menu)
         {
             int menuIndex = 0;
@@ -54,4 +60,8 @@ namespace Restaurant.Domain.Entities
             return Task.FromResult(this);
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> ed7dc5dd83c1de243b7a64f0c029b42d5192c598

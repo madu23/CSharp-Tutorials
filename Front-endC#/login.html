@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - Mama Put</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+      rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css" />
+    <link rel="stylesheet" href="logoanime.css" />
+  </head>
+
+  <body class="bg-light">
+    <!--Preloader star -->
+    <div id="preloader">
+      <div class="sk-three-bounce">
+        <div class="sk-bounce1 sk-child"></div>
+        <div class="sk-bounce2 sk-child"></div>
+        <div class="sk-bounce3 sk-child"></div>
+      </div>
+    </div>
+    <!--Preloader end-->
+
+    <div
+      class="container d-flex align-items-center justify-content-center vh-100">
+      <div
+        class="card p-4 rounded-4 shadow-lg"
+        style="width: 400px; background-color: #e6f0ff">
+        <div class="text-center">
+          <div class="container">
+            <img src="pot1.png" alt="Cooking Pot" class="pot" width="120" />
+            <div class="steam steam1"></div>
+            <div class="steam steam2"></div>
+            <div class="steam steam3"></div>
+          </div>
+          <h3 class="fw-bold">Mama Put</h3>
+        </div>
+        <form id="loginForm" class="needs-validation" novalidate>
+          <div class="mb-3">
+            <label class="form-label"
+              ><i class="fa-user fas"></i> Username</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              id="username"
+              placeholder="Enter username"
+              required />
+            <div class="invalid-feedback">Please enter your username.</div>
+          </div>
+          <div class="mb-3">
+            <label class="form-label"
+              ><i class="fa-lock fas"></i> Password</label
+            >
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              placeholder="Enter password"
+              required />
+            <div class="invalid-feedback">Please enter your password.</div>
+          </div>
+          <div class="d-none alert alert-danger" id="loginError">
+            Invalid username or password!
+          </div>
+          <button type="submit" class="btn btn-primary w-100">LOGIN</button>
+        </form>
+      </div>
+    </div>
+    <script
+      src="https://kit.fontawesome.com/a076d05399.js"
+      crossorigin="anonymous"></script>
+    <script src="login.js"></script>
+  </body>
+</html>
