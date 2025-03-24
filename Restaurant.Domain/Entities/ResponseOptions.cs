@@ -1,13 +1,6 @@
 namespace Restaurant.Domain.Entities
 {
-<<<<<<< HEAD
     public class ResponseOptions
-=======
-    /// <summary>
-    /// Defines constant values for menu options
-    /// </summary>
-    public static class ResponseOptions
->>>>>>> ed7dc5dd83c1de243b7a64f0c029b42d5192c598
     {
         public static class MainMenu
         {
@@ -18,18 +11,11 @@ namespace Restaurant.Domain.Entities
 
         public static class StaffManagement
         {
-<<<<<<< HEAD
             public const int ViewStaff = 1;
             public const int CreateStaff = 2;
             public const int EditStaff = 3;
             public const int DeleteStaff = 4;
             public const int Exit = 5;
-=======
-            public const int CreateStaff = 1;
-            public const int ViewStaff = 2;
-            public const int EditStaff = 3;
-            public const int Exit = 4;
->>>>>>> ed7dc5dd83c1de243b7a64f0c029b42d5192c598
         }
 
         public static class RestaurantManagement
@@ -38,7 +24,6 @@ namespace Restaurant.Domain.Entities
             public const int MenuItemSetup = 2;
             public const int Exit = 3;
         }
-<<<<<<< HEAD
 
         public static class ViewStaff
         {
@@ -81,7 +66,3 @@ namespace Restaurant.Domain.Entities
         }
     }
 }
-=======
-    }
-}
->>>>>>> ed7dc5dd83c1de243b7a64f0c029b42d5192c598
