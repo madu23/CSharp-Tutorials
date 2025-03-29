@@ -4,99 +4,137 @@ using Restaurant.Domain.Entities;
 namespace Restaurant.Application.Services;
 public class MainMenuTask1
 {
-   public Task<bool> showMenu()
+    public Task<bool> showMenu()
     {
-        
-        Console.WriteLine($"Select a system menu from the list below");
-
-       Console.WriteLine("Main menu");
-       Console.WriteLine("1. Staff Management");
-       Console.WriteLine("2. Restaurant Menu");
-    var menuSelection = Console.ReadLine();
-      if (menuSelection == "1")
-      {
-            Console.WriteLine("Staff Management Menu");
-            Console.WriteLine("1. View Staff");
-            Console.WriteLine("2. Create Staff");
-            Console.WriteLine("3. Edit Staff");
-            Console.WriteLine("4. Back to main menu");
-            var staffMenuSelection = Console.ReadLine();
-            if (staffMenuSelection == "1")
+        public class Dictionary<string, list<string>> menuOptions = new Dictionary<string, list<string>>();
+        public MainMenuTask1()
+    {
+        menuOptions = new Dictionary<string, list<string>>
             {
-                  Console.WriteLine("enter staff you want to view id");
-                  var viewstaffid = Console.ReadLine();
-                  var getStaffid= AppDb.StaffTable;
-                  var staffList = AppDb.StaffTable.Values.ToList();
-                  foreach (var record in staffList)
-                 {
-                    Console.WriteLine(String.Format("{0}\t {1}\t {2}\t {3}", record.StaffId, record.FirstName, record.LastName, record.Designation));
-                 }
-                 
-
-            }
-            else if (staffMenuSelection == "2")
-            {
-                 Console.WriteLine("Enter staff details (staff id, first name, last name, designation, password)");
-                var newStaffInfo = Console.ReadLine();
-                var splitStaffInfo = newStaffInfo.Split(',');
-                var newStaffData = new Staff
                 {
-                    StaffId = Convert.ToInt32(splitStaffInfo[0]),
-                    FirstName = splitStaffInfo[1],
-                    LastName = splitStaffInfo[2],
-                    Designation = splitStaffInfo[3],
-                    Password = splitStaffInfo[4]
-                };
-                newStaffData.CreateStaff();
-                
-            }
-            else if (staffMenuSelection == "3")
-            {
-                Console.WriteLine("Enter staff id to edit");
-                var staffId = Console.ReadLine();
-                var staff = AppDb.StaffTable[Convert.ToInt32(staffId)];
-                Console.WriteLine("Enter new staff details (staff id, first name, last name, designation, password)");
-                var newStaffInfo = Console.ReadLine();
-                var splitStaffInfo = newStaffInfo.Split(',');
-                staff.StaffId = Convert.ToInt32(splitStaffInfo[0]);
-                staff.FirstName = splitStaffInfo[1];
-                staff.LastName = splitStaffInfo[2];
-                staff.Designation = splitStaffInfo[3];
-                staff.Password = splitStaffInfo[4];
+                    "Admin main menu", new List<string>
+                    {
+                        "staff management",
+                        "restaurant management",
+                        "Exit"
+                    },
+                    {
+                        "Staff management", new List<string>
+                        {
+                            "Create staff",
+                            "View staff",
+                            "Edit staff",
+                            "Delete staff",
+                            "Back",
+                        }
+                    },
+                    {
+                        "Restaurant management", new List<string>
+                        {
+                            "menu setup",
+                            "menu item setup",
+                            "Back",
 
-                
-                
-            } 
-            else if (staffMenuSelection == "4")
+                        }
+                    }
+                }
+            }
+}
+    }
+    public void DisplayMenu()
+    {
+        Console.WriteLine();
+        Console.WriteLine();
+        Console.WriteLine("Select a menu option from the list below");
+        Console.WriteLine("=======================================");
+        int counter = 0;
+        foreach (var menu in menuOptions)
+        {
+            Console.WriteLine($"{counter + 1}. {menu.Key}");
+            counter++;
+        }
+    }
+
+    public string getMenuSelection(string menuType)
+    {
+
+        Console.WriteLine("Enter your selection");
+        var selection = Console.ReadLine();
+        if (menuType == "Admin main menu")
+        {
+            if (selection == "1")
             {
-                return Task.FromResult(true);
+                return "Staff management";
+            }
+            else if (selection == "2")
+            {
+                return "Restaurant management";
+            }
+            else if (selection == "3")
+            {
+                return "Exit";
             }
             else
             {
-                return Task.FromResult(true); 
+                return "Invalid selection";
             }
-            
-
-            return Task.FromResult(true);
-         }
-        else if (menuSelection == "2")
-        {
-            Console.WriteLine("Restaurant Menu");
-            Console.WriteLine("1. Menu Setup");
-            Console.WriteLine("2. Menu Item Setup");
-            Console.WriteLine("3. Back to main menu");
-            var restaurantMenuSelection = Console.ReadLine();
-            return Task.FromResult(true);
         }
-        else
+        else if (menuType == "Staff management")
         {
-           return Task.FromResult(true);
-        } 
-
+            if (selection == "1")
+            {
+                return "Create staff";
+            }
+            else if (selection == "2")
+            {
+                return "View staff";
+            }
+            else if (selection == "3")
+            {
+                return "Edit staff";
+            }
+            else if (selection == "4")
+            {
+                return "Delete staff";
+            }
+            else if (selection == "5")
+            {
+                return "Back";
+            }
+            else
+            {
+                return "Invalid selection";
+            }
+        }
+        else if (menuType == "Restaurant management")
+        {
+            if (selection == "1")
+            {
+                return "Menu setup";
+            }
+            else if (selection == "2")
+            {
+                return "Menu item setup";
+            }
+            else if (selection == "3")
+            {
+                return "Back";
+            }
+            else
+            {
+                return "Invalid selection";
+            }
+        }
+       
     }
+   
+    
+    
 }
 
 
 
+
+
+   
     
-       

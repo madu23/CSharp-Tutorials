@@ -1,34 +1,31 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Restaurant.Domain.Db;
 using Restaurant.Domain.Entities;
-using Restaurant.Domain.Enums;
-using Restaurant.Domain.Utilities;
 
 namespace Restaurant.Application.Services;
 
-/// <summary>
-/// Handles staff management operations such as creating, viewing, and editing staff members.
-/// </summary>
-
-public class StaffManagementService
-/// <summary>
-/// Manages staff operations based on user selection.
-/// </summary>
+public class MenuSelectionHandler
 {
+    private readonly SysMenu sysMenu;
+
+    public MenuSelectionHandler(SysMenu sysMenu)
+    {
+        this.sysMenu = sysMenu;
+    }
+
     public async Task HandleStaffManagement(int subChoice)
     {
-        switch ((StaffMenuAction)subChoice)
+        switch (subChoice)
         {
-            case StaffMenuAction.Create:
+            case 1:
                 await CreateStaff();
                 break;
-            case StaffMenuAction.View:
+            case 2:
                 await ViewStaff();
                 break;
-            case StaffMenuAction.Edit:
+            case 3:
                 await EditStaff();
                 break;
             default:
@@ -41,42 +38,20 @@ public class StaffManagementService
     {
         try
         {
-            string fieldNames = string.Join(
-                ", ",
-                Enum.GetValues(typeof(Field))
-                    .Cast<Field>()
-                    .Where(f => f != Field.Cancel) // Exclude Cancel
-                    .Select(f => f.ToString())
+            Console.WriteLine(
+                "Enter staff details (staff id, first name, last name, designation, password)"
             );
-
-            Console.WriteLine($"Enter staff details ({fieldNames}), separated by a comma:");
             var newStaffInfo = Console.ReadLine();
-            if (string.IsNullOrEmpty(newStaffInfo))
-            {
-                Console.WriteLine("No input provided. Please try again.\n");
-                await CreateStaff();
-                return;
-            }
-            Console.WriteLine($"You entered: {newStaffInfo}");
             var splitStaffInfo = newStaffInfo.Trim().Split(',');
-            int expectedFieldsCount = Enum.GetValues(typeof(Field)).Length - 1;
-            if (splitStaffInfo.Count() != expectedFieldsCount)
+            if (splitStaffInfo.Count() != 5)
             {
                 Console.WriteLine(
-                    $"Incorrect number of details! You entered {splitStaffInfo.Count()}, but {expectedFieldsCount} are required."
+                    $"Incorrect number of details! You entered {splitStaffInfo.Count()}, but 5 are required."
                 );
                 Console.WriteLine();
                 await CreateStaff();
                 return;
             }
-            Console.WriteLine("Are you sure you want to create this staff? (Yes/Cancel)");
-            var confirmation = UserInputHandler.GetUserConfirmation(Console.ReadLine().Trim());
-            if (confirmation == CancelOperation.Cancel || confirmation == CancelOperation.No)
-            {
-                Console.WriteLine("Staff creation cancelled.\n");
-                return;
-            }
-
             var newStaffData = new Staff
             {
                 StaffId = Convert.ToInt32(splitStaffInfo[0]),
@@ -86,12 +61,43 @@ public class StaffManagementService
                 Password = splitStaffInfo[4],
             };
             newStaffData.CreateStaff();
-            Console.WriteLine("Staff List");
-            PrintHandler.PrintStaffList(new Staff().ViewAllStaff());
-
-            bool repeat = await UserInputHandler.AskToRepeat("create", CreateStaff);
-            if (!repeat)
+            Console.WriteLine("Staff list");
+            Console.WriteLine(
+                "------------------------------------------------------------------------------------------------------------"
+            );
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.WriteLine(
+                String.Format(
+                    "{0, 4}\t {1, -30}\t {2, -30}\t {3, -30}",
+                    "StaffId",
+                    "First Name",
+                    "Last Name",
+                    "Designation"
+                )
+            );
+            Console.WriteLine(
+                "------------------------------------------------------------------------------------------------------------"
+            );
+            var staffList = AppDb.StaffTable.Values.ToList();
+            foreach (var record in staffList)
+            {
+                Console.WriteLine(
+                    String.Format(
+                        "{0, 4}\t {1, -30}\t {2, -30}\t {3, -30}",
+                        record.StaffId,
+                        record.FirstName,
+                        record.LastName,
+                        record.Designation
+                    )
+                );
+            }
+            Console.WriteLine("Do you want to create another staff? (Yes/No)");
+            if (Console.ReadLine().Trim().Equals("YES", StringComparison.OrdinalIgnoreCase))
+            {
+                await CreateStaff();
                 return;
+            }
         }
         catch (Exception ex)
         {
@@ -101,75 +107,86 @@ public class StaffManagementService
         }
     }
 
-    private static ViewStaffOption GetViewStaffOption(string input)
-    {
-        switch (input.Trim().ToUpper())
-        {
-            case "A":
-                return ViewStaffOption.ViewOne;
-            case "B":
-                return ViewStaffOption.ViewAll;
-            case "C":
-                return ViewStaffOption.Cancel;
-            default:
-                return ViewStaffOption.Invalid;
-        }
-    }
-
     private async Task ViewStaff()
     {
         try
         {
             Console.WriteLine(
-                "Do you want to \n\tA. View a specific staff \n\tB. View all the staff?\n\tC. Cancel\n\nChoose one of the above\n"
+                "Do you want to \n\tA. View a specific staff \n\tB. View all the staff?\n\nChoose A or B"
             );
             Console.Write("Enter choice: ");
             string adminInput = Console.ReadLine();
-            switch (GetViewStaffOption(adminInput))
+            if (string.Equals(adminInput, "A", StringComparison.OrdinalIgnoreCase))
             {
-                case ViewStaffOption.ViewOne:
+                while (true)
+                {
                     Console.Write("Enter the staff ID: ");
                     if (!int.TryParse(Console.ReadLine(), out int staffIdToView))
                     {
                         Console.WriteLine("Invalid input. Please enter a valid number.\n");
-                        await ViewStaff();
-                        return;
+                        continue;
                     }
                     var viewStaff = new Staff().ViewStaff(staffIdToView);
                     if (viewStaff != null)
                     {
                         Console.WriteLine(
-                            $"\nStaff Details:\nStaffId: {viewStaff.StaffId}\nFirst Name: {viewStaff.FirstName}\nLast Name: {viewStaff.LastName}\nDesignation: {viewStaff.Designation}\n"
+                            $"Staff Details:\nStaffId: {viewStaff.StaffId}\nFirst Name: {viewStaff.FirstName}\nLast Name: {viewStaff.LastName}\nDesignation: {viewStaff.Designation}"
                         );
                         Console.WriteLine("Staff Details Retrieved Successfully.");
                     }
                     else
                     {
                         Console.WriteLine("Staff ID not found.\n");
-                        await ViewStaff();
-                        return;
+                        continue;
                     }
-
-                    bool repeat = await UserInputHandler.AskToRepeat("view", ViewStaff);
-                    if (!repeat)
-                        return;
-                    break;
-
-                case ViewStaffOption.ViewAll:
-                    Console.WriteLine("View all staff");
-                    Console.WriteLine("Staff List:");
-                    PrintHandler.PrintStaffList(new Staff().ViewAllStaff());
-                    break;
-
-                case ViewStaffOption.Cancel:
-                    Console.WriteLine("Returning to main menu...");
-                    return;
-
-                case ViewStaffOption.Invalid:
-                default:
-                    Console.WriteLine("Invalid selection. Try again!\n");
-                    await ViewStaff();
-                    return;
+                    Console.Write("Do you want to view another staff? (Yes/No): ");
+                    if (Console.ReadLine().Trim().Equals("YES", StringComparison.OrdinalIgnoreCase))
+                    {
+                        continue;
+                    }
+                    else
+                        break;
+                }
+            }
+            else if (string.Equals(adminInput, "B", StringComparison.OrdinalIgnoreCase))
+            {
+                Console.WriteLine("View all staff");
+                Console.WriteLine("Staff List:");
+                Console.WriteLine(
+                    "------------------------------------------------------------------------------------------------------------"
+                );
+                Console.WriteLine();
+                Console.WriteLine(
+                    String.Format(
+                        "{0, 4}\t {1, -30}\t {2, -30}\t {3, -30}",
+                        "StaffId",
+                        "First Name",
+                        "Last Name",
+                        "Designation"
+                    )
+                );
+                Console.WriteLine(
+                    "------------------------------------------------------------------------------------------------------------"
+                );
+                var staffList = new Staff().ViewAllStaff();
+                foreach (var record in staffList)
+                {
+                    Console.WriteLine(
+                        String.Format(
+                            "{0, 4}\t {1, -30}\t {2, -30}\t {3, -30}",
+                            record.StaffId,
+                            record.FirstName,
+                            record.LastName,
+                            record.Designation
+                        )
+                    );
+                }
+            }
+            else
+            {
+                Console.WriteLine("Invalid selection. Please choose A or B.\n");
+                await ViewStaff();
+                return;
             }
         }
         catch (KeyNotFoundException)
@@ -192,20 +209,11 @@ public class StaffManagementService
         }
     }
 
-    private static Field? GetEditField(string input)
-    {
-        if (int.TryParse(input.Trim(), out int choice) && Enum.IsDefined(typeof(Field), choice))
-        {
-            return (Field)choice;
-        }
-        return null;
-    }
-
     private async Task EditStaff()
     {
         try
         {
-            Console.Write("\nEnter the staff ID to edit: ");
+            Console.Write("Enter the staff ID to edit: ");
             if (!int.TryParse(Console.ReadLine(), out int staffIdToEdit))
             {
                 Console.WriteLine("Invalid input. Please enter a valid number.\n");
@@ -222,80 +230,69 @@ public class StaffManagementService
             Console.WriteLine(
                 $"Editing details for {staffToEdit.FirstName} {staffToEdit.LastName}"
             );
-            while (true)
+            Console.WriteLine(
+                "What do you want to edit? Choose from the list below (separated by a comma) \n1. First Name\n2. Last Name\n3. Password\n4. Designation\n5. Cancel"
+            );
+            var editSelection = Console.ReadLine();
+            var selectedFields = editSelection.Trim().Split(',');
+            if (selectedFields.Contains("5"))
             {
-                Console.WriteLine(
-                    "What do you want to edit? Choose from the list below (separated by a comma) \n1. First Name\n2. Last Name\n3. Password\n4. Designation\n5. Cancel"
-                );
-
-                var editSelection = Console.ReadLine().Trim();
-                var selectedFields = editSelection.Trim().Split(',');
-
-                var editChoices = selectedFields
-                    .Select(x => GetEditField(x))
-                    .Where(x => x.HasValue) // Filter out invalid entries
-                    .Select(x => x.Value)
-                    .ToList();
-                if (editChoices.Contains(Field.Cancel))
+                if (selectedFields.Length > 1) // If "5" is selected along with any other number
                 {
-                    if (selectedFields.Length > 1)
-                    {
-                        Console.WriteLine("Returning to main menu...");
-                        return;
-                    }
-                    else
-                    {
-                        Console.WriteLine("cancelling operation...");
-                        return;
-                    }
+                    Console.WriteLine("Returning to main menu...");
+                    return;
                 }
-                if (selectedFields.Length == 0 || string.IsNullOrWhiteSpace(editSelection))
+                else
                 {
-                    Console.WriteLine("Pick a value. Try again!\n");
-                    continue;
+                    Console.WriteLine("cancelling operation...");
+                    return;
                 }
-                var staffInfoToEdit = new Staff { StaffId = staffIdToEdit };
-                bool validator = false;
-                foreach (var field in editChoices)
-                {
-                    switch (field)
-                    {
-                        case Field.FirstName:
-                            Console.Write("Enter the new first name: ");
-                            staffInfoToEdit.FirstName = Console.ReadLine();
-                            validator = true;
-                            break;
-                        case Field.LastName:
-                            Console.Write("Enter the new last name: ");
-                            staffInfoToEdit.LastName = Console.ReadLine();
-                            validator = true;
-                            break;
-                        case Field.Password:
-                            Console.Write("Enter the new password: ");
-                            staffInfoToEdit.Password = Console.ReadLine();
-                            validator = true;
-                            break;
-                        case Field.Designation:
-                            Console.Write("Enter the new designation: ");
-                            staffInfoToEdit.Designation = Console.ReadLine();
-                            validator = true;
-                            break;
-                        default:
-                            Console.WriteLine("\nInvalid selection. Try again!\n");
-                            validator = false;
-                            break;
-                    }
-                }
-                if (!validator)
-                    continue;
-                new Staff().EditStaff(staffIdToEdit, staffInfoToEdit);
-                Console.WriteLine("Staff details updated successfully.");
-                break;
+            }
+            if (selectedFields.Length == 0 || string.IsNullOrWhiteSpace(editSelection))
+            {
+                Console.WriteLine("Pick a value. Try again!\n");
+                await EditStaff();
+                return;
             }
 
-            bool repeat = await UserInputHandler.AskToRepeat("edit", EditStaff);
-            if (!repeat)
+            var staffInfoToEdit = new Staff { StaffId = staffIdToEdit };
+
+            foreach (var field in selectedFields)
+            {
+                switch (field.Trim())
+                {
+                    case "1":
+                        Console.Write("Enter the new first name: ");
+                        staffInfoToEdit.FirstName = Console.ReadLine();
+                        break;
+                    case "2":
+                        Console.Write("Enter the new last name: ");
+                        staffInfoToEdit.LastName = Console.ReadLine();
+                        break;
+                    case "3":
+                        Console.Write("Enter the new password: ");
+                        staffInfoToEdit.Password = Console.ReadLine();
+                        break;
+                    case "4":
+                        Console.Write("Enter the new designation: ");
+                        staffInfoToEdit.Designation = Console.ReadLine();
+                        break;
+                    default:
+                        Console.WriteLine("\nInvalid selection. Try again!\n");
+                        await EditStaff();
+                        continue;
+                }
+            }
+
+            new Staff().EditStaff(staffIdToEdit, staffInfoToEdit);
+            Console.WriteLine("Staff details updated successfully.");
+
+            Console.Write("Do you want to edit another staff? (Yes/No): ");
+            if (Console.ReadLine().Trim().Equals("YES", StringComparison.OrdinalIgnoreCase))
+            {
+                await EditStaff();
                 return;
+            }
         }
         catch (FormatException)
         {
