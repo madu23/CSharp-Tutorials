@@ -1,0 +1,50 @@
+.container {
+  position: relative;
+
+}
+
+
+
+.steam {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 20px;
+  height: 40px;
+  background: rgba(77, 72, 72, 0.7);
+  border-radius: 50%;
+  opacity: 0;
+  animation: rise 3s infinite ease-in-out;
+}
+
+.steam1 {
+  left: 40%;
+  animation-delay: 0s;
+}
+
+.steam2 {
+  left: 50%;
+  animation-delay: 1s;
+}
+
+.steam3 {
+  left: 60%;
+  animation-delay: 2s;
+}
+
+@keyframes rise {
+  0% {
+    opacity: 0;
+    transform: translateY(10px) scale(0.5);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translateY(-50px) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateY(-100px) scale(1.5);
+  }
+}

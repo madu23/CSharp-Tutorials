@@ -1,1 +1,1 @@
-My name is Eke test project
+TODAY WE STUDIED DOM AND JAVASCRIPT

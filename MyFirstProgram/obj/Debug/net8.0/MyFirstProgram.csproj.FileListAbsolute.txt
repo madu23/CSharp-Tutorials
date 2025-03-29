@@ -1,0 +1,15 @@
+C:\Development\TrainingClasses\CSharp-Tutorials\MyFirstProgram\bin\Debug\net8.0\MyFirstProgram.exe
+C:\Development\TrainingClasses\CSharp-Tutorials\MyFirstProgram\bin\Debug\net8.0\MyFirstProgram.deps.json
+C:\Development\TrainingClasses\CSharp-Tutorials\MyFirstProgram\bin\Debug\net8.0\MyFirstProgram.runtimeconfig.json
+C:\Development\TrainingClasses\CSharp-Tutorials\MyFirstProgram\bin\Debug\net8.0\MyFirstProgram.dll
+C:\Development\TrainingClasses\CSharp-Tutorials\MyFirstProgram\bin\Debug\net8.0\MyFirstProgram.pdb
+C:\Development\TrainingClasses\CSharp-Tutorials\MyFirstProgram\obj\Debug\net8.0\MyFirstProgram.GeneratedMSBuildEditorConfig.editorconfig
+C:\Development\TrainingClasses\CSharp-Tutorials\MyFirstProgram\obj\Debug\net8.0\MyFirstProgram.AssemblyInfoInputs.cache
+C:\Development\TrainingClasses\CSharp-Tutorials\MyFirstProgram\obj\Debug\net8.0\MyFirstProgram.AssemblyInfo.cs
+C:\Development\TrainingClasses\CSharp-Tutorials\MyFirstProgram\obj\Debug\net8.0\MyFirstProgram.csproj.CoreCompileInputs.cache
+C:\Development\TrainingClasses\CSharp-Tutorials\MyFirstProgram\obj\Debug\net8.0\MyFirstProgram.sourcelink.json
+C:\Development\TrainingClasses\CSharp-Tutorials\MyFirstProgram\obj\Debug\net8.0\MyFirstProgram.dll
+C:\Development\TrainingClasses\CSharp-Tutorials\MyFirstProgram\obj\Debug\net8.0\refint\MyFirstProgram.dll
+C:\Development\TrainingClasses\CSharp-Tutorials\MyFirstProgram\obj\Debug\net8.0\MyFirstProgram.pdb
+C:\Development\TrainingClasses\CSharp-Tutorials\MyFirstProgram\obj\Debug\net8.0\MyFirstProgram.genruntimeconfig.cache
+C:\Development\TrainingClasses\CSharp-Tutorials\MyFirstProgram\obj\Debug\net8.0\ref\MyFirstProgram.dll
