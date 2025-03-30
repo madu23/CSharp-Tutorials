@@ -17,8 +17,8 @@ document.addEventListener("DOMContentLoaded", () => {
       const errorMessage = document.getElementById("errorMessage");
 
       if (errorMessage) {
-        errorMessage.style.marginTop = "10px";
-        errorMessage.style.fontSize = "14px";
+        errorMessage.style.margin = "10px";
+        errorMessage.style.fontSize = "20px";
       }
 
       if (username === "admin" && password === "12345") {
@@ -73,3 +73,20 @@ const resetCards = () => {
     card.style.display = "";
   });
 };
+
+const loginButton = document.querySelector(".btn-primary.w-100");
+function updateLoginButtonColor() {
+  const currentHour = new Date().getHours();
+  if (currentHour < 12) {
+    loginButton.style.backgroundColor = "white";
+    loginButton.style.color = "black";
+  } else if (currentHour < 18) {
+    loginButton.style.backgroundColor = "blue";
+    loginButton.style.color = "white";
+  } else {
+    loginButton.style.backgroundColor = "red";
+    loginButton.style.color = "white";
+  }
+}
+
+updateLoginButtonColor();

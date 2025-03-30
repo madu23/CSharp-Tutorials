@@ -1,7 +1,8 @@
+/* Import Fonts */
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Monsieur+La+Doulaise&display=swap");
 
-/* Base Styles */
+/* Global Styles */
 html {
   font-size: 18px;
   width: 100%;
@@ -16,7 +17,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Preloader */
+/* Loading Animation */
 .loading-wave {
   width: 300px;
   height: 100px;
@@ -63,13 +64,13 @@ body {
   }
 }
 
-/* Dashboard Container & Sidebar */
+/* Dashboard Layout */
 .dashboard-container {
   display: flex;
   width: 100%;
 }
 
-/* SIDEBAR: Overlays on small screens, "pushes" content on large screens */
+/* Sidebar Styles */
 .sidebar {
   width: 300px;
   height: 100vh;
@@ -79,7 +80,7 @@ body {
   left: -300px;
   z-index: 1000;
   transition: left 0.3s ease-in-out;
-  background-color: #f8f9fa; /* Or any color you prefer */
+  background-color: #f8f9fa;
 }
 .sidebar.active {
   left: 0;
@@ -98,7 +99,8 @@ body {
   font-weight: bold;
   text-align: center;
 }
-/* Normal state: text is your primary color, background is transparent */
+
+/* Navigation Links */
 .nav-link,
 .dropdown-item {
   color: rgb(83, 83, 83);
@@ -107,73 +109,64 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
-/* Hover state: background is white, text is primary color, scale(1.05) */
 .nav-link:hover,
 .dropdown-item:hover {
-  color: #f09723 !important; /* Text is your primary color */
+  color: #f09723 !important;
   border-radius: 5px;
-  transform: scale(1.05); /* Keep the same scale animation */
-}
-
-/* Active state: background is primary color, text is white */
-.nav-link.active,
-.dropdown-item.active {
-  background-color: #f09723; /* Primary color */
-  color: #fff !important; /* White text */
-  border-radius: 5px;
-}
-
-/* ========== SEARCH BAR STYLES ========== */
-
-/* The form container */
-.search-form {
-  max-width: 300px; /* Adjust as needed */
-}
-
-/* The search input */
-.search-form .form-control {
-  border: 2px solid rgb(83, 83, 83); /* Primary color border */
-  border-radius: 30px 0 0 30px; /* Rounded left corners */
-  background-color: #fff; /* White background */
-  color: #333; /* Dark text */
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-/* Focus effect on the input */
-.search-form .form-control:focus {
-  border-color: #f09723; /* Keep primary border on focus */
-  box-shadow: 0 0 0 0.2rem rgba(240, 151, 35, 0.25);
-  outline: none; /* Remove default outline */
-}
-
-/* The search button */
-.btn-search {
-  border: 2px solid rgb(83, 83, 83); /* Primary color border */
-  border-radius: 0 30px 30px 0; /* Rounded right corners */
-  background-color: #fff; /* White background */
-  color: rgb(83, 83, 83); /* Primary color text */
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-}
-
-/* Hover effect on the button */
-.btn-search:hover {
-  background-color: #f09723;
-  color: #fff; /* White text on hover */
   transform: scale(1.05);
 }
 
-/* Optional: active/pressed state */
+.nav-link.active,
+.dropdown-item.active {
+  background-color: #f09723;
+  color: #fff !important;
+  border-radius: 5px;
+}
+
+/* Search Form */
+.search-form {
+  max-width: 300px;
+}
+
+.search-form .form-control {
+  border: 2px solid rgb(83, 83, 83);
+  border-radius: 30px 0 0 30px;
+  background-color: #fff;
+  color: #333;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.search-form .form-control:focus {
+  border-color: #f09723;
+  box-shadow: 0 0 0 0.2rem rgba(240, 151, 35, 0.25);
+  outline: none;
+}
+
+.btn-search {
+  border: 2px solid rgb(83, 83, 83);
+  border-radius: 0 30px 30px 0;
+  background-color: #fff;
+  color: rgb(83, 83, 83);
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.btn-search:hover {
+  background-color: #f09723;
+  color: #fff;
+  transform: scale(1.05);
+}
+
 .btn-search:active {
   transform: scale(0.95);
 }
 
-/* MAIN CONTENT & HEADER */
+/* Main Content */
 .main-content {
   flex: 1;
   margin-left: 0;
   transition: margin-left 0.3s ease-in-out;
   width: 100%;
-  margin-top: 70px; /* Adjust if needed for header overlap */
+  margin-top: 70px;
 }
 .dashboard-header {
   display: flex;
@@ -185,26 +178,25 @@ body {
   background-color: #fff;
   position: fixed;
   top: 0;
-  left: 0; /* Always start from left */
+  left: 0;
   width: 100%;
   z-index: 1000;
   transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
 }
 
-/* "Push" effect on large screens only */
+/* Media Queries */
 @media (min-width: 992px) {
-  /* When .sidebar is active, push the header & content right */
   .sidebar {
-    left: 0; /* By default, show sidebar on large screens */
+    left: 0;
   }
   .sidebar.active {
-    left: -300px; /* Toggle hidden if user closes it */
+    left: -300px;
   }
   .main-content {
-    margin-left: 300px; /* push content for visible sidebar */
+    margin-left: 300px;
   }
   .main-content.expanded {
-    margin-left: 0; /* content at full width if sidebar is closed */
+    margin-left: 0;
   }
   .dashboard-header {
     width: calc(100% - 300px);
@@ -216,7 +208,6 @@ body {
   }
 }
 
-/* For smaller screens, sidebar overlays the content */
 @media (max-width: 991px) {
   .sidebar.active {
     left: 0;
@@ -237,14 +228,15 @@ body {
   }
 }
 
-/* Header Right, Notifications, and User Info */
+/* Header Right */
 .header-right {
   display: flex;
   gap: 10px;
   align-items: center;
   position: relative;
 }
-/* 1. Base styling for the notifications container */
+
+/* Notifications */
 .notifications {
   position: relative;
   cursor: pointer;
@@ -252,19 +244,16 @@ body {
   display: flex;
   align-items: center;
   border-radius: 5px;
-  background-color: transparent; /* Default: transparent */
+  background-color: transparent;
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
-/* 2. Notification bell icon */
 .notifications i {
   font-size: 1.5rem;
-  color: rgb(83, 83, 83); /* Primary color for icon */
+  color: rgb(83, 83, 83);
 }
 
-/* 3. Badge styling */
 .notifications .badge {
-  /* background-color: #f09723;  */
   color: #fff;
   font-size: 0.7rem;
   border-radius: 50%;
@@ -275,35 +264,31 @@ body {
   transform: translate(50%, -50%);
 }
 
-/* 4. Hover state: white background, primary color icon */
 .notifications:hover {
-  background-color: #fff; /* White background on hover */
+  background-color: #fff;
   transform: scale(1.05);
 }
 
 .notifications,
 .badge:hover span {
-  background-color: #fff; /* White background on hover */
+  background-color: #fff;
   transform: scale(1.05);
 }
 
-/* 4a. Force the icon to remain primary color on hover */
 .notifications:hover i {
-  color: #f09723 !important; /* Keep the icon primary color */
+  color: #f09723 !important;
 }
 
-/* 5. Active/Selected state: primary color background, white icon */
 .notifications.active {
   background-color: #f09723;
   color: #fff;
 }
 
-/* 5a. Icon color changes to white in active state */
 .notifications.active i {
   color: #fff !important;
 }
 
-/* Base styling for user-info (profile) section */
+/* User Info */
 .user-info {
   display: flex;
   align-items: center;
@@ -311,7 +296,7 @@ body {
   padding: 0.5rem;
   border-radius: 5px;
   background-color: transparent;
-  color: rgb(83, 83, 83); /* Primary color for text and icon */
+  color: rgb(83, 83, 83);
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
   cursor: pointer;
 }
@@ -320,7 +305,6 @@ body {
   color: rgb(83, 83, 83);
 }
 
-/* Hover state for profile area: white background and primary color text */
 .user-info:hover {
   transform: scale(1.05);
 }
@@ -332,7 +316,6 @@ body {
   color: #f09723 !important;
 }
 
-/* Active state: background becomes primary color, text becomes white */
 .user-info.active,
 .user-info.active:hover {
   background-color: #f09723;
@@ -343,7 +326,6 @@ body {
   color: #fff !important;
 }
 
-/* Dropdown for user-info */
 .user-info .dropdown-menu {
   display: none;
   position: absolute;
@@ -364,7 +346,6 @@ body {
   transform: translateY(0);
 }
 
-/* Dropdown links styling: default text is primary, background is transparent */
 .user-info .dropdown-menu a {
   display: flex;
   align-items: center;
@@ -376,7 +357,6 @@ body {
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
-/* Dropdown link hover: white background, primary color text with scale effect */
 .user-info .dropdown-menu a:hover {
   background-color: #fff;
   color: rgb(83, 83, 83) !important;
@@ -384,13 +364,58 @@ body {
   transform: scale(1.05);
 }
 
-/* Dropdown active link: primary background, white text */
 .user-info .dropdown-menu a.active {
   background-color: #f09723;
   color: #fff !important;
 }
 
-/* Cards: use a custom class to keep the gradient style. */
+/* Toggle Buttons */
+.toggle-buttons span {
+  cursor: pointer;
+  margin-right: 10px;
+  font-weight: bold;
+  transition: color 0.3s ease, border-bottom 0.3s ease;
+}
+.toggle-buttons span:hover {
+  color: #ff5722;
+}
+.toggle-buttons .active {
+  color: #e91e63;
+  border-bottom: 2px solid #e91e63;
+}
+
+/* Chart Container */
+.chart-container {
+  position: relative;
+  width: 100%;
+  height: 300px;
+}
+
+/* Customer Map Section */
+.customer-map-section {
+  padding: 1.5rem;
+  margin-top: 27px;
+  margin-bottom: 27px;
+  /* border: 1px solid #dee2e6; */
+  border-radius: 5px;
+  background-color: #fff;
+}
+
+.customer-map-container {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  padding: 0.5rem;
+  /* border: 1px solid #e0e0e0; */
+  border-radius: 5px;
+}
+
+/* Reduced Card */
+.reduced-card {
+  padding: 1rem;
+}
+
+/* Custom Card */
 .custom-card {
   background: linear-gradient(to right, #f19720, #f3d423);
   color: white;
@@ -428,26 +453,24 @@ body {
   font-size: 14px;
 }
 
-/* Remove all vertical borders */
+/* Table Styles */
 .table-bordered tr > th,
 .table-bordered tr > td {
   border-left: none !important;
   border-right: none !important;
 }
 
-/* Reapply left border for the first cell in each row */
 .table-bordered tr > th:first-child,
 .table-bordered tr > td:first-child {
   border-left: 1px solid #dee2e6 !important;
 }
 
-/* Reapply right border for the last cell in each row */
 .table-bordered tr > th:last-child,
 .table-bordered tr > td:last-child {
   border-right: 1px solid #dee2e6 !important;
 }
 
-/* Additional small responsive tweaks if needed */
+/* Responsive Adjustments */
 @media (max-width: 768px) {
   .toggle-sidebar {
     margin-bottom: 10px;
