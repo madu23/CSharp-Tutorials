@@ -39,3 +39,32 @@ window.addEventListener("load", function () {
     preloader.style.display = "none";
   }, 500);
 });
+
+// Simple button color change based on time of day
+const loginBtn = document.querySelector(".btn-primary.w-100");
+
+function updateButtonColor() {
+  const hour = new Date().getHours();
+
+  // Morning: before 12pm
+  if (hour < 12) {
+    loginBtn.style.backgroundColor = "#e8f4f8";
+    loginBtn.style.color = "#2c3e50";
+  }
+  // Afternoon: 12pm to 6pm
+  else if (hour < 18) {
+    loginBtn.style.backgroundColor = "#3498db";
+    loginBtn.style.color = "#ffffff";
+  }
+  // Evening: after 6pm
+  else {
+    loginBtn.style.backgroundColor = "#e74c3c";
+    loginBtn.style.color = "#ffffff";
+  }
+}
+
+// Initial color update
+updateButtonColor();
+
+// Update color every hour
+setInterval(updateButtonColor, 3600000);
