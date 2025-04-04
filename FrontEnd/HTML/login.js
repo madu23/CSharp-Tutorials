@@ -22,3 +22,26 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+  let hours = new Date().getHours(); // Get current hour
+
+  let buttonElement = document.querySelector(".btn-dark");
+
+  if (buttonElement) { // To ensure the button exists before applying styles
+    if (hours >= 6 && hours < 12) {
+      // Morning (From 6 AM - 11:59 AM)
+      buttonElement.style.backgroundColor = "white";
+      buttonElement.style.color = "#49392c";
+      buttonElement.style.border = "grey"
+    } else if (hours >= 12 && hours < 18) {
+      // Afternoon (From 12 PM - 5:59 PM)
+      buttonElement.style.backgroundColor = "blue";
+      buttonElement.style.border = "none";
+    } else {
+      // Evening & Night (From 6 PM - 5:59 AM)
+      buttonElement.style.backgroundColor = "red";
+      buttonElement.style.border = "none";
+    }
+  }
+});
