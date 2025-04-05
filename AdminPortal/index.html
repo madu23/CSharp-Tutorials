@@ -27,9 +27,31 @@
                     <input type="password" id="password" class="form-control" placeholder="Password" required>
                 </div>
             </div>
-            <button type="submit" class="btn btn-primary w-100">LOGIN</button>
+            <button type="submit" class="btn btn-primary w-100" id="button"><span class="btntext">LOGIN</span></button>
         </form>
     </div>
     <script src="login.js"></script> 
+    <!-- <script>
+        function changeButtonColor() {
+            const now = new Date();
+            const hours = now.getHours();
+            const button = document.getElementById("button");
+
+            if (button) {
+                if (hours >= 0 && hours < 8) {
+                    button.style.backgroundColor = "black";
+                } else if (hours >= 8 && hours < 16) {
+                    button.style.backgroundColor = "blue";
+                } else {
+                    button.style.backgroundColor = "green";
+                }
+            }
+        }
+
+        document.addEventListener('DOMContentLoaded', function() {
+            changeButtonColor();
+            setInterval(changeButtonColor, 60000);
+        });
+    </script> -->
 </body>
 </html>
