@@ -41,11 +41,11 @@
             src="assets/img/gold-pot.png"
             alt="Mama Put Logo"
             class="img-fluid" /><br />
-          <span>Mama Put</span>
+          <span class="fw-bold fs-4">Mama Put</span>
         </div>
         <ul class="nav flex-column px-3">
-          <li class="nav-item mb-2 Active">
-            <a class="nav-link" href="#">
+          <li class="nav-item mb-2">
+            <a class="nav-link active" href="#">
               <i class="fas fa-tachometer-alt me-2"></i> Dashboard
             </a>
           </li>
@@ -131,22 +131,6 @@
 
           <!-- RIGHT SECTION ( Search Box + Notifications + User Info ) -->
           <div class="header-right d-flex align-items-center gap-3">
-            <!-- Search Box -->
-            <div class="ms-3">
-              <form class="d-flex align-items-center search-form" role="search">
-                <div class="input-group">
-                  <input
-                    class="form-control"
-                    type="search"
-                    placeholder="Search here..."
-                    aria-label="Search" />
-                  <button class="btn btn-search" type="submit">
-                    <i class="fas fa-search"></i>
-                  </button>
-                </div>
-              </form>
-            </div>
-
             <div class="notifications position-relative">
               <i class="fas fa-bell"></i>
               <span
@@ -154,17 +138,23 @@
                 >2</span
               >
             </div>
-            <div class="user-info" id="userInfo">
-              <i class="fas fa-user" style="font-size: 2rem"></i>
+            <div
+              class="user-info dropdown position-relative"
+              data-bs-toggle="dropdown">
+              <i class="fas fa-user fs-4"></i>
               <span>Hello, Admin</span>
-              <div class="dropdown-menu" id="userDropdown">
-                <a class="dropdown-item" href="#">
-                  <i class="fas fa-user-circle me-2"></i> Profile
-                </a>
-                <a class="dropdown-item" href="#logout">
-                  <i class="fas fa-sign-out-alt me-2"></i> Logout
-                </a>
-              </div>
+              <ul class="dropdown-menu">
+                <li>
+                  <a class="dropdown-item" href="#">
+                    <i class="fas fa-user-circle me-2"></i> Profile
+                  </a>
+                </li>
+                <li>
+                  <a class="dropdown-item" href="#logout">
+                    <i class="fas fa-sign-out-alt me-2"></i> Logout
+                  </a>
+                </li>
+              </ul>
             </div>
           </div>
         </header>
@@ -301,30 +291,26 @@
 
           <div class="row">
             <!-- Transactions Summary Section -->
-            <div class="col-md-6 mb-3">
-              <div class="card p-3 shadow-sm h-100 reduced-card">
+            <div class="col-md-7 mb-3">
+              <div class="card p-3 shadow-sm reduced-card">
                 <h3 class="mb-3">Transactions Summary</h3>
-                <div class="row">
-                  <div
-                    class="col-6 d-flex align-items-center justify-content-center">
+                <div class="row text-center">
+                  <div class="col-6">
                     <canvas
-                      id="successfulOrderChart"
-                      width="80"
-                      height="80"></canvas>
-                    <div class="ms-2">
-                      <h4>585</h4>
-                      <p>Successful Order</p>
+                      style="margin-top: -25px"
+                      id="successfulOrderChart"></canvas>
+                    <div style="margin-top: -70px">
+                      <h4 class="mt-2">585</h4>
+                      <p>Successful Orders</p>
                     </div>
                   </div>
-                  <div
-                    class="col-6 d-flex align-items-center justify-content-center">
+                  <div class="col-6">
                     <canvas
-                      id="unsuccessfulOrderChart"
-                      width="80"
-                      height="80"></canvas>
-                    <div class="ms-2">
-                      <h4>165</h4>
-                      <p>Unsuccessful Order</p>
+                      style="margin-top: -25px"
+                      id="unsuccessfulOrderChart"></canvas>
+                    <div style="margin-top: -70px">
+                      <h4 class="mt-2">165</h4>
+                      <p>Unsuccessful Orders</p>
                     </div>
                   </div>
                 </div>
@@ -332,12 +318,14 @@
             </div>
 
             <!-- Average Section -->
-            <div class="col-md-6 mb-3">
+            <div class="col-md-5 mb-3">
               <div class="card p-3 shadow-sm h-100 reduced-card">
                 <h3 class="mb-3">Average</h3>
-                <h4>87,456</h4>
-                <div class="chart-container">
-                  <canvas id="averageOrderChart"></canvas>
+                <div class="text-center">
+                  <h4>87,456</h4>
+                  <div class="chart-container mt-3">
+                    <canvas id="averageOrderChart"></canvas>
+                  </div>
                 </div>
               </div>
             </div>

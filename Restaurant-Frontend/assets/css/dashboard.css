@@ -79,11 +79,14 @@ body {
   position: fixed;
   left: -300px;
   z-index: 1000;
-  transition: left 0.3s ease-in-out;
+  transition: left 0.3s ease-in-out, width 0.3s ease-in-out,
+    transform 0.3s ease-in-out; /* Added width transition */
   background-color: #f8f9fa;
 }
 .sidebar.active {
   left: 0;
+  width: 300px; /* Ensure sidebar width is consistent when active */
+  transform: translateX(0);
 }
 .sidebar .m-logo {
   text-align: center;
@@ -123,50 +126,25 @@ body {
   border-radius: 5px;
 }
 
-/* Search Form */
-.search-form {
-  max-width: 300px;
-}
-
-.search-form .form-control {
-  border: 2px solid rgb(83, 83, 83);
-  border-radius: 30px 0 0 30px;
-  background-color: #fff;
-  color: #333;
-  transition: border-color 0.3s ease, box-shadow 0.3s ease;
-}
-
-.search-form .form-control:focus {
-  border-color: #f09723;
-  box-shadow: 0 0 0 0.2rem rgba(240, 151, 35, 0.25);
-  outline: none;
-}
-
-.btn-search {
-  border: 2px solid rgb(83, 83, 83);
-  border-radius: 0 30px 30px 0;
-  background-color: #fff;
-  color: rgb(83, 83, 83);
-  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
-}
-
-.btn-search:hover {
+.nav-link.active:active {
   background-color: #f09723;
   color: #fff;
-  transform: scale(1.05);
 }
 
-.btn-search:active {
-  transform: scale(0.95);
+header {
+  z-index: 10;
 }
 
 /* Main Content */
 .main-content {
   flex: 1;
-  margin-left: 0;
-  transition: margin-left 0.3s ease-in-out;
+  margin-left: 300px; /* Default margin when sidebar is active */
+  transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out; /* Added width transition */
   width: 100%;
   margin-top: 70px;
+}
+.main-content.expanded {
+  margin-left: 0; /* Full width when sidebar is closed */
 }
 .dashboard-header {
   display: flex;
@@ -179,9 +157,13 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%;
-  z-index: 1000;
-  transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out;
+  width: calc(100% - 300px); /* Default width when sidebar is active */
+  margin-left: 300px; /* Default margin when sidebar is active */
+  transition: margin-left 0.3s ease-in-out, width 0.3s ease-in-out; /* Added width transition */
+}
+.dashboard-header.expanded {
+  margin-left: 0; /* Full width when sidebar is closed */
+  width: 100%; /* Full width when sidebar is closed */
 }
 
 /* Media Queries */
@@ -384,6 +366,20 @@ body {
   border-bottom: 2px solid #e91e63;
 }
 
+/* Toggle Sidebar Button */
+.toggle-sidebar {
+  cursor: pointer;
+  padding: 10px;
+  border-radius: 5px;
+  background-color: transparent;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+}
+
+.toggle-sidebar:active {
+  transform: scale(0.95);
+  background-color: rgba(240, 151, 35, 0.2);
+}
+
 /* Chart Container */
 .chart-container {
   position: relative;
@@ -423,6 +419,7 @@ body {
   border-radius: 10px;
   padding: 1.5rem;
   border: none;
+  cursor: pointer;
 }
 .custom-card:hover {
   transform: scale(1.05);

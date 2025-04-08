@@ -1,12 +1,12 @@
 document.addEventListener("DOMContentLoaded", () => {
-  // Preloader
-  document.body.classList.add("loading");
-  setTimeout(() => {
+  window.addEventListener("load", function () {
+    // Fade out the preloader
     const preloader = document.getElementById("preloader");
-    if (preloader) preloader.style.display = "none";
-    document.body.classList.remove("loading");
-  }, 3000);
-
+    preloader.style.opacity = "0";
+    setTimeout(() => {
+      preloader.style.display = "none";
+    }, 5000);
+  });
   // Login Form
   const loginForm = document.getElementById("loginForm");
   if (loginForm) {
@@ -42,51 +42,22 @@ document.addEventListener("DOMContentLoaded", () => {
     });
   }
 
-  // Search Form
-  const searchForm = document.querySelector(".search-form");
-  if (searchForm) {
-    searchForm.addEventListener("submit", (e) => {
-      e.preventDefault();
-      const input = searchForm.querySelector('input[type="search"]');
-      const query = input ? input.value.trim() : "";
-      console.log("Searching for:", query);
-      query.length > 0 ? filterCards(query) : resetCards();
-    });
+  const loginButton = document.querySelector(".btn-primary.w-100");
+  if (loginButton) {
+    function updateLoginButtonColor() {
+      const currentHour = new Date().getHours();
+      if (currentHour < 12) {
+        loginButton.style.backgroundColor = "white";
+        loginButton.style.color = "black";
+      } else if (currentHour < 18) {
+        loginButton.style.backgroundColor = "blue";
+        loginButton.style.color = "white";
+      } else {
+        loginButton.style.backgroundColor = "red";
+        loginButton.style.color = "white";
+      }
+    }
+
+    updateLoginButtonColor();
   }
 });
-
-// Filters the dashboard cards based on the query.
-const filterCards = (query) => {
-  const cards = document.querySelectorAll(".custom-card");
-  cards.forEach((card) => {
-    card.style.display = card.textContent
-      .toLowerCase()
-      .includes(query.toLowerCase())
-      ? ""
-      : "none";
-  });
-};
-
-// Resets the display property for all dashboard cards.
-const resetCards = () => {
-  document.querySelectorAll(".custom-card").forEach((card) => {
-    card.style.display = "";
-  });
-};
-
-const loginButton = document.querySelector(".btn-primary.w-100");
-function updateLoginButtonColor() {
-  const currentHour = new Date().getHours();
-  if (currentHour < 12) {
-    loginButton.style.backgroundColor = "white";
-    loginButton.style.color = "black";
-  } else if (currentHour < 18) {
-    loginButton.style.backgroundColor = "blue";
-    loginButton.style.color = "white";
-  } else {
-    loginButton.style.backgroundColor = "red";
-    loginButton.style.color = "white";
-  }
-}
-
-updateLoginButtonColor();
