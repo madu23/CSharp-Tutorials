@@ -1,4 +1,3 @@
-// Customer Map Chart initialization
 const ctxCustomer = document
   .getElementById("customerMapChart")
   .getContext("2d");
@@ -33,15 +32,15 @@ let customerMapChart = new Chart(ctxCustomer, {
   options: {
     responsive: true,
     plugins: {
-      legend: {display: false}, // Hide the legend
+      legend: {display: false},
     },
     scales: {
       y: {
         beginAtZero: false,
-        grid: {display: true}, // Disable vertical grid lines
+        grid: {display: true},
       },
       x: {
-        grid: {display: false}, // Disable horizontal grid lines
+        grid: {display: false},
       },
     },
     animation: {
@@ -52,15 +51,12 @@ let customerMapChart = new Chart(ctxCustomer, {
 });
 
 function updateChart(view) {
-  // Smooth toggle animation by updating active classes
   document
     .querySelectorAll(".toggle-buttons span")
     .forEach((el) => el.classList.remove("active"));
   document
     .querySelector(`.toggle-buttons span[onclick="updateChart('${view}')"]`)
     .classList.add("active");
-
-  // Update chart data based on view (dummy data used here)
   customerMapChart.data.datasets[0].data = Array.from(
     {length: 27},
     () => Math.floor(Math.random() * 160) - 80
@@ -68,30 +64,23 @@ function updateChart(view) {
   customerMapChart.update();
 }
 
-// Donut Charts for Transaction Summary
 const centerTextPlugin = {
   id: "centerTextPlugin",
   beforeDraw(chart, args, options) {
     const {ctx, width, height} = chart;
-    console.log(`Donut chart height: ${height}`);
     ctx.save();
-
-    // Calculate font size relative to height
     const fontSize = (height / 200).toFixed(2);
     ctx.font = `${fontSize}em Poppins`;
     ctx.textBaseline = "middle";
     ctx.fillStyle = options.fontColor || "black";
-
     const text = options.text || "";
     const textX = Math.round((width - ctx.measureText(text).width) / 2);
     const textY = height / 2;
-
     ctx.fillText(text, textX, textY);
     ctx.restore();
   },
 };
 
-// Register the plugin globally
 Chart.register(centerTextPlugin);
 
 function createDonutChart(elementId, value, color) {
@@ -142,25 +131,21 @@ function createDonutChart(elementId, value, color) {
   });
 }
 
-// Set the height and width of successfulOrderChart and unsuccessfulOrderChart
 const successfulOrderCanvas = document.getElementById("successfulOrderChart");
-successfulOrderCanvas.width = 321; // Set desired width
-successfulOrderCanvas.height = 321; // Set desired height
+successfulOrderCanvas.width = 321;
+successfulOrderCanvas.height = 321;
 
 const unsuccessfulOrderCanvas = document.getElementById(
   "unsuccessfulOrderChart"
 );
-unsuccessfulOrderCanvas.width = 321; // Set desired width
-unsuccessfulOrderCanvas.height = 321; // Set desired height
+unsuccessfulOrderCanvas.width = 321;
+unsuccessfulOrderCanvas.height = 321;
 
-// Create charts with the custom center text
 createDonutChart("successfulOrderChart", 86, "#4caf50");
 createDonutChart("unsuccessfulOrderChart", 14, "#e91e63");
 
-// Average Order Chart initialization
 const ctx = document.getElementById("averageOrderChart").getContext("2d");
 
-// Your actual data values
 const dataValues = [25, 40, 55, 70, 60, 85, 90, 75, 50, 65];
 
 new Chart(ctx, {
@@ -174,8 +159,6 @@ new Chart(ctx, {
           const chart = context.chart;
           const {ctx, chartArea} = chart;
           if (!chartArea) return null;
-
-          // Create vertical gradient
           const gradient = ctx.createLinearGradient(
             0,
             chartArea.top,
@@ -187,7 +170,7 @@ new Chart(ctx, {
           return gradient;
         },
         borderWidth: 0,
-      }, // ✅ This closing brace was missing
+      },
     ],
   },
   options: {
@@ -200,7 +183,7 @@ new Chart(ctx, {
     scales: {
       y: {
         beginAtZero: false,
-        min: 20, // Start from 20
+        min: 20,
         ticks: {
           stepSize: 20,
         },

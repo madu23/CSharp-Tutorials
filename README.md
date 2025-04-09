@@ -17,3 +17,16 @@ Stories: - Customer Registration - Customer Verification - Customer Account Mana
 - Restaurant Management
 - Reporting
 - Stories >>>>> many Task
+
+login flow
+get the value of the username
+get the value of the password
+check if the va;ue of the username is correct and the value of password is also correct
+if username and password are correct
+redirect to user dashboard
+else  
+ increament user login attempt
+show them a notiifcation (use bootstrap notification)
+if user attempt is up to three times
+show a message of maximum retry exceeded then (use bootstrap for notification)
+disable the login button
