@@ -1,3 +1,23 @@
+// Add this after your existing window.addEventListener code
+window.addEventListener("load", function () {
+  // Get username from localStorage
+  const username = localStorage.getItem("username");
+
+  // Update the welcome message
+  const welcomeSpan = document.getElementById("welcomeMessage");
+  if (welcomeSpan) {
+    welcomeSpan.textContent = `Hello, ${username}`;
+  }
+});
+
+// Add this after your existing window.addEventListener code
+document.getElementById("logoutBtn").addEventListener("click", function () {
+  // Clear the stored username
+  localStorage.removeItem("username");
+  // Redirect to login page
+  window.location.href = "login.html";
+});
+
 // Purpose: To create a chart for the sales data
 var ctx = document.getElementById("salesChart").getContext("2d");
 new Chart(ctx, {

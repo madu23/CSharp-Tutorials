@@ -1,11 +1,19 @@
 const form = document.getElementById("loginForm");
 const loginError = document.getElementById("loginError");
 
+let loginAttempts = 3;
+let isLocked = false; // Flag to check if the account is locked
+
 form.addEventListener("submit", function (event) {
   event.preventDefault();
 
   // Add validation classes
   form.classList.add("was-validated");
+
+  // Prevent submission if account is locked
+  if (isLocked) {
+    return;
+  }
 
   const username = document.getElementById("username").value;
   const password = document.getElementById("password").value;
@@ -18,16 +26,39 @@ form.addEventListener("submit", function (event) {
 
   // Simple validation (replace with your actual validation logic)
   if (username === "rukky" && password === "superpassword") {
+    // Store username before redirecting
+    localStorage.setItem("username", username);
     window.location.href = "dashboard.html";
   } else {
-    loginError.classList.remove("d-none");
+    loginAttempts--;
+    if (loginAttempts > 0) {
+      loginError.textContent = `Invalid username or password! ${loginAttempts} attempts remaining`;
+      loginError.classList.remove("d-none");
+    } else {
+      loginError.textContent =
+        "Maximum login attempts reached. Please try again later.";
+      loginError.classList.remove("d-none");
+      loginBtn.disabled = true;
+      loginBtn.classList.add("opacity-50");
+
+      // Unlock after 20 seconds
+      setTimeout(() => {
+        isLocked = false;
+        loginAttempts = 3;
+        loginBtn.disabled = false;
+        loginBtn.classList.remove("opacity-50");
+        loginError.classList.add("d-none");
+      }, 20000);
+    }
     form.classList.remove("was-validated");
   }
 });
 
-// Hide error message when user starts typing
+// Only hide error when user starts typing if there are attempts left
 form.addEventListener("input", function () {
-  loginError.classList.add("d-none");
+  if (loginAttempts > 0) {
+    loginError.classList.add("d-none");
+  }
 });
 
 // Add this at the beginning of the file
