@@ -1,5 +1,16 @@
 document.addEventListener("DOMContentLoaded", function () {
-  /*** 1️⃣ Sidebar Active State ***/
+    // Get username from localStorage
+    const userName = localStorage.getItem("loggedUser") || "Admin";
+  
+    // Update the greeting
+    const greetingElement = document.getElementById("greeting");
+    if (greetingElement) {
+      greetingElement.innerText = `Hello ${userName}`;
+    }
+  });
+
+document.addEventListener("DOMContentLoaded", function () {
+  /*** Sidebar Active State ***/
   const menuItems = document.querySelectorAll("nav button");
 
   menuItems.forEach((menu) => {
@@ -11,7 +22,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   });
 
-  /*** 2️⃣ Navbar Toggle (for Mobile) ***/
+  /*** Navbar Toggle (for Mobile) ***/
   const navToggle = document.getElementById("navToggle");
   const navbar = document.querySelector(".navbar-collapse");
 
@@ -21,7 +32,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  /*** 3️⃣ Sidebar Toggle (for Small Screens) ***/
+  /*** Sidebar Toggle (for Small Screens) ***/
   const sidebarToggle = document.getElementById("sidebarToggle");
   const sidebar = document.querySelector("nav");
 
@@ -32,15 +43,47 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-/*** 4️⃣ Graph Switching Function ***/
-function changeGraph(pageId) {
-  document.getElementById("graphFrame").src =
-      "https://lookerstudio.google.com/embed/reporting/21ae1fd8-bf1f-421b-a0ed-a9b94d3b3918/page/" + pageId;
+/*** Graph Switching Function ***/
+const ctx = document.getElementById("salesChart").getContext("2d");
 
-  // Remove "active" class from all graph buttons
-  let buttons = document.querySelectorAll(".btn-group .btn");
-  buttons.forEach((btn) => btn.classList.remove("active"));
-
-  // Add "active" class to the clicked button
-  event.target.classList.add("active");
-}
+let salesChart = new Chart(ctx, {
+  type: 'bar',
+  data: {
+    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+    datasets: [{
+      label: 'Sales',
+      data: [12, 19, 3, 5, 2, 3, 7],
+      backgroundColor: '#212529',
+      borderRadius: 5
+    }]
+  },
+  options: {
+    responsive: true,
+    plugins: {
+      legend: {
+        display: true
+      },
+    }
+  }
+});
+function changeGraph(type) {
+    let newData;
+  
+    if (type === 'daily') {
+      newData = [12, 19, 3, 5, 2, 3, 7];
+    } else if (type === 'weekly') {
+      newData = [70, 55, 40, 90, 66, 45, 75];
+    } else {
+      newData = [300, 280, 260, 400, 500, 320, 380];
+    }
+  
+    salesChart.data.datasets[0].data = newData;
+    salesChart.update();
+  
+    // Remove "active" class from all graph buttons
+    let buttons = document.querySelectorAll(".btn-group .btn");
+    buttons.forEach((btn) => btn.classList.remove("active"));
+  
+    // Add "active" class to the clicked button
+    event.target.classList.add("active");
+  }

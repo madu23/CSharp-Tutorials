@@ -1,3 +1,5 @@
+let loginAttempts = 0;
+const maxAttempts = 3;
 document.addEventListener("DOMContentLoaded", function () {
   const loginForm = document.getElementById("loginForm");
 
@@ -8,16 +10,40 @@ document.addEventListener("DOMContentLoaded", function () {
       // Get user input
       const username = document.getElementById("username").value.trim();
       const password = document.getElementById("password").value.trim();
+      const alertBox = document.getElementById("loginAlert");
+      const loginButton = loginForm.querySelector("button[type='submit']");
 
       // Dummy credentials (replace with real authentication)
       const validUsername = "admin";
       const validPassword = "superPassword";
 
       if (username === validUsername && password === validPassword) {
-        alert("Login successful!");
+        alertBox.className = "text-success mt-2 small";
+        alertBox.innerText = "Login successful! Redirecting...";
+
+        localStorage.setItem("loggedUser", username);
         window.location.href = "dashboard.html"; // Redirect to dashboard
       } else {
-        alert("Invalid username or password. Try again.");
+        loginAttempts++;
+
+        const attemptsLeft = maxAttempts - loginAttempts;
+
+        if (loginAttempts < maxAttempts) {
+          alertBox.className = "text-warning mt-2 small";
+          alertBox.innerText = `Incorrect login again. You have ${attemptsLeft} trial${
+            attemptsLeft === 1 ? "" : "s"
+          } left!`;
+        } else {
+          alertBox.className = "text-danger mt-2 small";
+          alertBox.innerText =
+            "Too many failed attempts. Please try again later.";
+
+          loginButton.disabled = true;
+          loginButton.classList.add("btn-secondary");
+          loginButton.classList.remove("btn-dark");
+        }
+
+        alertBox.classList.remove("d-none");
       }
     });
   }
@@ -28,12 +54,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let buttonElement = document.querySelector(".btn-dark");
 
-  if (buttonElement) { // To ensure the button exists before applying styles
+  if (buttonElement) {
+    // To ensure the button exists before applying styles
     if (hours >= 6 && hours < 12) {
       // Morning (From 6 AM - 11:59 AM)
       buttonElement.style.backgroundColor = "white";
       buttonElement.style.color = "#49392c";
-      buttonElement.style.border = "grey"
+      buttonElement.style.border = "grey";
     } else if (hours >= 12 && hours < 18) {
       // Afternoon (From 12 PM - 5:59 PM)
       buttonElement.style.backgroundColor = "blue";
