@@ -29,3 +29,11 @@ const salesChart = new Chart(ctx, {
         }
     }
 });
+
+document.addEventListener("DOMContentLoaded", function() {
+    const username = localStorage.getItem("loggedInUser") || "Admin"; 
+    const userInfoSpan = document.querySelector(".user-info span"); 
+    if (userInfoSpan) {
+        userInfoSpan.textContent = `Hello, ${username}`;
+    }
+});

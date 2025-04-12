@@ -1,50 +1,88 @@
 
-    alert('You clicked login')
-    document.getElementById("loginBtn").addEventListener("click", function() {
-        const username = document.getElementById("username").value;
-        const password = document.getElementById("password").value;
-        
-        if (username.trim() === "aikay" && password.trim() === "aikay") {
+alert('You clicked login')
+let loginCount = 0;
+const maxCount = 3;
+
+document.getElementById("loginBtn").addEventListener("click", function() {
+
+
+    if(loginCount >= 3) {
+        showAlert("Too many failed attempts. Login disabled.", "danger");
+        document.getElementById("loginBtn").disabled = true;
+        return;
+    }
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+    
+    if (username.trim() === "aikay" && password.trim() === "aikay") {
+        showAlert("Login successful! Redirecting...", "success");
+        setTimeout(() => {
             window.location.assign("dashboard.html");
-        } else {
-            alert("Invalid Credentials");
+        }, 5000);
+        
+    } else {
+        loginCount++;
+        const attemptsLeft = maxCount - loginCount;
+        showAlert(`Invalid Credentials. Attempts left: ${attemptsLeft}`, "danger");
+        
+    }
+        
+
+        if(loginCount >= 3) {
+            document.getElementById("loginBtn").disabled = true;
         }
-
-
-        const loginBtn = document.getElementById("loginBtn");
-        
-        function updateButtonColor()
-        {
-            
-            const currentHour = new Date().getHours(); // Get the current hour (0-23)
-        
-            if (currentHour >= 8 && currentHour < 12)
-            {
-                loginBtn.style.backgroundColor = "Blue"; // Blue
-                loginBtn.style.color = "white"; // White text
-            }
-            
-            else if (currentHour >= 12 && currentHour < 18) 
-            {
-                loginBtn.style.backgroundColor = "White"; // White
-                loginBtn.style.color = "Black"; // Black text for contrast
-            } 
-            
-            else
-             {
-                loginBtn.style.backgroundColor = "Red"; // Red
-                loginBtn.style.color = "White"; // White text
-            }
+        if (username.trim() === "aikay" && password.trim() === "aikay") {
+            localStorage.setItem("loggedInUser", username.trim()); 
+            window.location.assign("dashboard.html");
         }
         
-        // Run the function on page load
-        document.addEventListener("DOMContentLoaded", updateButtonColor);
-        
-        // Optional: Update the button color every minute in case the user keeps the page open
-        setInterval(updateButtonColor, 60000);
-        
-    });
+});
+    
    
+    const loginBtn = document.getElementById("loginBtn");
+
+    function updateButtonColor()
+    {
+        
+        const currentHour = new Date().getHours(); 
+    
+        if ( currentHour < 12)
+        {
+            loginBtn.style.backgroundColor = "Blue";   
+            loginBtn.style.color = "white"; 
+
+        }    
+        else if ( currentHour < 18) 
+                {
+                    loginBtn.style.backgroundColor = "White"; // White
+                    loginBtn.style.color = "Black"; 
+                } 
+                
+                else
+                 {
+                    loginBtn.style.backgroundColor = "Red"; // Red
+                    loginBtn.style.color = "White"; 
+                }
+        
+        
+       
+    }
+    
+   updateButtonColor(); 
+
+   function showAlert(message, type) {
+    let alertBox = document.getElementById("loginAlert");
+    if (!alertBox) {
+        alertBox = document.createElement("div");
+        alertBox.id = "loginAlert";
+        alertBox.className = "alert alert-" + type;
+        alertBox.setAttribute("role", "alert");
+        document.getElementById("loginBtn").insertAdjacentElement("afterend", alertBox);
+    }
+    alertBox.className = `alert alert-${type}`;
+    alertBox.textContent = message;
+}
+
     
 
 
