@@ -14,6 +14,8 @@
             <i class="bi bi-egg-fried fa-3x"></i>
             <h2 class="mt-2">Mama Put</h2>
         </div>
+        <!-- Add an error message container -->
+        <div id="errorMessage" class="alert alert-danger d-none" role="alert"></div>
         <form onsubmit="return validateLogin(event)"> 
             <div class="mb-3">
                 <div class="input-group">
@@ -31,27 +33,5 @@
         </form>
     </div>
     <script src="login.js"></script> 
-    <!-- <script>
-        function changeButtonColor() {
-            const now = new Date();
-            const hours = now.getHours();
-            const button = document.getElementById("button");
-
-            if (button) {
-                if (hours >= 0 && hours < 8) {
-                    button.style.backgroundColor = "black";
-                } else if (hours >= 8 && hours < 16) {
-                    button.style.backgroundColor = "blue";
-                } else {
-                    button.style.backgroundColor = "green";
-                }
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            changeButtonColor();
-            setInterval(changeButtonColor, 60000);
-        });
-    </script> -->
 </body>
 </html>

@@ -1,4 +1,22 @@
 document.addEventListener("DOMContentLoaded", function () {
+    // Display the logged-in user's name
+    const usernameDisplay = document.getElementById("usernaemDisplay");
+    const loggedInUser = localStorage.getItem("username");
+    if (loggedInUser && usernameDisplay) {
+        usernameDisplay.textContent = `Welcome, ${loggedInUser}`;
+    }
+
+    // Handle logout button click
+    const logoutButton = document.getElementById("logoutButton");
+    if (logoutButton) {
+        logoutButton.addEventListener("click", function () {
+            // Clear the logged-in user and redirect to login page
+            localStorage.removeItem("username");
+            window.location.href = "index.html"; // Redirect to login page
+        });
+    }
+
+    // Create the sales chart
     var ctx = document.getElementById('salesChart').getContext('2d');
     var salesChart = new Chart(ctx, {
         type: 'bar',

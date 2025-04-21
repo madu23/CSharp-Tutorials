@@ -10,6 +10,7 @@
 <body style="background-color: skyblue;">
     <div class="container-fluid">
         <div class="row">
+            <!-- Sidebar -->
             <nav class="col-md-3 col-lg-2 d-md-block bg-light sidebar">
                 <div class="position-sticky">
                     <h2 class="text-center mt-3">Mama Put</h2>
@@ -37,7 +38,22 @@
                     </ul>
                 </div>
             </nav>
+
+            <!-- Main Content -->
             <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4" style="background-color: skyblue;">
+                <!-- Navbar -->
+                <nav class="navbar navbar-light bg-light px-3 mb-3">
+                    <div class="d-flex align-items-center">
+                        <!-- Profile Avatar -->
+                        <img src="https://via.placeholder.com/40" alt="Avatar" class="rounded-circle me-2">
+                        <!-- Username -->
+                        <span id="usernaemDisplay" class="fw-bold">Welcome, User</span>
+                    </div>
+                    <!-- Logout Button -->
+                    <button id="logoutButton" class="btn btn-danger">Logout</button>
+                </nav>
+
+                <!-- Dashboard Content -->
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                 </div><br><br>
                 <div class="row mb-4">
@@ -102,7 +118,6 @@
             </main>
         </div>
     </div>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="dashboard.js"></script>
 </body>
