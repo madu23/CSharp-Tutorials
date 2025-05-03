@@ -1,0 +1,41 @@
+:root {
+  --bs-primary: #462009;
+  --bs-secondary: #6f431b;
+}
+.btn-primary {
+  background-color: var(--bs-primary) !important;
+  border-color: var(--bs-primary) !important;
+}
+.btn.btn-light:hover {
+  color: var(--bs-secondary);
+}
+.btn-secondary {
+  background-color: var(--bs-secondary) !important;
+  border-color: var(--bs-secondary) !important;
+}
+.nav-link {
+  color: black;
+  transition: color 0.2s ease, background-color 0.2s ease;
+}
+.nav-link:hover {
+  color: var(--bs-secondary);
+}
+.nav-link.active {
+  color: var(--bs-primary) !important;
+}
+.nav-link:hover {
+  color: var(--bs-secondary);
+  background-color: rgba(0, 0, 0, 0.05);
+}
+.nav-link.active {
+  color: var(--bs-primary) !important;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.nav-pills .nav-link.active {
+  background-color: var(--bs-primary) !important;
+  border-color: var(--bs-primary) !important;
+  color: #fff !important; /* Add this line for white text on active */
+}
+.nav-pills .nav-link {
+  color: var(--bs-primary);
+}

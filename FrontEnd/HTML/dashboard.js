@@ -1,89 +1,57 @@
 document.addEventListener("DOMContentLoaded", function () {
-    // Get username from localStorage
-    const userName = localStorage.getItem("loggedUser") || "Admin";
-  
-    // Update the greeting
-    const greetingElement = document.getElementById("greeting");
-    if (greetingElement) {
-      greetingElement.innerText = `Hello ${userName}`;
-    }
-  });
+  // Get username from localStorage
+  const userName = localStorage.getItem("loggedUser") || "Admin";
+
+  // Update the greeting
+  const nameElements = document.getElementsByClassName("user-name");
+  if (nameElements) {
+    Array.from(nameElements).forEach((el) => {
+      el.innerText = userName;
+    });
+  }
+});
 
 document.addEventListener("DOMContentLoaded", function () {
-  /*** Sidebar Active State ***/
-  const menuItems = document.querySelectorAll("nav button");
+  document.querySelectorAll(".nav-link").forEach((link) => {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
 
-  menuItems.forEach((menu) => {
-      menu.addEventListener("click", function () {
-          // Remove active class from all buttons
-          menuItems.forEach((item) => item.classList.remove("active"));
-          // Add active class to the clicked button
-          this.classList.add("active");
-      });
+      // Remove 'active' from all links
+      document
+        .querySelectorAll(".nav-link")
+        .forEach((nav) => nav.classList.remove("active"));
+
+      // Hide all charts
+      document.getElementById("daily-sales").classList.add("d-none");
+      document.getElementById("weekly-sales").classList.add("d-none");
+      document.getElementById("monthly-sales").classList.add("d-none");
+
+      // Add 'active' to the clicked link
+      this.classList.add("active");
+
+      // Show the corresponding chart
+      const selectedTab = this.getAttribute("data-tab");
+      document
+        .getElementById(`${selectedTab}-sales`)
+        .classList.remove("d-none");
+    });
   });
 
-  /*** Navbar Toggle (for Mobile) ***/
-  const navToggle = document.getElementById("navToggle");
-  const navbar = document.querySelector(".navbar-collapse");
+  const sidebarButtons = document.querySelectorAll(
+    ".btn.d-flex.align-items-center"
+  );
 
-  if (navToggle) {
-      navToggle.addEventListener("click", function () {
-          navbar.classList.toggle("show");
+  sidebarButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      // Remove btn-primary and add btn-light for all buttons
+      sidebarButtons.forEach((btn) => {
+        btn.classList.remove("btn-primary");
+        btn.classList.add("btn-light");
       });
-  }
 
-  /*** Sidebar Toggle (for Small Screens) ***/
-  const sidebarToggle = document.getElementById("sidebarToggle");
-  const sidebar = document.querySelector("nav");
-
-  if (sidebarToggle) {
-      sidebarToggle.addEventListener("click", function () {
-          sidebar.classList.toggle("d-none");
-      });
-  }
+      // Add btn-primary and remove btn-light to the clicked button
+      button.classList.remove("btn-light");
+      button.classList.add("btn-primary");
+    });
+  });
 });
-
-/*** Graph Switching Function ***/
-const ctx = document.getElementById("salesChart").getContext("2d");
-
-let salesChart = new Chart(ctx, {
-  type: 'bar',
-  data: {
-    labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
-    datasets: [{
-      label: 'Sales',
-      data: [12, 19, 3, 5, 2, 3, 7],
-      backgroundColor: '#212529',
-      borderRadius: 5
-    }]
-  },
-  options: {
-    responsive: true,
-    plugins: {
-      legend: {
-        display: true
-      },
-    }
-  }
-});
-function changeGraph(type) {
-    let newData;
-  
-    if (type === 'daily') {
-      newData = [12, 19, 3, 5, 2, 3, 7];
-    } else if (type === 'weekly') {
-      newData = [70, 55, 40, 90, 66, 45, 75];
-    } else {
-      newData = [300, 280, 260, 400, 500, 320, 380];
-    }
-  
-    salesChart.data.datasets[0].data = newData;
-    salesChart.update();
-  
-    // Remove "active" class from all graph buttons
-    let buttons = document.querySelectorAll(".btn-group .btn");
-    buttons.forEach((btn) => btn.classList.remove("active"));
-  
-    // Add "active" class to the clicked button
-    event.target.classList.add("active");
-  }

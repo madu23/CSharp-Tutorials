@@ -11,240 +11,400 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="style.css" />
+    <!-- Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
 
     <!-- Google Fonts -->
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600&display=swap"
       rel="stylesheet"
     />
+    <!-- CSS -->
+    <link rel="stylesheet" href="dashboard.css" />
   </head>
 
   <body>
     <div class="container-fluid">
-      <div class="row vh-100">
-        <!-- Sidebar -->
-        <nav
-          class="col-md-3 col-lg-2 bg-light d-flex flex-column align-items-center py-3"
-        >
-          <img src="Images/logo.png" alt="Logo" class="mb-3 w-50" />
+      <div class="row">
+        <!-- Navbar -->
+        <nav class="navbar bg-body-tertiary d-flex align-items-center">
+          <form class="d-flex w-75" role="search">
+            <input
+              class="form-control me-2 mx-3"
+              type="search"
+              placeholder="Search"
+              aria-label="Search"
+            />
+            <button class="btn btn-primary" type="submit">Search</button>
+          </form>
 
-          <button
-            class="btn w-100 text-start d-flex align-items-center py-2 active"
+          <!-- Notification + Profile + Name Group -->
+          <div
+            class="d-lg-flex d-none flex-column align-items-center ms-auto me-3"
           >
-            <img
-              src="Images/dashboard-icon.svg"
-              alt="Dashboard"
-              margin-buttom="-4px"
-              class="me-2"
-            />
-            Dashboard
-          </button>
+            <div class="d-flex align-items-center gap-3 mb-1">
+              <!-- Notification Icon -->
+              <a href="#" class="text-dark fs-5 position-relative">
+                <i class="fas fa-bell"></i>
+                <!-- 
+                Notification Badge 
+                <span
+                  class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                >
+                  3
+                  <span class="visually-hidden">unread messages</span>
+                </span>
+                -->
+              </a>
 
-          <button class="btn w-100 text-start d-flex align-items-center py-2">
-            <img
-              src="Images/food-icon.svg"
-              alt="Menu"
-              margin-buttom="-4px"
-              class="me-2"
-            />
-            Menu
-          </button>
+              <!-- Profile Icon -->
+              <a href="#" class="text-dark fs-5">
+                <i class="fas fa-user-circle"></i>
+              </a>
+            </div>
+            <!-- Name under icons -->
+            <h6 class="m-0 user-name">Oluwafunmilayo</h6>
+          </div>
 
-          <button class="btn w-100 text-start d-flex align-items-center py-2">
-            <img
-              src="Images/customer-icon.svg"
-              alt="Customer"
-              margin-buttom="-4px"
-              class="me-2"
-            />
-            Customers
-          </button>
-
-          <button class="btn w-100 text-start d-flex align-items-center py-2">
-            <img
-              src="Images/order-icon.svg"
-              alt="Order"
-              margin-buttom="-4px"
-              class="me-2"
-            />
-            Orders
+          <!-- Menu button for small screens -->
+          <button
+            class="btn btn-secondary d-md-none"
+            type="button"
+            data-bs-toggle="offcanvas"
+            data-bs-target="#sidebarMenu"
+            aria-controls="sidebarMenu"
+          >
+            <i class="fas fa-bars"></i>
           </button>
         </nav>
 
-        <!-- Main Content -->
-        <main class="col-md-9 col-lg-10 p-4 bg-light">
-          <!-- Navbar -->
-          <nav
-            class="navbar navbar-expand-lg navbar-light bg-white rounded shadow-sm px-3"
-          >
-            <input
-              type="text"
-              class="form-control me-3"
-              placeholder="Search Employee ID"
+        <!-- Offcanvas Sidebar (for mobile) -->
+        <div
+          class="offcanvas offcanvas-start d-md-none"
+          tabindex="-1"
+          id="sidebarMenu"
+          aria-labelledby="sidebarMenuLabel"
+        >
+          <div class="offcanvas-header">
+            <img
+              src="Logo.png"
+              alt="Logo"
+              class="img-fluid"
+              style="max-height: 80px"
             />
-            <div class="d-flex align-items-start">
-              <!-- Notification Icon -->
-              <img
-                src="Images/Notification.svg"
-                alt="Notification"
-                class="me-3"
-              />
-              <!-- Profile + Greeting stacked vertically -->
-              <div class="d-flex flex-column align-items-center">
-                <img
-                  src="Images/profile.jpg"
-                  alt="Profile"
-                  class="rounded-circle"
-                  width="40"
-                />
-                <h6 id="greeting" class="fw-bold text-dark mt-1 mb-0">
-                  Hello Admin
-                </h6>
-              </div>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="offcanvas"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="offcanvas-body">
+            <ul class="nav flex-column">
+              <li class="nav-item">
+                <a class="nav-link active" href="#"
+                  ><i class="fas fa-tachometer-alt me-2"></i> Dashboard</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"
+                  ><i class="fas fa-utensils me-2"></i> Food Menu</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"
+                  ><i class="fas fa-users me-2"></i> Customer</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"
+                  ><i class="fas fa-shopping-cart me-2"></i> Order</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <i class="fas fa-user me-2"></i> Profile</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#">
+                  <i class="fas fa-bell me-2"></i> Notification</a
+                >
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="#"
+                  ><i class="fas fa-cog me-2"></i> Setting</a
+                >
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Fixed Sidebar (for desktop) -->
+        <nav class="col-md-3 col-lg-2 d-none d-md-block bg-light sidebar p-3">
+          <a class="navbar-brand d-flex justify-content-center" href="#">
+            <img
+              src="Logo.png"
+              alt="Logo"
+              width="120"
+              height="120"
+              class="d-inline-block align-text-top me-2 mb-3"
+            />
+          </a>
+          <div class="d-grid gap-2">
+            <button
+              class="btn btn-primary d-flex align-items-center"
+              type="button"
+            >
+              <i class="fas fa-tachometer-alt me-2"></i>
+              <span>Dashboard</span>
+            </button>
+
+            <button
+              class="btn btn-light d-flex align-items-center"
+              type="button"
+            >
+              <i class="fas fa-utensils me-2"></i>
+              <span>Food Menu</span>
+            </button>
+
+            <button
+              class="btn btn-light d-flex align-items-center"
+              type="button"
+            >
+              <i class="fas fa-shopping-cart me-2"></i>
+              <span>Order</span>
+            </button>
+
+            <button
+              class="btn btn-light d-flex align-items-center"
+              type="button"
+            >
+              <i class="fas fa-users me-2"></i>
+              <span>Customer</span>
+            </button>
+
+            <div class="dropdown-center w-100">
+              <button
+                class="btn btn-light w-100 d-flex justify-content-between align-items-center"
+                type="button"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
+              >
+                <span class="d-flex align-items-center">
+                  <i class="fas fa-cog me-2"></i> Setting
+                </span>
+                <i class="fas fa-chevron-down small"></i>
+              </button>
+              <ul class="dropdown-menu p-2 m-2" style="min-width: 150px">
+                <li><a class="dropdown-item small" href="#">Action</a></li>
+                <li><a class="dropdown-item small" href="#">Action two</a></li>
+                <li>
+                  <a class="dropdown-item small" href="#">Action three</a>
+                </li>
+              </ul>
             </div>
-          </nav>
+          </div>
+        </nav>
 
-          <!-- Hero Section -->
-          <section class="mt-4">
-            <!-- Cards -->
-            <!-- Cards Section -->
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-3">
-              <div class="col">
-                <div class="card text-center shadow-sm p-3">
-                  <img
-                    src="Images/orders-icon.svg"
-                    alt="Orders"
-                    class="mb-2"
-                    width="30"
-                  />
-                  <h6>Total Orders</h6>
-                  <p class="fw-bold">1,750</p>
-                </div>
-              </div>
+        <!-- Main Content -->
+        <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4">
+          <h4 class="m-3">
+            Welcome, <span class="user-name">Oluwafunmilayo</span>
+          </h4>
 
-              <div class="col">
-                <div class="card text-center shadow-sm p-3">
-                  <img
-                    src="Images/delivered-icon.svg"
-                    alt="Delivered"
-                    class="mb-2"
-                    width="30"
-                  />
-                  <h6>Total Delivered</h6>
-                  <p class="fw-bold">567</p>
-                </div>
-              </div>
-
-              <div class="col">
-                <div class="card text-center shadow-sm p-3">
-                  <img
-                    src="Images/revenue-icon.svg"
-                    alt="Revenue"
-                    class="mb-2"
-                    width="30"
-                  />
-                  <h6>Total Revenue</h6>
-                  <p class="fw-bold">N1,290,750</p>
-                </div>
-              </div>
-
-              <div class="col">
-                <div class="card text-center shadow-sm p-3">
-                  <img
-                    src="Images/menu-icon.svg"
-                    alt="Food"
-                    class="mb-2"
-                    width="30"
-                  />
-                  <h6>Total Menu</h6>
-                  <p class="fw-bold">125</p>
-                </div>
-              </div>
-            </div>
-
-            <!-- Dashboard Content (Table & Graph) -->
-            <div class="row g-3 mt-4">
-              <!-- Employee Details Table -->
-              <div class="col-12 col-lg-6">
-                <div class="card shadow-sm p-3">
-                  <h5 class="card-title">Employee Details</h5>
-                  <table class="table table-striped">
-                    <thead class="table-dark">
-                      <tr>
-                        <th>ID</th>
-                        <th>First Name</th>
-                        <th>Last Name</th>
-                        <th>Designation</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td>#1454</td>
-                        <td>Oluwafunmilayo</td>
-                        <td>Lemboye</td>
-                        <td>System Admin</td>
-                      </tr>
-                      <tr>
-                        <td>#1455</td>
-                        <td>Jane</td>
-                        <td>Doe</td>
-                        <td>HR Manager</td>
-                      </tr>
-                      <tr>
-                        <td>#1456</td>
-                        <td>John</td>
-                        <td>Smith</td>
-                        <td>Developer</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <!-- Graph Section -->
-              <div class="col-12 col-lg-6">
-                <div class="card shadow-sm p-3">
+          <!-- <div class="card-group gap-3"> -->
+          <div class="row g-3 m-3">
+            <!-- Added gap for spacing between cards -->
+            <div class="col-12 col-sm-6 col-xl-3">
+              <div class="card bg-white p-3 border rounded-3">
+                <div class="d-flex align-items-start">
                   <div
-                    class="d-flex justify-content-between align-items-center"
+                    class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3"
+                    style="width: 40px; height: 40px"
                   >
-                    <h5 class="card-title">Sales Chart</h5>
-                    <div class="btn-group">
-                      <button
-                        class="btn btn-outline-dark active"
-                        onclick="changeGraph('daily')"
+                    <i class="fas fa-shopping-cart"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h5 class="card-title mb-1">Total Orders</h5>
+                    <p class="card-text mb-2">1,750</p>
+                    <div class="text-end">
+                      <small
+                        class="text-success d-inline-flex align-items-center gap-1 fw-light"
                       >
-                        Daily
-                      </button>
-                      <button
-                        class="btn btn-outline-dark"
-                        onclick="changeGraph('weekly')"
-                      >
-                        Weekly
-                      </button>
-                      <button
-                        class="btn btn-outline-dark"
-                        onclick="changeGraph('monthly')"
-                      >
-                        Monthly
-                      </button>
+                        <i class="fas fa-arrow-up"></i> 8.75%
+                      </small>
                     </div>
                   </div>
-
-                  <!-- Graph Frame -->
-                  <canvas id="salesChart" width="100%" height="100"></canvas>
-
                 </div>
               </div>
             </div>
-          </section>
+
+            <div class="col-12 col-sm-6 col-xl-3">
+              <div class="card bg-white p-3 border rounded-3">
+                <div class="d-flex align-items-start">
+                  <div
+                    class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center me-3"
+                    style="width: 40px; height: 40px"
+                  >
+                    <i class="fas fa-truck"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h5 class="card-title mb-1">Total Delivered</h5>
+                    <p class="card-text mb-2">200</p>
+                    <div class="text-end">
+                      <small
+                        class="text-success d-inline-flex align-items-center gap-1 fw-light"
+                      >
+                        <i class="fas fa-arrow-up"></i> 9.6%
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-3">
+              <div class="card bg-white p-3 border rounded-3">
+                <div class="d-flex align-items-start">
+                  <div
+                    class="rounded-circle bg-warning text-white d-flex align-items-center justify-content-center me-3"
+                    style="width: 40px; height: 40px"
+                  >
+                    <i class="fas fa-dollar-sign"></i>
+                  </div>
+                  <div class="flex-grow-1">
+                    <h5 class="card-title mb-1">Total Revenue</h5>
+                    <p class="card-text mb-2">1,250,000</p>
+                    <div class="text-end">
+                      <small
+                        class="text-danger d-inline-flex align-items-center gap-1 fw-light"
+                      >
+                        <i class="fas fa-arrow-down"></i> 8.75%
+                      </small>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-xl-3">
+              <div class="card bg-white p-3 border rounded-3">
+                <div class="d-flex align-items-start mb-3">
+                  <div
+                    class="icon-circle bg-danger text-white d-flex align-items-center justify-content-center me-3"
+                    style="width: 40px; height: 40px; border-radius: 50%"
+                  >
+                    <i class="fas fa-times-circle"></i>
+                  </div>
+                  <div>
+                    <h5 class="card-title m-0">Total Canceled</h5>
+                    <p class="card-text">1,750</p>
+                  </div>
+                </div>
+
+                <div class="text-end">
+                  <small
+                    class="text-success d-inline-flex align-items-center gap-1 fw-light"
+                  >
+                    <i class="fas fa-arrow-up"></i> 12.3%
+                  </small>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row m-3">
+            <div class="col-lg-6">
+              <h5 class="text-start">Employee Details</h5>
+              <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">#ID</th>
+                    <th scope="col">First</th>
+                    <th scope="col">Last</th>
+                    <th scope="col">Designation</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <th scope="row">1</th>
+                    <td>Oluwafunmilayo</td>
+                    <td>Lemboye</td>
+                    <td>Admin</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">2</th>
+                    <td>Mark</td>
+                    <td>Otto</td>
+                    <td>HR</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">3</th>
+                    <td>Jacob</td>
+                    <td>Thornton</td>
+                    <td>Manager</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">4</th>
+                    <td>John</td>
+                    <td>Doe</td>
+                    <td>Head Chef</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="col-lg-6">
+              <h5 class="text-start">Sales Chart</h5>
+              <div class="card text-center">
+                <div class="card-header">
+                  <ul class="nav nav-pills card-header-pills">
+                    <li class="nav-item m-2">
+                      <a class="nav-link" href="#" data-tab="daily">Daily</a>
+                    </li>
+                    <li class="nav-item m-2">
+                      <a class="nav-link" href="#" data-tab="weekly">Weekly</a>
+                    </li>
+                    <li class="nav-item m-2">
+                      <a class="nav-link" href="#" data-tab="monthly"
+                        >Monthly</a
+                      >
+                    </li>
+                  </ul>
+                </div>
+                <div class="card-body">
+                  <img
+                    src="Images/Daily.svg"
+                    class="img-fluid"
+                    id="daily-sales"
+                    alt="..."
+                  />
+                  <img
+                    src="Images/Weekly.svg"
+                    class="img-fluid d-none"
+                    id="weekly-sales"
+                    alt="..."
+                  />
+                  <img
+                    src="Images/Monthly.svg"
+                    class="img-fluid d-none"
+                    id="monthly-sales"
+                    alt="..."
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
         </main>
       </div>
     </div>
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="dashboard.js"></script>
   </body>
 </html>
