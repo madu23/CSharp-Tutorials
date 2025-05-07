@@ -219,6 +219,7 @@
           <!-- <div class="card-group gap-3"> -->
           <div class="row g-3 m-3">
             <!-- Added gap for spacing between cards -->
+            <!-- Total Orders -->
             <div class="col-12 col-sm-6 col-xl-3">
               <div class="card bg-white p-3 border rounded-3">
                 <div class="d-flex align-items-start">
@@ -230,9 +231,10 @@
                   </div>
                   <div class="flex-grow-1">
                     <h5 class="card-title mb-1">Total Orders</h5>
-                    <p class="card-text mb-2">1,750</p>
+                    <p id="orders-value" class="card-text mb-2">1,750</p>
                     <div class="text-end">
                       <small
+                        id="orders-change"
                         class="text-success d-inline-flex align-items-center gap-1 fw-light"
                       >
                         <i class="fas fa-arrow-up"></i> 8.75%
@@ -243,6 +245,7 @@
               </div>
             </div>
 
+            <!-- Total Delivered -->
             <div class="col-12 col-sm-6 col-xl-3">
               <div class="card bg-white p-3 border rounded-3">
                 <div class="d-flex align-items-start">
@@ -254,9 +257,10 @@
                   </div>
                   <div class="flex-grow-1">
                     <h5 class="card-title mb-1">Total Delivered</h5>
-                    <p class="card-text mb-2">200</p>
+                    <p id="delivered-value" class="card-text mb-2">200</p>
                     <div class="text-end">
                       <small
+                        id="delivered-change"
                         class="text-success d-inline-flex align-items-center gap-1 fw-light"
                       >
                         <i class="fas fa-arrow-up"></i> 9.6%
@@ -267,6 +271,7 @@
               </div>
             </div>
 
+            <!-- Total Revenue -->
             <div class="col-12 col-sm-6 col-xl-3">
               <div class="card bg-white p-3 border rounded-3">
                 <div class="d-flex align-items-start">
@@ -278,9 +283,10 @@
                   </div>
                   <div class="flex-grow-1">
                     <h5 class="card-title mb-1">Total Revenue</h5>
-                    <p class="card-text mb-2">1,250,000</p>
+                    <p id="revenue-value" class="card-text mb-2">1,250,000</p>
                     <div class="text-end">
                       <small
+                        id="revenue-change"
                         class="text-danger d-inline-flex align-items-center gap-1 fw-light"
                       >
                         <i class="fas fa-arrow-down"></i> 8.75%
@@ -291,6 +297,7 @@
               </div>
             </div>
 
+            <!-- Total Canceled -->
             <div class="col-12 col-sm-6 col-xl-3">
               <div class="card bg-white p-3 border rounded-3">
                 <div class="d-flex align-items-start mb-3">
@@ -302,12 +309,13 @@
                   </div>
                   <div>
                     <h5 class="card-title m-0">Total Canceled</h5>
-                    <p class="card-text">1,750</p>
+                    <p id="canceled-value" class="card-text">1,750</p>
                   </div>
                 </div>
 
                 <div class="text-end">
                   <small
+                    id="canceled-change"
                     class="text-success d-inline-flex align-items-center gap-1 fw-light"
                   >
                     <i class="fas fa-arrow-up"></i> 12.3%
@@ -329,7 +337,7 @@
                     <th scope="col">Designation</th>
                   </tr>
                 </thead>
-                <tbody>
+                <tbody id="employee-table-body">
                   <tr>
                     <th scope="row">1</th>
                     <td>Oluwafunmilayo</td>
