@@ -1,0 +1,6 @@
+@ZibaEmployeePortal_HostAddress = http://localhost:5058
+
+GET {{ZibaEmployeePortal_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
