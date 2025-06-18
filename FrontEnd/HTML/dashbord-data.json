@@ -1,0 +1,116 @@
+{
+  "totalOrders": {
+    "value": "1,121",
+    "change": "+8.75%"
+  },
+  "totalDelivered": {
+    "value": "908",
+    "change": "+9.6%"
+  },
+  "totalRevenue": {
+    "value": "2,020,500",
+    "change": "-1.75%"
+  },
+  "totalCanceled": {
+    "value": "2",
+    "change": "+0.3%"
+  },
+  "employees": [
+    {
+      "firstName": "Oluwafunmilayo",
+      "lastName": "Lemboye",
+      "id": 1,
+      "designation": "Owner"
+    },
+    {
+      "firstName": "Mark",
+      "lastName": "Otto",
+      "id": 2,
+      "designation": "Admin"
+    },
+    {
+      "firstName": "Jacob",
+      "lastName": "Thornton",
+      "id": 3,
+      "designation": "Manager"
+    },
+    {
+      "firstName": "John",
+      "lastName": "Nolan",
+      "id": 4,
+      "designation": "Head Security"
+    },
+    {
+      "firstName": "Ayobami",
+      "lastName": "Lemboye",
+      "id": 5,
+      "designation": "Finance Lead"
+    },
+    {
+      "firstName": "John",
+      "lastName": "Doe",
+      "id": 6,
+      "designation": "HR"
+    },
+    {
+      "firstName": "Jane",
+      "lastName": "Doe",
+      "id": 7,
+      "designation": "Head Chef"
+    },
+    {
+      "firstName": "Elizabeth",
+      "lastName": "Kepler",
+      "id": 8,
+      "designation": "Ass. Chef"
+    },
+    {
+      "firstName": "Megan",
+      "lastName": "Keepler",
+      "id": 9,
+      "designation": "Waiter"
+    },
+    {
+      "firstName": "Gbemi",
+      "lastName": "Solanke",
+      "id": 10,
+      "designation": "Legal Rep"
+    }
+  ],
+  "dailySales": [
+    { "time": "08:00", "sale": 25 },
+    { "time": "09:00", "sale": 50 },
+    { "time": "10:00", "sale": 4 },
+    { "time": "11:00", "sale": 6 },
+    { "time": "12:00", "sale": 70 },
+    { "time": "13:00", "sale": 9 },
+    { "time": "14:00", "sale": 10 },
+    { "time": "15:00", "sale": 47 },
+    { "time": "16:00", "sale": 39 },
+    { "time": "17:00", "sale": 5 },
+    { "time": "18:00", "sale": 24 }
+  ],
+  "weeklySales": [
+    { "day": "Monday", "sale": 287 },
+    { "day": "Tuesday", "sale": 86 },
+    { "day": "Wednesday", "sale": 87 },
+    { "day": "Thursday", "sale": 95 },
+    { "time": "Friday", "sale": 169 },
+    { "day": "Saturday", "sale": 300 },
+    { "day": "Sunday", "sale": 109 }
+  ],
+  "monthlySales": [
+    { "month": "Jan", "sale": 5008 },
+    { "month": "Feb", "sale": 4053 },
+    { "month": "Mar", "sale": 4009 },
+    { "month": "Apr", "sale": 6087 },
+    { "month": "May", "sale": 2009 },
+    { "month": "Jun", "sale": 1890 },
+    { "month": "Jul", "sale": 3980 },
+    { "month": "Aug", "sale": 5879 },
+    { "month": "Sep", "sale": 1898 },
+    { "month": "Oct", "sale": 2345 },
+    { "month": "Nov", "sale": 3877 },
+    { "month": "Dec", "sale": 6985 }
+  ]
+}

@@ -53,92 +53,49 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function () {
-  const stats = {
-    totalOrders: {
-      value: "1,121",
-      change: "+8.75%",
-    },
-    totalDelivered: {
-      value: "908",
-      change: "+9.6%",
-    },
-    totalRevenue: {
-      value: "2,020,500",
-      change: "-1.75%",
-    },
-    totalCanceled: {
-      value: "2",
-      change: "+0.3%",
-    },
-  };
+  fetch("./dashbord-data.json")
+    .then((response) => response.json())
+    .then((data) => {
+      // 1. Table
+      const tableBody = this.querySelector("#employee-table-body");
+      tableBody.innerHTML = ""; // this is to clear old content
+      for (let employee of data.employees) {
+        tableBody.innerHTML += `
+        <tr>
+        <th scope="row">${employee.id}</th>
+        <td>${employee.firstName}</td>
+        <td>${employee.lastName}</td>
+        <td>${employee.designation}</td>
+        </tr>
+        `;
+      }
 
-  // Update values for cards and table
-  document.getElementById("orders-value").innerText = stats.totalOrders.value;
-  document.getElementById(
-    "orders-change"
-  ).innerHTML = `<i class="fas fa-arrow-up"></i> ${stats.totalOrders.change}`;
+      // 2. Card
+      document.getElementById("orders-value").innerText =
+        data.totalOrders.value;
+      document.getElementById(
+        "orders-change"
+      ).innerHTML = `<i class="fas fa-arrow-up"></i> ${data.totalOrders.change}`;
 
-  document.getElementById("delivered-value").innerText =
-    stats.totalDelivered.value;
-  document.getElementById(
-    "delivered-change"
-  ).innerHTML = `<i class="fas fa-arrow-up"></i> ${stats.totalDelivered.change}`;
+      document.getElementById("delivered-value").innerText =
+        data.totalDelivered.value;
+      document.getElementById(
+        "delivered-change"
+      ).innerHTML = `<i class="fas fa-arrow-up"></i> ${data.totalDelivered.change}`;
 
-  document.getElementById("revenue-value").innerText = stats.totalRevenue.value;
-  document.getElementById(
-    "revenue-change"
-  ).innerHTML = `<i class="fas fa-arrow-down"></i> ${stats.totalRevenue.change}`;
+      document.getElementById("revenue-value").innerText =
+        data.totalRevenue.value;
+      document.getElementById(
+        "revenue-change"
+      ).innerHTML = `<i class="fas fa-arrow-down"></i> ${data.totalRevenue.change}`;
 
-  document.getElementById("canceled-value").innerText =
-    stats.totalCanceled.value;
-  document.getElementById(
-    "canceled-change"
-  ).innerHTML = `<i class="fas fa-arrow-up"></i> ${stats.totalCanceled.change}`;
-});
+      document.getElementById("canceled-value").innerText =
+        data.totalCanceled.value;
+      document.getElementById(
+        "canceled-change"
+      ).innerHTML = `<i class="fas fa-arrow-up"></i> ${data.totalCanceled.change}`;
 
-document.addEventListener("DOMContentLoaded", function () {
-  const employees = [
-    {
-      id: 1,
-      firstName: "Oluwafunmilayo",
-      lastName: "Lemboye",
-      designation: "Admin",
-    },
-    { id: 2, firstName: "Mark", lastName: "Otto", designation: "HR" },
-    { id: 3, firstName: "Jacob", lastName: "Thornton", designation: "Manager" },
-    { id: 4, firstName: "John", lastName: "Doe", designation: "Head Chef" },
-    {
-      id: 5,
-      firstName: "Oluwafunmilayo",
-      lastName: "Lemboye",
-      designation: "Secetary",
-    },
-    {
-      id: 6,
-      firstName: "Mark",
-      lastName: "Otto",
-      designation: "Ass. Head Chef",
-    },
-    {
-      id: 7,
-      firstName: "Jacob",
-      lastName: "Thornton",
-      designation: "Ass. Manager",
-    },
-    { id: 8, firstName: "John", lastName: "Doe", designation: "Waiter" },
-  ];
-
-  const tableBody = document.getElementById("employee-table-body");
-  // Clear the old content
-  tableBody.innerHTML = "";
-  employees.forEach((emp) => {
-    const row = document.createElement("tr");
-    row.innerHTML = `
-      <th scope="row">${emp.id}</th>
-      <td>${emp.firstName}</td>
-      <td>${emp.lastName}</td>
-      <td>${emp.designation}</td>
-    `;
-    tableBody.appendChild(row);
-  });
+      //3. Charts
+      
+    });
 });
