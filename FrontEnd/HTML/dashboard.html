@@ -382,27 +382,16 @@
                         >Monthly</a
                       >
                     </li>
+                    <li class="nav-item m-2">
+                      <a class="nav-link" href="#" data-tab="yearly"
+                        >Yearly</a
+                      >
+                    </li>
                   </ul>
                 </div>
                 <div class="card-body">
-                  <img
-                    src="Images/Daily.svg"
-                    class="img-fluid"
-                    id="daily-sales"
-                    alt="..."
-                  />
-                  <img
-                    src="Images/Weekly.svg"
-                    class="img-fluid d-none"
-                    id="weekly-sales"
-                    alt="..."
-                  />
-                  <img
-                    src="Images/Monthly.svg"
-                    class="img-fluid d-none"
-                    id="monthly-sales"
-                    alt="..."
-                  />
+                  <div id="chart-container" class="w-100">
+                  </div>
                 </div>
               </div>
             </div>
@@ -413,6 +402,8 @@
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Chart.js CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="dashboard.js"></script>
   </body>
 </html>

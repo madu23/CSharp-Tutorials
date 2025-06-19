@@ -10,29 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
+// Sidebar
 document.addEventListener("DOMContentLoaded", function () {
-  document.querySelectorAll(".nav-link").forEach((link) => {
-    link.addEventListener("click", function (event) {
-      event.preventDefault();
-
-      document
-        .querySelectorAll(".nav-link")
-        .forEach((nav) => nav.classList.remove("active"));
-
-      // Hide the charts
-      document.getElementById("daily-sales").classList.add("d-none");
-      document.getElementById("weekly-sales").classList.add("d-none");
-      document.getElementById("monthly-sales").classList.add("d-none");
-
-      // Make the chart selected active and show the corresponding chart
-      this.classList.add("active");
-      const selectedTab = this.getAttribute("data-tab");
-      document
-        .getElementById(`${selectedTab}-sales`)
-        .classList.remove("d-none");
-    });
-  });
-
   const sidebarButtons = document.querySelectorAll(
     ".btn.d-flex.align-items-center"
   );
@@ -51,6 +30,9 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   });
 });
+
+let chartInstance = null;
+let chartData = null;
 
 document.addEventListener("DOMContentLoaded", function () {
   fetch("./dashbord-data.json")
@@ -95,7 +77,117 @@ document.addEventListener("DOMContentLoaded", function () {
         "canceled-change"
       ).innerHTML = `<i class="fas fa-arrow-up"></i> ${data.totalCanceled.change}`;
 
-      //3. Charts
-      
+      // 3. Charts
+      chartData = data; // to store it globally and use it below
+      showChart(data, "daily");
     });
+});
+
+// CHART
+document.addEventListener("DOMContentLoaded", function () {
+  document.querySelectorAll(".nav-link").forEach((link) => {
+    link.addEventListener("click", function (event) {
+      event.preventDefault();
+      document
+        .querySelectorAll(".nav-link")
+        .forEach((nav) => nav.classList.remove("active"));
+      this.classList.add("active");
+      const selectedTab = this.getAttribute("data-tab");
+      showChart(chartData, selectedTab);
+    });
+  });
+
+  function getChartStyle(viewType) {
+    const chartStyleMap = {
+      daily: "bar",
+      weekly: "pie",
+      monthly: "bar",
+      yearly: "line",
+    };
+    return chartStyleMap[viewType] || "bar"; // The default will be bar
+  }
+
+  window.showChart = function (data, type) {
+    if (!chartData) return;
+
+    const salesChartContainer = document.querySelector("#chart-container");
+    salesChartContainer.innerHTML = "";
+    const canvas = document.createElement("canvas");
+    canvas.id = "salesChart";
+    salesChartContainer.appendChild(canvas);
+
+    const ctx = canvas.getContext("2d");
+
+    let labels = [];
+    let sales = [];
+
+    if (type === "daily") {
+      labels = data.dailySales.map((row) => row.time);
+      sales = data.dailySales.map((row) => row.sale);
+    } else if (type === "weekly") {
+      labels = data.weeklySales.map((row) => row.day);
+      sales = data.weeklySales.map((row) => row.sale);
+    } else if (type === "monthly") {
+      labels = data.monthlySales.map((row) => row.week);
+      sales = data.monthlySales.map((row) => row.sale);
+    } else if (type === "yearly") {
+      labels = data.yearlySales.map((row) => row.month);
+      sales = data.yearlySales.map((row) => row.sale);
+    }
+
+    if (chartInstance) {
+      chartInstance.destroy();
+    }
+
+    chartInstance = new Chart(ctx, {
+      type: getChartStyle(type),
+      data: {
+        labels,
+        datasets: [
+          {
+            label: `${type.charAt(0).toUpperCase() + type.slice(1)} Sales`,
+            data: sales,
+            backgroundColor: [
+              "#B5C0D0",
+              "#C3B1E1",
+              "#D6BFA7",
+              "#E3D5CA",
+              "#B0C4B1",
+              "#FFE6E6",
+              "#F7E9D7",
+              "#D2E0FB",
+              "#C9E4CA",
+              "#F5EEE6",
+              "#D3CEDF",
+              "#EADBC8",
+            ],
+            borderWidth: 1,
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: { display: true, text: "Sales Count" },
+          },
+          x: {
+            title: {
+              display: true,
+              text:
+                type === "daily"
+                  ? "Hour of Day"
+                  : type === "weekly"
+                  ? "Day of Week"
+                  : type === "monthly"
+                  ? "Week"
+                  : "Month",
+            },
+          },
+        },
+        // maintainAspectRatio: false
+      },
+    });
+  };
 });

@@ -95,11 +95,17 @@
     { "day": "Tuesday", "sale": 86 },
     { "day": "Wednesday", "sale": 87 },
     { "day": "Thursday", "sale": 95 },
-    { "time": "Friday", "sale": 169 },
+    { "day": "Friday", "sale": 169 },
     { "day": "Saturday", "sale": 300 },
     { "day": "Sunday", "sale": 109 }
   ],
   "monthlySales": [
+    { "week": "1", "sale": 1287 },
+    { "week": "2", "sale": 886 },
+    { "week": "3", "sale": 807 },
+    { "week": "4", "sale": 957 }
+  ],
+  "yearlySales": [
     { "month": "Jan", "sale": 5008 },
     { "month": "Feb", "sale": 4053 },
     { "month": "Mar", "sale": 4009 },
