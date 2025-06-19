@@ -98,13 +98,13 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
   function getChartStyle(viewType) {
-    const chartStyleMap = {
+    const chartStyle = {
       daily: "bar",
       weekly: "pie",
       monthly: "bar",
       yearly: "line",
     };
-    return chartStyleMap[viewType] || "bar"; // The default will be bar
+    return chartStyle[viewType] || "bar"; // The default will be bar
   }
 
   window.showChart = function (data, type) {
