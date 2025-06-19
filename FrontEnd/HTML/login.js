@@ -44,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 document.addEventListener("DOMContentLoaded", function(){
-  // 🕒 Time-based color styling
   let hours = new Date().getHours();
   let buttonElement = document.querySelector(".btn-primary");
   if (buttonElement) {
