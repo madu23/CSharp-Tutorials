@@ -1,0 +1,40 @@
+{
+  "totalCustomer": 500,
+  "menuCount": 10,
+  "orderCount": 50,
+  "totalRevenue": 1000000,
+  "employees": [
+    {
+      "firstName": "rukky",
+      "lastName": "faruq",
+      "staffNo": 1,
+      "designation": "Supervisor",
+      "status": "Active"
+    },
+    {
+      "firstName": "sir-eke",
+      "lastName": "joe",
+      "staffNo": 2,
+      "designation": "head-Cheff",
+      "status": "Active"
+    },
+    {
+      "firstName": "james",
+      "lastName": "smith",
+      "staffNo": 3,
+      "designation": "jr-cook",
+      "status": "not-Active"
+    }
+  ],
+  "dailySales": [
+    { "time": "8:00", "sale": 5 },
+    { "time": "9:00", "sale": 6 },
+    { "time": "10:00", "sale": 7 },
+    { "time": "11:00", "sale": 3 },
+    { "time": "12:00", "sale": 4 },
+    { "time": "13:00", "sale": 6 },
+    { "time": "15:00", "sale": 8 },
+    { "time": "16:00", "sale": 7 },
+    { "time": "17:00", "sale": 9 }
+  ]
+}

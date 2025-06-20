@@ -19,7 +19,7 @@ document.getElementById("logoutBtn").addEventListener("click", function () {
 });
 
 // Purpose: To create a chart for the sales data
-var ctx = document.getElementById("salesChart").getContext("2d");
+/*var ctx = document.getElementById("salesChart").getContext("2d");
 new Chart(ctx, {
   type: "bar",
   data: {
@@ -32,7 +32,8 @@ new Chart(ctx, {
       },
     ],
   },
-});
+});*/
+
 // Sidebar Toggle Function
 
 document.getElementById("sidebarToggle").addEventListener("click", function () {
@@ -49,3 +50,58 @@ window.addEventListener("load", function () {
     preloader.style.display = "none";
   }, 5000);
 });
+
+// Load dashboard-data.json using XHR
+var xhr = new XMLHttpRequest();
+xhr.open("GET", "data-dashoard.json", true);
+xhr.onreadystatechange = function () {
+  if (xhr.readyState === 4 && xhr.status === 200) {
+    var data = JSON.parse(xhr.responseText);
+
+    // Update card values
+    document.getElementById("menuCount").textContent = data.menuCount;
+    document.getElementById("totalCustomer").textContent = data.totalCustomer;
+    document.getElementById("orderCount").textContent = data.orderCount;
+    document.getElementById("totalRevenue").textContent =
+      "₦" + data.totalRevenue.toLocaleString();
+
+    // Update employee table
+    var tbody = document.getElementById("employeeTableBody");
+    tbody.innerHTML = ""; // clear old
+    data.employees.forEach(function (emp) {
+      var row = `<tr>
+        <td>${emp.staffNo}</td>
+        <td>${emp.firstName}</td>
+        <td>${emp.lastName}</td>
+        <td>${emp.designation}</td>
+        <td style="color: ${emp.status === "Active" ? "green" : "red"};">
+      ${emp.status}
+    </td>
+      </tr>`;
+      tbody.innerHTML += row;
+    });
+
+    // Create sales chart
+    var ctx = document.getElementById("salesChart").getContext("2d");
+    new Chart(ctx, {
+      type: "bar",
+      data: {
+        labels: data.dailySales.map((item) => item.time),
+        datasets: [
+          {
+            label: "Hourly Sales",
+            data: data.dailySales.map((item) => item.sale),
+            backgroundColor: ["blue", "orange", "red", "teal", "black"],
+          },
+        ],
+      },
+      options: {
+        responsive: true,
+        scales: {
+          y: { beginAtZero: true },
+        },
+      },
+    });
+  }
+};
+xhr.send();
