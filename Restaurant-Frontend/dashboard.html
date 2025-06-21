@@ -227,19 +227,13 @@
             <div class="col-12 col-md-6">
               <div class="card p-3 shadow-sm h-100">
                 <h3 class="mb-3">Sales Chart</h3>
-
-                <button class="mb-3" onclick="updateChart('hourly')">
-                  Hourly
-                </button>
-                <button class="mb-3" onclick="updateChart('daily')">
-                  Daily
-                </button>
-                <button class="mb-3" onclick="updateChart('weekly')">
-                  Weekly
-                </button>
-                <button class="mb-3" onclick="updateChart('monthly')">
-                  Monthly
-                </button>
+                <div class="toggle-buttons mb-3">
+                  <span class="active" onclick="handleToggle(this, 'daily')"
+                    >Daily</span
+                  >
+                  <span onclick="handleToggle(this, 'weekly')">Weekly</span>
+                  <span onclick="handleToggle(this, 'monthly')">Monthly</span>
+                </div>
                 <canvas id="salesChart"></canvas>
               </div>
             </div>

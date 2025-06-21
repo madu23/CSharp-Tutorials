@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
       preloader.style.opacity = "0";
       setTimeout(() => {
         preloader.style.display = "none";
-      }, 1500); // Reduced from 5000ms to 1500ms for better UX
+      }, 1500);
     }
   });
 
@@ -91,6 +91,132 @@ document.addEventListener("DOMContentLoaded", () => {
       window.location.href = "index.html";
     });
   }
+
+  // ===== Dashboard Data Load and binding with AJAX =====
+
+  fetch("assets/js/dashboard-data.json")
+    .then((res) => {
+      if (!res.ok) throw new Error("Network response was not ok");
+      return res.json();
+    })
+    .then((data) => {
+      // Cards
+      const totalMenusElem = document.getElementById("totalMenusValue");
+      const totalRevenueElem = document.getElementById("totalRevenueValue");
+      const totalOrdersElem = document.getElementById("totalOrdersValue");
+      const totalCustomersElem = document.getElementById("totalCustomersValue");
+      if (
+        totalMenusElem &&
+        totalRevenueElem &&
+        totalOrdersElem &&
+        totalCustomersElem
+      ) {
+        totalMenusElem.textContent = data.menuCount;
+        totalRevenueElem.textContent = "₦" + data.totalRevenue.toLocaleString();
+        totalOrdersElem.textContent = data.orderCount;
+        totalCustomersElem.textContent = data.totalCustomer;
+      }
+
+      // Employees
+      const employeeTableBody = document.getElementById("employeeTableBody");
+      if (employeeTableBody && Array.isArray(data.employees)) {
+        employeeTableBody.innerHTML = data.employees
+          .map(
+            (emp) => `
+            <tr>
+              <td>${emp.staffNo.toString().padStart(2, "0")}</td>
+              <td>${emp.firstName}</td>
+              <td>${emp.lastName}</td>
+              <td>${emp.designation}</td>
+              <td class="${
+                emp.status === "Active" ? "text-success" : "text-danger"
+              }">${emp.status}</td>
+            </tr>
+          `
+          )
+          .join("");
+      }
+
+      // Sales Chart
+      let salesChart;
+      function createSalesChart(labels, values, label) {
+        const ctx = document.getElementById("salesChart").getContext("2d");
+        if (salesChart) salesChart.destroy();
+        salesChart = new Chart(ctx, {
+          type: "bar",
+          data: {
+            labels: labels,
+            datasets: [
+              {
+                label: label,
+                data: values,
+                backgroundColor: function (context) {
+                  const chart = context.chart;
+                  const {ctx, chartArea} = chart;
+                  if (!chartArea) return null;
+                  const gradient = ctx.createLinearGradient(
+                    0,
+                    chartArea.top,
+                    0,
+                    chartArea.bottom
+                  );
+                  gradient.addColorStop(0, "#f3d423");
+                  gradient.addColorStop(1, "#f19720");
+                  return gradient;
+                },
+                borderColor: "rgba(241, 151, 32, 1)",
+                borderWidth: 1,
+              },
+            ],
+          },
+          options: {
+            responsive: true,
+            scales: {
+              y: {beginAtZero: true},
+            },
+            plugins: {
+              legend: {display: false},
+              title: {display: false},
+            },
+          },
+        });
+      }
+
+      if (Array.isArray(data.dailySales)) {
+        const labels = data.dailySales.map((d) => d.time);
+        const values = data.dailySales.map((d) => d.sale);
+        createSalesChart(labels, values, "Hourly Sales");
+      }
+
+      window.handleToggle = function (el, type) {
+        document
+          .querySelectorAll(".toggle-buttons span")
+          .forEach((btn) => btn.classList.remove("active"));
+
+        // Active class for all clicked buttons
+        el.classList.add("active");
+        let labels = [];
+        let values = [];
+        let labelText = "";
+        if (type === "daily") {
+          labels = data.dailySales.map((d) => d.time);
+          values = data.dailySales.map((d) => d.sale);
+          labelText = "Hourly Sales";
+        } else if (type === "weekly") {
+          labels = data.weeklySales.map((d) => d.day);
+          values = data.weeklySales.map((d) => d.sale);
+          labelText = "Daily Sales (Past 7 Days)";
+        } else if (type === "monthly") {
+          labels = data.monthlySales.map((d) => d.date);
+          values = data.monthlySales.map((d) => d.sale);
+          labelText = "Daily Sales (This Month)";
+        }
+        createSalesChart(labels, values, labelText);
+      };
+    })
+    .catch((err) => {
+      console.error("Failed to load dashboard data:", err);
+    });
 
   // ===== Sidebar Toggle =====
   const toggleSidebarButton = document.querySelector(".toggle-sidebar");
@@ -327,84 +453,4 @@ document.addEventListener("DOMContentLoaded", () => {
       },
     });
   }
-
-  // ===== Dashboard Data AJAX Load and Binding =====
-  // Only fetch data if on dashboard page (cards exist)
-  fetch("assets/js/dashboard-data.json")
-    .then((res) => {
-      if (!res.ok) throw new Error("Network response was not ok");
-      return res.json();
-    })
-    .then((data) => {
-      // Cards
-      const totalMenusElem = document.getElementById("totalMenusValue");
-      const totalRevenueElem = document.getElementById("totalRevenueValue");
-      const totalOrdersElem = document.getElementById("totalOrdersValue");
-      const totalCustomersElem = document.getElementById("totalCustomersValue");
-      if (
-        totalMenusElem &&
-        totalRevenueElem &&
-        totalOrdersElem &&
-        totalCustomersElem
-      ) {
-        totalMenusElem.textContent = data.menuCount;
-        totalRevenueElem.textContent = "₦" + data.totalRevenue.toLocaleString();
-        totalOrdersElem.textContent = data.orderCount;
-        totalCustomersElem.textContent = data.totalCustomer;
-      }
-
-      // Employees
-      const employeeTableBody = document.getElementById("employeeTableBody");
-      if (employeeTableBody && Array.isArray(data.employees)) {
-        employeeTableBody.innerHTML = data.employees
-          .map(
-            (emp) => `
-            <tr>
-              <td>${emp.staffNo.toString().padStart(2, "0")}</td>
-              <td>${emp.firstName}</td>
-              <td>${emp.lastName}</td>
-              <td>${emp.designation}</td>
-              <td class="${
-                emp.status === "Active" ? "text-success" : "text-danger"
-              }">${emp.status}</td>
-            </tr>
-          `
-          )
-          .join("");
-      }
-
-      // Daily Sales Chart
-      const salesCtx = document.getElementById("salesChart")?.getContext("2d");
-      if (salesCtx && Array.isArray(data.dailySales)) {
-        // if (window.dailySalesChart) {
-        //   window.dailySalesChart.destroy();
-        // }
-        window.dailySalesChart = new Chart(salesCtx, {
-          type: "bar",
-          data: {
-            labels: data.dailySales.map((d) => d.time),
-            datasets: [
-              {
-                label: "Hourly Sales",
-                data: data.dailySales.map((d) => d.sale),
-                backgroundColor: "rgba(241, 151, 32, 0.7)",
-                borderColor: "rgba(241, 151, 32, 1)",
-                borderWidth: 1,
-              },
-            ],
-          },
-          options: {
-            responsive: true,
-            scales: {y: {beginAtZero: true}},
-            plugins: {
-              legend: {display: false},
-              title: {display: false},
-            },
-          },
-        });
-      }
-    })
-    .catch((err) => {
-      console.error("Failed to load dashboard data:", err);
-    });
 });
